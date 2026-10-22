@@ -96,7 +96,7 @@ def md_to_html(text):
             flush()
         elif m_h:
             flush()
-            level = min(len(m_h.group(1)) + 1, 4)  # the page title is the only h1
+            level = max(2, len(m_h.group(1)))  # the page title is the only h1
             out.append(f"<h{level}>{md_inline(m_h.group(2))}</h{level}>")
         elif s.startswith("|"):
             if para or items:
@@ -515,7 +515,7 @@ RACE_TEMPLATE = """<!doctype html>
 .prose code {{ font-size: 13px; background: var(--page); padding: 1px 4px; border-radius: 4px; }}
 .table-wrap {{ overflow-x: auto; margin: 0 0 12px; }}
 .prose table {{ font-size: 13px; }}
-.prose td, .prose th {{ white-space: nowrap; }}
+.prose td, .prose th {{ text-align: left; vertical-align: top; }}
 </style>
 </head>
 <body>
