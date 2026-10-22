@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Parx Racing Race 8 – Mon Oct 19, 2026 – Optional Claiming $100K / N/C</title>
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
+  --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+  --pos: #006300; --neg: #c0302f;
+  --series-a: #2a78d6; --series-b: #eb6834; --series-s: #1baf7a;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+    --pos: #0ca30c; --neg: #e66767;
+    --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+  --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+  --pos: #0ca30c; --neg: #e66767;
+  --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink);
+  font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 16px 16px 48px; }
+h1 { font-size: 22px; margin: 4px 0 2px; }
+h2 { font-size: 16px; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+h3 { font-size: 15px; margin: 28px 0 10px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .04em; }
+.muted { color: var(--muted); font-weight: normal; }
+.pos { color: var(--pos); } .neg { color: var(--neg); }
+a { color: var(--series-a); }
+.card, .race { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+.hero { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 12px; }
+.hero .card { margin: 0; }
+.hero-label { font-size: 13px; color: var(--ink-2); display: flex; align-items: center; gap: 6px; }
+.hero-value { font-size: 30px; font-weight: 700; margin-top: 2px; }
+.added { font-size: 14px; color: var(--ink-2); margin: 0 0 12px; }
+.swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex: none; }
+.swatch.a { background: var(--series-a); } .swatch.b { background: var(--series-b); } .swatch.s { background: var(--series-s); }
+.tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.tile { background: var(--page); border-radius: 8px; padding: 8px; text-align: center; }
+.tile-label { font-size: 11px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .03em; }
+.tile-value { font-size: 18px; font-weight: 700; }
+.tile-sub { font-size: 11px; color: var(--muted); }
+.kv { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; margin: 12px 0 0; font-size: 14px; }
+.kv dt { color: var(--ink-2); } .kv dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+.legend { display: flex; gap: 16px; font-size: 13px; color: var(--ink-2); margin-bottom: 6px; }
+.legend span { display: flex; align-items: center; gap: 6px; }
+.chart-wrap { position: relative; }
+svg { display: block; width: 100%; height: auto; touch-action: pan-y; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 8px; font-size: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.12); display: none; white-space: nowrap; }
+.tip b { display: block; margin-bottom: 2px; }
+.tip div { display: flex; align-items: center; gap: 6px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { padding: 6px 4px; text-align: right; border-bottom: 1px solid var(--grid); }
+th:first-child, td:first-child { text-align: left; }
+thead th { font-size: 12px; color: var(--ink-2); font-weight: 600; }
+.note { font-size: 12px; color: var(--muted); margin: 8px 0 0; }
+.race-head { display: flex; justify-content: space-between; gap: 8px; }
+.race-sub { font-size: 13px; margin-bottom: 8px; }
+.pick { display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 8px; margin-top: 6px; }
+.pick-name { font-weight: 600; }
+.pick-fin { color: var(--ink-2); font-size: 14px; }
+.pick-net { min-width: 64px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.pick-label { font-size: 11px; color: var(--muted); margin-left: 18px; }
+.race-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; font-size: 13px;
+  margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--grid); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@media (max-width: 480px) {
+  .tiles { grid-template-columns: repeat(2, 1fr); }
+  .hero-value { font-size: 24px; }
+}
+
+.back { display: inline-block; margin: 4px 0 10px; font-size: 14px; text-decoration: none; }
+.prose h2 { display: block; font-size: 17px; margin: 22px 0 8px; }
+.prose h2:first-child { margin-top: 0; }
+.prose h3, .prose h4 { font-size: 15px; margin: 18px 0 6px; text-transform: none; letter-spacing: 0; color: var(--ink); }
+.prose p, .prose li { margin: 0 0 10px; }
+.prose ul, .prose ol { padding-left: 20px; margin: 0 0 10px; }
+.prose a { overflow-wrap: anywhere; }
+.prose code { font-size: 13px; background: var(--page); padding: 1px 4px; border-radius: 4px; }
+.table-wrap { overflow-x: auto; margin: 0 0 12px; }
+.prose table { font-size: 13px; }
+.prose td, .prose th { white-space: nowrap; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="../">← All races</a>
+  <h1>Parx Racing Race 8 – Mon Oct 19, 2026 – Optional Claiming $100K / N/C</h1>
+  <div class="muted" style="margin-bottom:12px">Updated Oct 22, 2026 9:06 AM</div>
+  <article class="race"><div class="race-head"><strong>Parx Racing R8</strong><span class="muted">Mon Oct 19</span></div><div class="race-sub muted">Dirt 6f (OC 100k/NC)</div><div class="pick"><span class="swatch a"></span><span class="pick-name">Maximus Meridius <span class="muted">(7-2)</span></span><span class="pick-fin">4th</span><span class="pick-net"><span class="neg">−$6.00</span></span></div><div class="pick-label">Top pick</div><div class="pick"><span class="swatch s"></span><span class="pick-name">Subrogate <span class="muted">(5-1)</span></span><span class="pick-fin">2nd</span><span class="pick-net"><span class="pos">+$5.80</span></span></div><div class="pick-label">2nd pick</div><div class="race-foot"><span>Top 2 net: <b class="neg">−$0.20</b></span><span class="muted">Won by Houghton Shuffle ($7.60)</span></div></article>
+  <article class="card prose"><p>PP URL: <a href="https://www.drf.com/pp-details/10-19-2026/PRX/8/D/USA">https://www.drf.com/pp-details/10-19-2026/PRX/8/D/USA</a> Handicapped: 2026-10-19 (unattended run). Odds used: morning line (live tote not available at handicap time).</p>
+<p>Parx Race 8, 6 furlongs on the dirt, 3-year-olds and up, optional claiming $100K / N/C allowance, purse $55K. Six horses, no scratches listed. Post 3:49 PM ET.</p>
+<h3>Off the list on the odds rule</h3>
+<ul><li><strong>Houghton Shuffle (5-2).</strong> The morning-line favorite and the only true closer (TimeformUS late pace 92). Beyers 98, 95, 90, and he has the pace setup with three speed horses in front of him. Strong horse, no value at 5-2.</li><li><strong>Spikezone (3-1).</strong> Seven-year-old Ness speedster, 19 wins from 41, 101 lifetime top. Ran 93 when caught in the Newcastle at Delaware last out. Fastest early (118) but has to deal with two other need-the-lead types. Under the line.</li></ul>
+<p>No probable scratches. Dropline&#x27;s last two entries were scratches (one a vet scratch for illness on Oct 8), so watch him at post time.</p>
+<h3>Playable horses, ranked</h3>
+<p><strong>Maximus Meridius (7-2)</strong> – the play, right on the line. Per-start of $19,580 this year (4 starts) and $31,056 last year (8 starts, 4 wins, Parx Sprint 3rd at 97). Trend is up: Beyers 88 (won the Banjo Picker over Houghton Shuffle), 85 (game 3rd in the State Rep), then 92 when 4th in the $150K Stable Recovery last out, the best figure he has run this year. I throw out the February 61 (checked hard to avoid a foe). He is 7-for-15 at Parx and 5-for-10 at the distance, so nothing to project. Connections are the best in the field: Sanchez wins 28% at the meet, Reid 20%, and the pair are 32% together at Parx with a $1.77 ROI. Drops from two stakes to an allowance. The risk is pace: Spikezone and Winning Time both want the lead too, and a three-way duel sets it up for Houghton Shuffle. He is also the horse most likely to get bet below 7-2.</p>
+<p><strong>Subrogate (5-1)</strong> – the class shipper. Only one start this year, so lean on 2025: $36,375 per start (4 starts, a win in the De Francis at 93, 2nd in the Mr. Prospector). Career top 106 and multiple graded-stakes tries. The trend is the problem: 89, 82, 82, then a dull 72 at Colonial in August, his only start this year, and he has been off eight weeks since with slow farm works. Lopez is 21% here and the Duarte/Lopez combo is 32% with a $1.80 ROI, which is real. Stalking style (early 95) fits a race with this much speed. First start at Parx.</p>
+<p><strong>Winning Time (9-2)</strong> – the in-form speed. $16,807 per start this year, $16,884 in 2024 (missed all of 2025). Just won an N2R allowance by 7 1/2 in the slop (88), and ran 91 winning at 7 furlongs in June. 14 starts, all at Parx. The minuses stack up though: he is moving up from N2R allowance company to this level, his one try against these (the Banjo Picker) ended in a long duel and a 4th, he needs the lead with Spikezone faster early, and the connections are cold (Gonzalez 13%, DeMasi 14%, J/T 10%, and DeMasi off a win is 5% with a $0.76 ROI).</p>
+<p><strong>Dropline (6-1)</strong> – pass. $15,602 per start in 2025, but his only 2026 start ended with a fall in February, he has scratched twice since (vet, then illness on Oct 8), and his latest works are slow (:53 4/5, last of 55). Mosco&#x27;s +180 days angle (27%, $4.96 ROI) is the only reason to look. Too many question marks.</p>
+<h3>Bottom line</h3>
+<p>Maximus Meridius at 7-2 is the win play: rising figures, a Parx specialist, the best jockey/trainer combo in the race, and a drop in class. If he goes off below 7-2, he falls off the list and the play moves to Subrogate at 5-1 or better (class and a hot combo, but you need to forgive the 72). Winning Time is a small saver only if he gets loose early, which is unlikely with Spikezone inside him.</p></article>
+  <a class="back" href="../">← All races</a>
+</main>
+</body>
+</html>

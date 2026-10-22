@@ -1,0 +1,126 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Keeneland Race 9, Saturday October 17, 2026</title>
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
+  --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+  --pos: #006300; --neg: #c0302f;
+  --series-a: #2a78d6; --series-b: #eb6834; --series-s: #1baf7a;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+    --pos: #0ca30c; --neg: #e66767;
+    --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+  --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+  --pos: #0ca30c; --neg: #e66767;
+  --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink);
+  font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 16px 16px 48px; }
+h1 { font-size: 22px; margin: 4px 0 2px; }
+h2 { font-size: 16px; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+h3 { font-size: 15px; margin: 28px 0 10px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .04em; }
+.muted { color: var(--muted); font-weight: normal; }
+.pos { color: var(--pos); } .neg { color: var(--neg); }
+a { color: var(--series-a); }
+.card, .race { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+.hero { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 12px; }
+.hero .card { margin: 0; }
+.hero-label { font-size: 13px; color: var(--ink-2); display: flex; align-items: center; gap: 6px; }
+.hero-value { font-size: 30px; font-weight: 700; margin-top: 2px; }
+.added { font-size: 14px; color: var(--ink-2); margin: 0 0 12px; }
+.swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex: none; }
+.swatch.a { background: var(--series-a); } .swatch.b { background: var(--series-b); } .swatch.s { background: var(--series-s); }
+.tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.tile { background: var(--page); border-radius: 8px; padding: 8px; text-align: center; }
+.tile-label { font-size: 11px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .03em; }
+.tile-value { font-size: 18px; font-weight: 700; }
+.tile-sub { font-size: 11px; color: var(--muted); }
+.kv { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; margin: 12px 0 0; font-size: 14px; }
+.kv dt { color: var(--ink-2); } .kv dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+.legend { display: flex; gap: 16px; font-size: 13px; color: var(--ink-2); margin-bottom: 6px; }
+.legend span { display: flex; align-items: center; gap: 6px; }
+.chart-wrap { position: relative; }
+svg { display: block; width: 100%; height: auto; touch-action: pan-y; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 8px; font-size: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.12); display: none; white-space: nowrap; }
+.tip b { display: block; margin-bottom: 2px; }
+.tip div { display: flex; align-items: center; gap: 6px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { padding: 6px 4px; text-align: right; border-bottom: 1px solid var(--grid); }
+th:first-child, td:first-child { text-align: left; }
+thead th { font-size: 12px; color: var(--ink-2); font-weight: 600; }
+.note { font-size: 12px; color: var(--muted); margin: 8px 0 0; }
+.race-head { display: flex; justify-content: space-between; gap: 8px; }
+.race-sub { font-size: 13px; margin-bottom: 8px; }
+.pick { display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 8px; margin-top: 6px; }
+.pick-name { font-weight: 600; }
+.pick-fin { color: var(--ink-2); font-size: 14px; }
+.pick-net { min-width: 64px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.pick-label { font-size: 11px; color: var(--muted); margin-left: 18px; }
+.race-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; font-size: 13px;
+  margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--grid); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@media (max-width: 480px) {
+  .tiles { grid-template-columns: repeat(2, 1fr); }
+  .hero-value { font-size: 24px; }
+}
+
+.back { display: inline-block; margin: 4px 0 10px; font-size: 14px; text-decoration: none; }
+.prose h2 { display: block; font-size: 17px; margin: 22px 0 8px; }
+.prose h2:first-child { margin-top: 0; }
+.prose h3, .prose h4 { font-size: 15px; margin: 18px 0 6px; text-transform: none; letter-spacing: 0; color: var(--ink); }
+.prose p, .prose li { margin: 0 0 10px; }
+.prose ul, .prose ol { padding-left: 20px; margin: 0 0 10px; }
+.prose a { overflow-wrap: anywhere; }
+.prose code { font-size: 13px; background: var(--page); padding: 1px 4px; border-radius: 4px; }
+.table-wrap { overflow-x: auto; margin: 0 0 12px; }
+.prose table { font-size: 13px; }
+.prose td, .prose th { white-space: nowrap; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="../">← All races</a>
+  <h1>Keeneland Race 9, Saturday October 17, 2026</h1>
+  <div class="muted" style="margin-bottom:12px">Updated Oct 22, 2026 9:06 AM</div>
+  <article class="race"><div class="race-head"><strong>Keeneland R9</strong><span class="muted">Sat Oct 17</span></div><div class="race-sub muted">Dirt 7f (G2 Raven Run)</div><div class="pick"><span class="swatch a"></span><span class="pick-name">Conceit <span class="muted">(4-1)</span></span><span class="pick-fin">4th</span><span class="pick-net"><span class="neg">−$6.00</span></span></div><div class="pick-label">Top pick</div><div class="pick"><span class="swatch s"></span><span class="pick-name">Percy&#x27;s Bar <span class="muted">(6-1)</span></span><span class="pick-fin">9th</span><span class="pick-net"><span class="neg">−$6.00</span></span></div><div class="pick-label">2nd pick</div><div class="race-foot"><span>Top 2 net: <b class="neg">−$12.00</b></span><span class="muted">Won by Movie Night ($9.84)</span></div></article>
+  <article class="card prose"><p>PP URL: <a href="https://www.drf.com/pp-details/10-17-2026/KEE/9/D/USA">https://www.drf.com/pp-details/10-17-2026/KEE/9/D/USA</a></p>
+<p>Grade 2 Raven Run Stakes, 7 furlongs on dirt, 3-year-old fillies, $400,000. Twelve horses, no scratches listed. Handicapped on 2026-10-17 from the DRF Formulator page (full field, 12/12 shown). Odds are morning line; check the board at post time (5:16 PM ET).</p>
+<h3>Off the list on the odds rule</h3>
+<p>Mashallah (8-5) is the class of the race on paper: 4-for-5, a 106 Beyer at Keeneland in her maiden win, and a 92 when drawing off in the Prioress (G3) last out. She is too short to play. She is also a pure speed horse (TimeformUS early pace 112) drawn next to Movie Night (early 114), so the front end should be contested.</p>
+<p>No probable scratches. Everyone&#x27;s last start is three-plus weeks back.</p>
+<h3>Pace shape</h3>
+<p>Mashallah and Movie Night are the two fastest early horses by a wide margin, with Mythical (99) and With a Kiss (103) also inclined to press. That sets up a stalker or closer. The best late numbers belong to Percy&#x27;s Bar (111), Hen Party (96), Star Actress (93), Conceit (89) and Yo Fancy (89).</p>
+<h3>Playable horses, ranked</h3>
+<p><strong>Conceit (4-1), the pick.</strong> Per-start of about $97,200 this year on four starts (three wins), up from $15,300 as a 2-year-old, so she has improved sharply. The trend is as solid as it gets: Beyers of 94, 94 and 94 in three straight wins, the last two at this exact 7 furlongs (Audubon Oaks and the Dogwood G3, where she ran down Explora and Movie Night). She is 3-for-3 on fast dirt and 2-for-2 at the distance. Connections are the best in the field: Irad Ortiz Jr. (24% this year, 20% at the meet) and Brad Cox (25%), and the pair wins 29% at Keeneland with a $1.58 ROI. She sits off the pace (early 82, late 89), which is exactly where you want to be with Mashallah and Movie Night likely to duel. The risk: she has not run a figure close to Mashallah&#x27;s 106, and 4-1 is near your floor, so if the crowd pounds her below 7-2 she falls off the list.</p>
+<p><strong>Percy&#x27;s Bar (6-1), second choice.</strong> Highest per-start in the race both years (about $118,500 this year and $111,200 last year), and she is a Keeneland specialist: 3 starts here, 2 wins (including the Ashland G1) and a second. Throw out the Music City on turf (60 Beyer, shuffled, wrong surface). Her last dirt race was a big one, an 86 when second in the Test (G1) at 7 furlongs after stumbling at the start. She has the best late-pace number in the field (111), and this pace should suit her. Joel Ortiz is 23% this year, but trainer Ben Colebrook is only 10%, and she carries 123 pounds, five more than most of the field. Her figures (77 to 87) sit a clear notch below Conceit&#x27;s.</p>
+<p><strong>Movie Night (9-2).</strong> Per-start about $39,300. Beyers 83, 84, 96, then a throwout 59 in the Test (stumbled at the break), then a gutsy 94 when third in the Dogwood after dueling. Flavien Prat is 38% at the meet and Walden is 25%. Talented, but she wants the lead and Mashallah wants it more. A pace casualty unless Mashallah stumbles.</p>
+<p><strong>A Fine Chardonnay (12-1).</strong> Per-start about $57,700 this year, $81,400 last year. Unbeaten at Keeneland (2-for-2, including the Beaumont G2 at this distance). Beyers 86, 74, 85, 93, then 81 in the Dogwood, so the trend has turned down from that 93. Ian Wilkes wins 30% in graded stakes with a $5.11 ROI, a real longshot angle, but jockey Hernandez is only 6% at the meet.</p>
+<p><strong>Mythical (12-1).</strong> Big earner as a 2-year-old ($90,100 per start) but only $31,900 this year, and the figures have slid from 94s in the spring to 70, 82 (turf) and 81. Going the wrong way.</p>
+<p><strong>With a Kiss (20-1), flyer.</strong> 2-for-2, per-start $66,000 this year. Beyers 70 then 86 in an allowance win off a 10-month layoff, so the second start back could bring more. Pletcher and Velazquez win 40% together at Keeneland ($3.08 ROI). Big class jump and likely to be caught in the speed duel, but the price is right for a small saver.</p>
+<p><strong>Hen Party (20-1).</strong> Per-start $38,200. Mostly a turf and synthetic filly (86 top on synthetic); her one fast-dirt start was a 78 when third to Mashallah. The J/T combo is 3-for-7 with a $5.22 ROI, which is interesting, but the dirt figure is not.</p>
+<p><strong>Star Actress (30-1).</strong> Per-start $23,700. Router cutting back to 7 furlongs, figures in the 70s and 80s (86 top). Will close but probably not enough.</p>
+<p><strong>Army&#x27;s Marauder (30-1), Yo Fancy (30-1), Coco Connect (50-1).</strong> Figures of 78, 77 and 74 at best. Army&#x27;s Marauder and Yo Fancy are maiden or allowance types jumping into a G2; Coco Connect has been well beaten in graded company.</p>
+<h3>Bottom line</h3>
+<p>Conceit at 4-1 is the play: three straight 94s, proven at the trip, the best jockey and trainer in the race, and a stalking style that fits a race with two speedballs up front. Percy&#x27;s Bar at 6-1 is the second choice and the horse to switch to if Conceit drifts under 7-2 on the board. With a Kiss at 20-1 is a small flyer on the hot Pletcher and Velazquez combo.</p>
+<p>Tracker bet: $2 Win, $2 Place, $2 Show on #8 Conceit (4-1 ML).</p></article>
+  <a class="back" href="../">← All races</a>
+</main>
+</body>
+</html>

@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Keeneland Race 7, Thu Oct 22 2026</title>
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
+  --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+  --pos: #006300; --neg: #c0302f;
+  --series-a: #2a78d6; --series-b: #eb6834; --series-s: #1baf7a;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+    --pos: #0ca30c; --neg: #e66767;
+    --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+  --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+  --pos: #0ca30c; --neg: #e66767;
+  --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink);
+  font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 16px 16px 48px; }
+h1 { font-size: 22px; margin: 4px 0 2px; }
+h2 { font-size: 16px; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+h3 { font-size: 15px; margin: 28px 0 10px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .04em; }
+.muted { color: var(--muted); font-weight: normal; }
+.pos { color: var(--pos); } .neg { color: var(--neg); }
+a { color: var(--series-a); }
+.card, .race { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+.hero { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 12px; }
+.hero .card { margin: 0; }
+.hero-label { font-size: 13px; color: var(--ink-2); display: flex; align-items: center; gap: 6px; }
+.hero-value { font-size: 30px; font-weight: 700; margin-top: 2px; }
+.added { font-size: 14px; color: var(--ink-2); margin: 0 0 12px; }
+.swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex: none; }
+.swatch.a { background: var(--series-a); } .swatch.b { background: var(--series-b); } .swatch.s { background: var(--series-s); }
+.tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.tile { background: var(--page); border-radius: 8px; padding: 8px; text-align: center; }
+.tile-label { font-size: 11px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .03em; }
+.tile-value { font-size: 18px; font-weight: 700; }
+.tile-sub { font-size: 11px; color: var(--muted); }
+.kv { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; margin: 12px 0 0; font-size: 14px; }
+.kv dt { color: var(--ink-2); } .kv dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+.legend { display: flex; gap: 16px; font-size: 13px; color: var(--ink-2); margin-bottom: 6px; }
+.legend span { display: flex; align-items: center; gap: 6px; }
+.chart-wrap { position: relative; }
+svg { display: block; width: 100%; height: auto; touch-action: pan-y; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 8px; font-size: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.12); display: none; white-space: nowrap; }
+.tip b { display: block; margin-bottom: 2px; }
+.tip div { display: flex; align-items: center; gap: 6px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { padding: 6px 4px; text-align: right; border-bottom: 1px solid var(--grid); }
+th:first-child, td:first-child { text-align: left; }
+thead th { font-size: 12px; color: var(--ink-2); font-weight: 600; }
+.note { font-size: 12px; color: var(--muted); margin: 8px 0 0; }
+.race-head { display: flex; justify-content: space-between; gap: 8px; }
+.race-sub { font-size: 13px; margin-bottom: 8px; }
+.pick { display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 8px; margin-top: 6px; }
+.pick-name { font-weight: 600; }
+.pick-fin { color: var(--ink-2); font-size: 14px; }
+.pick-net { min-width: 64px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.pick-label { font-size: 11px; color: var(--muted); margin-left: 18px; }
+.race-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; font-size: 13px;
+  margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--grid); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@media (max-width: 480px) {
+  .tiles { grid-template-columns: repeat(2, 1fr); }
+  .hero-value { font-size: 24px; }
+}
+
+.back { display: inline-block; margin: 4px 0 10px; font-size: 14px; text-decoration: none; }
+.prose h2 { display: block; font-size: 17px; margin: 22px 0 8px; }
+.prose h2:first-child { margin-top: 0; }
+.prose h3, .prose h4 { font-size: 15px; margin: 18px 0 6px; text-transform: none; letter-spacing: 0; color: var(--ink); }
+.prose p, .prose li { margin: 0 0 10px; }
+.prose ul, .prose ol { padding-left: 20px; margin: 0 0 10px; }
+.prose a { overflow-wrap: anywhere; }
+.prose code { font-size: 13px; background: var(--page); padding: 1px 4px; border-radius: 4px; }
+.table-wrap { overflow-x: auto; margin: 0 0 12px; }
+.prose table { font-size: 13px; }
+.prose td, .prose th { white-space: nowrap; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="../">← All races</a>
+  <h1>Keeneland Race 7, Thu Oct 22 2026</h1>
+  <div class="muted" style="margin-bottom:12px">Updated Oct 22, 2026 9:06 AM</div>
+  <article class="race"><div class="race-head"><strong>Keeneland R7</strong><span class="muted">Thu Oct 22</span></div><div class="race-sub muted">Dirt 1 1/16m (F&amp;M Alw 120k N1X)</div><div class="pick"><span class="swatch a"></span><span class="pick-name">Passionfruit <span class="muted">(6-1)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">Top pick</div><div class="pick"><span class="swatch s"></span><span class="pick-name">Athenix <span class="muted">(10-1)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">2nd pick</div><div class="race-foot muted">Awaiting result</div></article>
+  <article class="card prose"><p>PP URL: <a href="https://www.drf.com/pp-details/10-22-2026/KEE/7/D/USA">https://www.drf.com/pp-details/10-22-2026/KEE/7/D/USA</a></p>
+<p>Dirt, 1 1/16 miles, 3-year-olds and up fillies and mares, Allowance $120,000 N1X. Beyer par 85. 10 runners, no scratches listed. Odds used: morning line (handicapped in the morning, unattended run).</p>
+<h3>Off the list and probable scratches</h3>
+<p>Atropa (3-1) is off the list on the odds rule. She is the likely favorite on pedigree and Jose Ortiz, but her Beyers (79, 79) are nothing special for the price.</p>
+<p>No probable scratches.</p>
+<h3>Playable horses, ranked</h3>
+<p><strong>Passionfruit (6-1)</strong> is the top pick. Per start is about $18,200 on 4 starts, all this year. The trend is the best in the field: Beyers 68, 56, 74, 80. The 80 came last out in a $123k N1X at Churchill at exactly today&#x27;s 1 1/16 trip, where she rallied 3-4 wide and missed by about a half-length (beating Lobby Rendzvous, who is in here again). She is proven at the distance (Dst 1-0-1-0) and the class, and she is still improving. The knock is the connections: Sheehy is 0 for 27 at the meet and Eurton 0 for 3, though the pair are 17% together with a $2.51 ROI. That weak barn is part of why the price is fair.</p>
+<p><strong>Athenix (10-1)</strong> is the second choice. Per start is light (about $8,500 this year, $6,300 last year), but her dirt figures are rising: 56, 79, 82. The 82 was a 2nd in a Colonial N1X at a mile, coming again late. I throw out both turf lines (60 and 62); she is a dirt filly. She has a bullet work at Keeneland (5f :58 4/5, fastest of 40 on Oct 3). Saez 16%, Campbell 22% on the year and 28% on dirt ($2.64); J/T 2 for 2 ($6.13). Risks: a class jump from a $70k Colonial allowance, and her first try at 1 1/16.</p>
+<p><strong>Ivory and Ebony (8-1)</strong> is the flyer on figures. She has the best numbers in the field (86 in the Seneca stakes, 82 and 81 at this N1X level) and about $28,200 per start in 2025. Her two 2026 lines (68, 67) are both excusable: a turf try at Gulfstream and traffic at the 3/16 here as the 1.44-1 favorite in April. Irad Ortiz Jr 19% at the meet and 24% on the year; J/T 6 for 12 ($2.29). Worries: six months off, Romans only 16% ($1.08) off 180+ day layoffs, and a habit of running 2nd (five seconds in ten starts).</p>
+<p><strong>Maria Louise (4-1)</strong>. Per start about $38,800 on 2 starts; Beyers 80 then 81 (3rd in a Saratoga N1X). Pletcher/Velazquez are 38% at Keeneland ($2.93), the strongest combo here. She barely clears the line, though, and as the top early-speed horse (118 early pace) she figures to duel with American Pearl.</p>
+<p><strong>American Pearl (9-2)</strong>. Per start $45,200 in 2025, $7,700 this year on one start. Wire-to-wire maiden win (81), then a one-paced 3rd (73) in January and nothing since. Walden 33% at the meet and 31% off 180+ days, so the layoff is less of a concern, but she adds to the speed duel.</p>
+<p><strong>Newtown Pike (8-1)</strong>. Per start about $36,000 both years, driven by stakes placings; best Beyer 81, and the 72 in the Fair Grounds Oaks is excused (broke through the gate). Top closer (late pace 103). But she has been off seven months, and Schultz is 0 for 22 off 180+ day layoffs, with Cedillo 0 for 6 at the meet.</p>
+<p><strong>Leinani (10-1)</strong>. Per start about $15,700 this year. Beyers 75 to 79, steady but below par; her best line is a 2nd to Conceit on a sloppy track. Chad Brown 28% at the meet. Too slow unless she takes a step.</p>
+<p><strong>Lobby Rendzvous (12-1)</strong> and <strong>Delicious Diva (20-1)</strong>. Top figures of 77 and 71, chronic N1X losers, behind Passionfruit last out. Toss.</p>
+<h3>Bottom line</h3>
+<p>Passionfruit at 6-1 is the play: improving, proven at the trip and class, at a fair price. Athenix at 10-1 is the second choice on the rising dirt figures and the bullet work, and Ivory and Ebony at 8-1 is a small saver on figures. Morning line odds; check the board at post time.</p></article>
+  <a class="back" href="../">← All races</a>
+</main>
+</body>
+</html>

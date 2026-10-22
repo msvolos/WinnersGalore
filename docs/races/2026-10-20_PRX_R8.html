@@ -1,0 +1,122 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Parx Racing Race 8 – Tue Oct 20, 2026</title>
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
+  --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+  --pos: #006300; --neg: #c0302f;
+  --series-a: #2a78d6; --series-b: #eb6834; --series-s: #1baf7a;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+    --pos: #0ca30c; --neg: #e66767;
+    --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+  --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+  --pos: #0ca30c; --neg: #e66767;
+  --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink);
+  font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 16px 16px 48px; }
+h1 { font-size: 22px; margin: 4px 0 2px; }
+h2 { font-size: 16px; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+h3 { font-size: 15px; margin: 28px 0 10px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .04em; }
+.muted { color: var(--muted); font-weight: normal; }
+.pos { color: var(--pos); } .neg { color: var(--neg); }
+a { color: var(--series-a); }
+.card, .race { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+.hero { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 12px; }
+.hero .card { margin: 0; }
+.hero-label { font-size: 13px; color: var(--ink-2); display: flex; align-items: center; gap: 6px; }
+.hero-value { font-size: 30px; font-weight: 700; margin-top: 2px; }
+.added { font-size: 14px; color: var(--ink-2); margin: 0 0 12px; }
+.swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex: none; }
+.swatch.a { background: var(--series-a); } .swatch.b { background: var(--series-b); } .swatch.s { background: var(--series-s); }
+.tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.tile { background: var(--page); border-radius: 8px; padding: 8px; text-align: center; }
+.tile-label { font-size: 11px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .03em; }
+.tile-value { font-size: 18px; font-weight: 700; }
+.tile-sub { font-size: 11px; color: var(--muted); }
+.kv { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; margin: 12px 0 0; font-size: 14px; }
+.kv dt { color: var(--ink-2); } .kv dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+.legend { display: flex; gap: 16px; font-size: 13px; color: var(--ink-2); margin-bottom: 6px; }
+.legend span { display: flex; align-items: center; gap: 6px; }
+.chart-wrap { position: relative; }
+svg { display: block; width: 100%; height: auto; touch-action: pan-y; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 8px; font-size: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.12); display: none; white-space: nowrap; }
+.tip b { display: block; margin-bottom: 2px; }
+.tip div { display: flex; align-items: center; gap: 6px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { padding: 6px 4px; text-align: right; border-bottom: 1px solid var(--grid); }
+th:first-child, td:first-child { text-align: left; }
+thead th { font-size: 12px; color: var(--ink-2); font-weight: 600; }
+.note { font-size: 12px; color: var(--muted); margin: 8px 0 0; }
+.race-head { display: flex; justify-content: space-between; gap: 8px; }
+.race-sub { font-size: 13px; margin-bottom: 8px; }
+.pick { display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 8px; margin-top: 6px; }
+.pick-name { font-weight: 600; }
+.pick-fin { color: var(--ink-2); font-size: 14px; }
+.pick-net { min-width: 64px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.pick-label { font-size: 11px; color: var(--muted); margin-left: 18px; }
+.race-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; font-size: 13px;
+  margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--grid); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@media (max-width: 480px) {
+  .tiles { grid-template-columns: repeat(2, 1fr); }
+  .hero-value { font-size: 24px; }
+}
+
+.back { display: inline-block; margin: 4px 0 10px; font-size: 14px; text-decoration: none; }
+.prose h2 { display: block; font-size: 17px; margin: 22px 0 8px; }
+.prose h2:first-child { margin-top: 0; }
+.prose h3, .prose h4 { font-size: 15px; margin: 18px 0 6px; text-transform: none; letter-spacing: 0; color: var(--ink); }
+.prose p, .prose li { margin: 0 0 10px; }
+.prose ul, .prose ol { padding-left: 20px; margin: 0 0 10px; }
+.prose a { overflow-wrap: anywhere; }
+.prose code { font-size: 13px; background: var(--page); padding: 1px 4px; border-radius: 4px; }
+.table-wrap { overflow-x: auto; margin: 0 0 12px; }
+.prose table { font-size: 13px; }
+.prose td, .prose th { white-space: nowrap; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="../">← All races</a>
+  <h1>Parx Racing Race 8 – Tue Oct 20, 2026</h1>
+  <div class="muted" style="margin-bottom:12px">Updated Oct 22, 2026 9:06 AM</div>
+  <article class="race"><div class="race-head"><strong>Parx Racing R8</strong><span class="muted">Tue Oct 20</span></div><div class="race-sub muted">Dirt 1m ($75k stakes)</div><div class="pick"><span class="swatch a"></span><span class="pick-name">Margie&#x27;s Fun Son <span class="muted">(6-1)</span></span><span class="pick-fin">4th</span><span class="pick-net"><span class="neg">−$6.00</span></span></div><div class="pick-label">Top pick</div><div class="pick"><span class="swatch s"></span><span class="pick-name">Duration <span class="muted">(5-1)</span></span><span class="pick-fin">5th</span><span class="pick-net"><span class="neg">−$6.00</span></span></div><div class="pick-label">2nd pick</div><div class="race-foot"><span>Top 2 net: <b class="neg">−$12.00</b></span><span class="muted">Won by Wild Vine ($3.40)</span></div></article>
+  <article class="card prose"><p>PP URL: <a href="https://www.drf.com/pp-details/10-20-2026/PRX/8/D/USA">https://www.drf.com/pp-details/10-20-2026/PRX/8/D/USA</a></p>
+<p>1 mile, fast dirt, $75k stakes, 3-year-olds and up, 6 runners, post 3:49 PM ET. Scratches: none. Odds used: morning line (handicapped at 10:30 AM ET, before live tote; the board at post decides).</p>
+<h3>Off the list on the odds rule</h3>
+<ul><li><strong>Wild Vine (5-2).</strong> The class of the field. Won the $300k PRX Dirt Mile last out with a 99, 3-for-4 this year, Sanchez/Ness 31% together at Parx. No value at 5-2.</li><li><strong>Freedom&#x27;s Echo (3-1).</strong> Overbet at 3-1. A 3-year-old whose Beyers have topped out at 75 (65 in the PA Derby last out), and the J/T combo is 0-for-3. Off the list either way.</li></ul>
+<p>No probable scratches.</p>
+<h3>Average earnings per start</h3>
+<div class="table-wrap"><table><thead><tr><th>Horse</th><th>ML</th><th>2026</th><th>2025</th></tr></thead><tbody><tr><td>Wild Vine</td><td>5-2</td><td>$70,750 (4)</td><td>$18,365 (11)</td></tr><tr><td>Bartlett</td><td>9-2</td><td>$27,719 (7)</td><td>$26,333 (3)</td></tr><tr><td>Duration</td><td>5-1</td><td>$21,553 (6)</td><td>$11,892 (6)</td></tr><tr><td>Margie&#x27;s Fun Son</td><td>6-1</td><td>$15,079 (8)</td><td>$5,496 (12)</td></tr><tr><td>Freedom&#x27;s Echo</td><td>3-1</td><td>$14,164 (5)</td><td>$9,805 (2)</td></tr><tr><td>Dreambuilder</td><td>7-2</td><td>$7,608 (6)</td><td>$10,449 (7)</td></tr></tbody></table></div>
+<h3>Pace shape</h3>
+<p>There is a lot of early speed: Duration (TimeformUS early 122), Freedom&#x27;s Echo (108) and Bartlett (107) all want the lead, with Dreambuilder (91) just behind. The only real late-pace horses are Margie&#x27;s Fun Son (late 110) and Wild Vine (late 100). A contested pace over a one-turn mile sets up a closer.</p>
+<h3>Playable horses, ranked</h3>
+<p><strong>1. Margie&#x27;s Fun Son (6-1). The diamond.</strong> His per-start number nearly tripled from 2025 ($5,496) to 2026 ($15,079), and he has won 3 of 8 this year. His key line is the Mayor&#x27;s Mile here on Aug 18, at today&#x27;s exact distance: he trailed, circled the field and won by 2 1/2 lengths with a 90, beating Wild Vine. I&#x27;m throwing out the last line (74, trailed, no bid) because that was the $300k Dirt Mile against a much stronger field, and he still beat one home. His Beyers in that stretch (87, 82, 90) are on par with this group except Wild Vine. He has 16 starts at the distance (3-2-5) and he is 5-for-13 at Parx. Abrams wins at 18%, and the trainer angles fit a price: Routes 18% ($2.76), Dirt $2.25, Stakes 1-for-3 ($11.67), and the J/T line is 2-for-7 at a $6.06 ROI. <strong>The risk:</strong> Castillo wins at only 10%, and the regular rider (Martinez) is off. As a deep closer, he needs the speed to collapse, and if Wild Vine gets first run, Wild Vine is the faster horse.</p>
+<p><strong>2. Duration (5-1).</strong> He has the best recent figure among the playable horses: a 96 when he wire-jumped an OC 50k at 6 1/2 furlongs last out. His per-start number climbed ($11,892 to $21,553), and he is 4-for-6 this year. Pino is a 30% trainer with Sprint/Route at 39% ($1.88) and 2Off45-180 at 33% ($2.08), both of which apply today. <strong>The knocks:</strong> he is 0-for-5 at the distance (2 seconds, 2 thirds). He lost the rider Sanchez to Wild Vine, and Rodriguez is 1-for-13 at the meet. He also has to outrun Freedom&#x27;s Echo and Bartlett early. If he gets loose on the lead, he is the upset threat.</p>
+<p><strong>3. Bartlett (9-2).</strong> He has the best per-start number among the playable horses ($27,719, steady on $26,333) and is 5-for-9 at Parx. Throw out his last start: he was trying to come back on 6 1/2 furlongs and took up at the 3/8. Before that he won two stakes and ran a 94 in a $100k allowance. He also fits Servis&#x27;s Sprint/Route angle (24%, $1.75). <strong>The concerns:</strong> he carries 126, the barn is cold at the meet (8%), the J/T combo returns only $0.97 at Parx, and he is another speed horse in a crowded pace.</p>
+<p><strong>4. Dreambuilder (7-2).</strong> He sits right on the line. He is 3-for-6 at the distance and won his last start handily (82), but his per-start numbers ($7,608 and $10,449) are the lowest in the field. His figures top out at 82 to 86, short of these. He is moving up from an OC 50k after 55 days off. J/T 26% at Parx is the plus. Pass.</p>
+<h3>Bottom line</h3>
+<p><strong>Play Margie&#x27;s Fun Son at 6-1</strong> to win, place and show. He has already beaten the favorite at this trip, and the pace should come back to him. Duration is the second choice and the horse to fear if he gets an easy lead. Bartlett is a saver if the board drifts him to 6-1 or higher. Wild Vine is the most likely winner and is no value at 5-2.</p></article>
+  <a class="back" href="../">← All races</a>
+</main>
+</body>
+</html>

@@ -1,0 +1,129 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Remington Park Race 8, Fri Oct 16 2026</title>
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
+  --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+  --pos: #006300; --neg: #c0302f;
+  --series-a: #2a78d6; --series-b: #eb6834; --series-s: #1baf7a;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+    --pos: #0ca30c; --neg: #e66767;
+    --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+  --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+  --pos: #0ca30c; --neg: #e66767;
+  --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink);
+  font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 16px 16px 48px; }
+h1 { font-size: 22px; margin: 4px 0 2px; }
+h2 { font-size: 16px; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+h3 { font-size: 15px; margin: 28px 0 10px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .04em; }
+.muted { color: var(--muted); font-weight: normal; }
+.pos { color: var(--pos); } .neg { color: var(--neg); }
+a { color: var(--series-a); }
+.card, .race { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+.hero { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 12px; }
+.hero .card { margin: 0; }
+.hero-label { font-size: 13px; color: var(--ink-2); display: flex; align-items: center; gap: 6px; }
+.hero-value { font-size: 30px; font-weight: 700; margin-top: 2px; }
+.added { font-size: 14px; color: var(--ink-2); margin: 0 0 12px; }
+.swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex: none; }
+.swatch.a { background: var(--series-a); } .swatch.b { background: var(--series-b); } .swatch.s { background: var(--series-s); }
+.tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.tile { background: var(--page); border-radius: 8px; padding: 8px; text-align: center; }
+.tile-label { font-size: 11px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .03em; }
+.tile-value { font-size: 18px; font-weight: 700; }
+.tile-sub { font-size: 11px; color: var(--muted); }
+.kv { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; margin: 12px 0 0; font-size: 14px; }
+.kv dt { color: var(--ink-2); } .kv dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+.legend { display: flex; gap: 16px; font-size: 13px; color: var(--ink-2); margin-bottom: 6px; }
+.legend span { display: flex; align-items: center; gap: 6px; }
+.chart-wrap { position: relative; }
+svg { display: block; width: 100%; height: auto; touch-action: pan-y; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 8px; font-size: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.12); display: none; white-space: nowrap; }
+.tip b { display: block; margin-bottom: 2px; }
+.tip div { display: flex; align-items: center; gap: 6px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { padding: 6px 4px; text-align: right; border-bottom: 1px solid var(--grid); }
+th:first-child, td:first-child { text-align: left; }
+thead th { font-size: 12px; color: var(--ink-2); font-weight: 600; }
+.note { font-size: 12px; color: var(--muted); margin: 8px 0 0; }
+.race-head { display: flex; justify-content: space-between; gap: 8px; }
+.race-sub { font-size: 13px; margin-bottom: 8px; }
+.pick { display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 8px; margin-top: 6px; }
+.pick-name { font-weight: 600; }
+.pick-fin { color: var(--ink-2); font-size: 14px; }
+.pick-net { min-width: 64px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.pick-label { font-size: 11px; color: var(--muted); margin-left: 18px; }
+.race-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; font-size: 13px;
+  margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--grid); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@media (max-width: 480px) {
+  .tiles { grid-template-columns: repeat(2, 1fr); }
+  .hero-value { font-size: 24px; }
+}
+
+.back { display: inline-block; margin: 4px 0 10px; font-size: 14px; text-decoration: none; }
+.prose h2 { display: block; font-size: 17px; margin: 22px 0 8px; }
+.prose h2:first-child { margin-top: 0; }
+.prose h3, .prose h4 { font-size: 15px; margin: 18px 0 6px; text-transform: none; letter-spacing: 0; color: var(--ink); }
+.prose p, .prose li { margin: 0 0 10px; }
+.prose ul, .prose ol { padding-left: 20px; margin: 0 0 10px; }
+.prose a { overflow-wrap: anywhere; }
+.prose code { font-size: 13px; background: var(--page); padding: 1px 4px; border-radius: 4px; }
+.table-wrap { overflow-x: auto; margin: 0 0 12px; }
+.prose table { font-size: 13px; }
+.prose td, .prose th { white-space: nowrap; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="../">← All races</a>
+  <h1>Remington Park Race 8, Fri Oct 16 2026</h1>
+  <div class="muted" style="margin-bottom:12px">Updated Oct 22, 2026 9:06 AM</div>
+  <article class="race"><div class="race-head"><strong>Remington Park R8</strong><span class="muted">Fri Oct 16</span></div><div class="race-sub muted">Dirt 6f</div><div class="pick"><span class="swatch a"></span><span class="pick-name">Easy as Pie <span class="muted">(9-2)</span></span><span class="pick-fin">2nd</span><span class="pick-net"><span class="pos">+$7.00</span></span></div><div class="pick-label">Top pick</div><div class="pick"><span class="swatch s"></span><span class="pick-name">Missin Hollywood <span class="muted">(8-1)</span></span><span class="pick-fin">11th</span><span class="pick-net"><span class="neg">−$6.00</span></span></div><div class="pick-label">2nd pick</div><div class="race-foot"><span>Top 2 net: <b class="pos">+$1.00</b></span><span class="muted">Won by Connors Outlaw ($47.60)</span></div></article>
+  <article class="card prose"><p>PPs: <a href="https://www.drf.com/pp-details/10-16-2026/RP/8/D/USA">https://www.drf.com/pp-details/10-16-2026/RP/8/D/USA</a></p>
+<p>Remington Park Race 8, 6 furlongs on dirt, Oklahoma Classics Sprint ($130K, Oklahoma-breds, 3 and up). Eleven horses, no scratches listed. Post 10:54 PM ET.</p>
+<p>Handicapped 2026-10-15 (the day before) using morning-line odds. Today&#x27;s featured race (Keeneland R8, Oct 15) had already run when this was done, so the next Race of the Day was used.</p>
+<h3>Clearing the deck</h3>
+<p>Off the list on the 3.5-1 rule: nobody. The shortest price is Breakable Code at 7-2, which is right on the line, so he stays playable on the morning line. He is the defending winner of this race and the most likely horse to be bet below 7-2 at post, at which point he drops off the list.</p>
+<p>Probable scratches: none flagged. No horse shows a start in the last few days. Note that Cajun Stoops, Mi Saturday and Breakable Code all run for owner Bryan Hawk and trainer Joe Offolter.</p>
+<p>Pace shape: this race is loaded with speed. Guapo (TimeformUS early 117), Legacy Account (111), Connors Outlaw (104) and Lil Elvis (97) all want the lead, which sets it up for horses who can sit off a hot pace.</p>
+<h3>Earnings per start</h3>
+<div class="table-wrap"><table><thead><tr><th>#</th><th>Horse</th><th>ML</th><th>2026</th><th>2025</th></tr></thead><tbody><tr><td>1</td><td>Easy as Pie</td><td>9-2</td><td>$15,435 (2 starts)</td><td>$10,590 (4)</td></tr><tr><td>2</td><td>Cajun Stoops</td><td>10-1</td><td>$6,342 (5)</td><td>$8,413 (5)</td></tr><tr><td>3</td><td>Connors Outlaw</td><td>5-1</td><td>$2,486 (5)</td><td>$6,328 (8)</td></tr><tr><td>4</td><td>Lil Elvis</td><td>12-1</td><td>$22,470 (1)</td><td>$10,097 (3)</td></tr><tr><td>5</td><td>Slades Tank</td><td>6-1</td><td>$9,820 (5)</td><td>$8,071 (5)</td></tr><tr><td>6</td><td>Legacy Account</td><td>20-1</td><td>$6,082 (9)</td><td>$4,025 (7)</td></tr><tr><td>7</td><td>Mi Saturday</td><td>20-1</td><td>$8,365 (5)</td><td>$11,496 (7)</td></tr><tr><td>8</td><td>Missin Hollywood</td><td>8-1</td><td>$10,824 (4)</td><td>$7,943 (8)</td></tr><tr><td>9</td><td>How About Bob</td><td>8-1</td><td>$9,910 (8)</td><td>$8,648 (4)</td></tr><tr><td>10</td><td>Breakable Code</td><td>7-2</td><td>$3,358 (2)</td><td>$28,720 (3)</td></tr><tr><td>11</td><td>Guapo</td><td>10-1</td><td>$6,589 (6)</td><td>$5,286 (7)</td></tr></tbody></table></div>
+<h3>Playable horses, ranked</h3>
+<p><strong>1. Easy as Pie (9-2)</strong> - the pick. Second-best per start this year ($15,435) on a small sample, backed by a solid $10,590 last year. The trend is the sell: Beyers went 59, 49, 52, 63 as a young horse, then jumped to 81 in a game second at Remington in August and he followed it with a 67 win last out going 7 furlongs (chased 3 wide, dueled, edged clear as the favorite). He is 3 for 4 at Remington. Hamilton only wins at 8%, but Biehler is 15% at the meet and the pair together hit 31% with a $3.31 ROI here, which is a live combo. He has tactical early speed (93) without needing the lead. The risk is the class jump from a first-level allowance into a stakes against older Oklahoma-bred sprinters, and he has to repeat or top that 81.</p>
+<p><strong>2. Missin Hollywood (8-1)</strong> - second choice. Per start $10,824 this year, steady figures in the mid to high 70s (78, 57 with a hop at the start that I throw out, 77 winning a $50K Oklahoma-bred stakes in March, 74 second on turf last out). He is a closer (late pace 77) in a race full of front runners, so the pace should come back to him. Ashford is 23% on the year. The knock is that he is 6, Luzzi is only 9% at the meet, and this J/T team is 0 for 15 at Remington.</p>
+<p><strong>3. Breakable Code (7-2)</strong> - class of the field, short price. Won this exact race last year and earned $28,720 per start in 2025. Only two starts this year (66 in a sprint where he lunged at the start, 77 rallying third on turf last out), so I lean on last year. Cabrera is the leading rider here at 22%. He is the most likely winner, but at 7-2 he is the minimum price and probably goes lower, so there is little value.</p>
+<p><strong>4. Mi Saturday (20-1)</strong> - the flyer. Career-best 86 and a 85 winning a $50K stakes in February. Last out was a turf sprint (52, 4 wide, no threat), a surface experiment I throw out. Before that he ran 72, 69 and 67 in decent spots. Works since August are sharp. De La Cruz (18%) won three times on him. At 20-1 there is a lot of price for a horse whose top figure matches anyone&#x27;s here.</p>
+<p><strong>5. Guapo (10-1)</strong> - fastest last out (86, won a $25K claimer by 9+ going 5 furlongs) but it is a big jump in class, he stretches to 6, and he has to deal with Legacy Account and Connors Outlaw for the lead. The barn is 2% in stakes. Bounce candidate.</p>
+<p><strong>6. How About Bob (8-1)</strong> - honest 3-year-old with a good late kick (84), runs 64 to 75. Huckaby is 2% and Swan is 0 for 25 at the meet. Hard to trust the connections.</p>
+<p><strong>7. Slades Tank (6-1)</strong> - beat Cajun Stoops in a $30K claimer last out but the figures have slipped (72, 72, 68, 62). Silva is hot at 25% but the horse is going the wrong way.</p>
+<p><strong>8. Lil Elvis (12-1)</strong> - just broke his maiden; 3-year-old into an open stakes. Good barn, needs a jump.</p>
+<p><strong>9. Cajun Stoops (10-1)</strong> - flat form; broke in the air last time. Strong J/T ROI ($5.16) but the numbers do not stack up.</p>
+<p><strong>10. Connors Outlaw (5-1)</strong> - 6-year-old in decline ($2,486 per start this year), new trainer is 0 for 14. Overbet at 5-1.</p>
+<p><strong>11. Legacy Account (20-1)</strong> - more early speed in a race already full of it.</p>
+<h3>Bottom line</h3>
+<p>Easy as Pie at 9-2 is the play: rising form, strong record over the track, and a live jockey/trainer combo. Missin Hollywood at 8-1 is the second choice and the one to use if the early pace is as hot as it looks. Breakable Code is the horse to beat but likely too short. Mi Saturday at 20-1 is the small flyer. Check the board at post since Easy as Pie could drift either way.</p></article>
+  <a class="back" href="../">← All races</a>
+</main>
+</body>
+</html>

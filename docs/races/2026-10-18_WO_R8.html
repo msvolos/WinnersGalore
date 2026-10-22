@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Woodbine Race 8 – Sun Oct 18, 2026 – Frost King Stakes</title>
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
+  --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+  --pos: #006300; --neg: #c0302f;
+  --series-a: #2a78d6; --series-b: #eb6834; --series-s: #1baf7a;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+    --pos: #0ca30c; --neg: #e66767;
+    --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+  --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+  --pos: #0ca30c; --neg: #e66767;
+  --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink);
+  font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 16px 16px 48px; }
+h1 { font-size: 22px; margin: 4px 0 2px; }
+h2 { font-size: 16px; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+h3 { font-size: 15px; margin: 28px 0 10px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .04em; }
+.muted { color: var(--muted); font-weight: normal; }
+.pos { color: var(--pos); } .neg { color: var(--neg); }
+a { color: var(--series-a); }
+.card, .race { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+.hero { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 12px; }
+.hero .card { margin: 0; }
+.hero-label { font-size: 13px; color: var(--ink-2); display: flex; align-items: center; gap: 6px; }
+.hero-value { font-size: 30px; font-weight: 700; margin-top: 2px; }
+.added { font-size: 14px; color: var(--ink-2); margin: 0 0 12px; }
+.swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex: none; }
+.swatch.a { background: var(--series-a); } .swatch.b { background: var(--series-b); } .swatch.s { background: var(--series-s); }
+.tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.tile { background: var(--page); border-radius: 8px; padding: 8px; text-align: center; }
+.tile-label { font-size: 11px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .03em; }
+.tile-value { font-size: 18px; font-weight: 700; }
+.tile-sub { font-size: 11px; color: var(--muted); }
+.kv { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; margin: 12px 0 0; font-size: 14px; }
+.kv dt { color: var(--ink-2); } .kv dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+.legend { display: flex; gap: 16px; font-size: 13px; color: var(--ink-2); margin-bottom: 6px; }
+.legend span { display: flex; align-items: center; gap: 6px; }
+.chart-wrap { position: relative; }
+svg { display: block; width: 100%; height: auto; touch-action: pan-y; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 8px; font-size: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.12); display: none; white-space: nowrap; }
+.tip b { display: block; margin-bottom: 2px; }
+.tip div { display: flex; align-items: center; gap: 6px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { padding: 6px 4px; text-align: right; border-bottom: 1px solid var(--grid); }
+th:first-child, td:first-child { text-align: left; }
+thead th { font-size: 12px; color: var(--ink-2); font-weight: 600; }
+.note { font-size: 12px; color: var(--muted); margin: 8px 0 0; }
+.race-head { display: flex; justify-content: space-between; gap: 8px; }
+.race-sub { font-size: 13px; margin-bottom: 8px; }
+.pick { display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 8px; margin-top: 6px; }
+.pick-name { font-weight: 600; }
+.pick-fin { color: var(--ink-2); font-size: 14px; }
+.pick-net { min-width: 64px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.pick-label { font-size: 11px; color: var(--muted); margin-left: 18px; }
+.race-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; font-size: 13px;
+  margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--grid); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@media (max-width: 480px) {
+  .tiles { grid-template-columns: repeat(2, 1fr); }
+  .hero-value { font-size: 24px; }
+}
+
+.back { display: inline-block; margin: 4px 0 10px; font-size: 14px; text-decoration: none; }
+.prose h2 { display: block; font-size: 17px; margin: 22px 0 8px; }
+.prose h2:first-child { margin-top: 0; }
+.prose h3, .prose h4 { font-size: 15px; margin: 18px 0 6px; text-transform: none; letter-spacing: 0; color: var(--ink); }
+.prose p, .prose li { margin: 0 0 10px; }
+.prose ul, .prose ol { padding-left: 20px; margin: 0 0 10px; }
+.prose a { overflow-wrap: anywhere; }
+.prose code { font-size: 13px; background: var(--page); padding: 1px 4px; border-radius: 4px; }
+.table-wrap { overflow-x: auto; margin: 0 0 12px; }
+.prose table { font-size: 13px; }
+.prose td, .prose th { white-space: nowrap; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="../">← All races</a>
+  <h1>Woodbine Race 8 – Sun Oct 18, 2026 – Frost King Stakes</h1>
+  <div class="muted" style="margin-bottom:12px">Updated Oct 22, 2026 9:06 AM</div>
+  <article class="race"><div class="race-head"><strong>Woodbine R8</strong><span class="muted">Sun Oct 18</span></div><div class="race-sub muted">Synth 7f (Frost King S.)</div><div class="pick"><span class="swatch a"></span><span class="pick-name">Signature Winner <span class="muted">(6-1)</span></span><span class="pick-fin">5th</span><span class="pick-net"><span class="neg">−$6.00</span></span></div><div class="pick-label">Top pick</div><div class="pick"><span class="swatch s"></span><span class="pick-name">Magical Trickster <span class="muted">(4-1)</span></span><span class="pick-fin">1st</span><span class="pick-net"><span class="pos">+$6.20</span></span></div><div class="pick-label">2nd pick</div><div class="race-foot"><span>Top 2 net: <b class="pos">+$0.20</b></span><span class="muted">Won by Magical Trickster ($6.20)</span></div></article>
+  <article class="card prose"><p>PP URL: <a href="https://www.drf.com/pp-details/10-18-2026/WO/8/D/CAN">https://www.drf.com/pp-details/10-18-2026/WO/8/D/CAN</a> Handicapped: 2026-10-18 (unattended run). Odds used: morning line (live tote not available at handicap time).</p>
+<p>Woodbine Race 8, 7 furlongs on the synthetic (Tapeta), $150K Frost King Stakes for Ontario-bred 2-year-olds. Six horses, no scratches listed.</p>
+<h3>Off the list on the odds rule</h3>
+<ul><li><strong>Souper Survivor (6-5).</strong> The class of the field. Top Beyer 73, won the Bull Page by 4 1/2 last out, 2-for-3 at Woodbine, Wilson/Tharrenos 35% together. No value at 6-5.</li><li><strong>Marvellous Marvin (2-1).</strong> Won his only start on turf at 5f (Beyer 65), now switches to synthetic and stretches to 7f off one race. Short price for a lot of projecting.</li></ul>
+<p>No probable scratches. Everyone&#x27;s last line is weeks back, and the PPs show no cross-entries.</p>
+<h3>Playable horses, ranked</h3>
+<p><strong>Signature Winner (6-1).</strong> Top pick. Per-start about $20,300 on two starts (no 2025 record; all six are 2-year-olds, so this year is the only sample and it is small). He is the only horse in here who has already won at today&#x27;s trip: 7f on the Woodbine synthetic on Oct 1, asked by the quarter and clear the rest of the way, &quot;safe&quot; at the wire. The Beyer dipped from 62 to 50 in that win, but he did it on his own and was never asked hard, so I read that as a race won with something left more than a horse going backward. His other line was a 2nd beaten 1 1/2 by Magical Trickster after dueling into the turn. Connections are the best fit on the board: Tharrenos wins 23% overall, 29% with 2-year-olds at a $3.87 ROI, and this jockey/trainer combo is 27% at a $4.87 ROI. He shares the barn with the favorite, which keeps his price up. The risk is speed: his top figure (62) is well below Souper Survivor&#x27;s 73, so he needs a step forward or a favorite who doesn&#x27;t fire.</p>
+<p><strong>Magical Trickster (4-1).</strong> Second choice. Biggest per-start in the playable group ($31,017 on one start) and the best figure (67) of the horses at a price. He beat Signature Winner on debut despite a bump at the break and a 6-wide run turning for home, which is a strong effort. Moran wins 21%, Carey 18%, together 24%. Two cautions: this barn is 0-for-16 with last-out winners and only 6% with 2-year-olds, and he stretches from 5 1/2 to 7 furlongs in his first stakes. Moran also leaves Signature Winner to ride him, which is a vote of confidence.</p>
+<p><strong>It Wasn&#x27;t a Bluff (8-1).</strong> Flyer. Per-start only about $7,400 and still a maiden after four starts, but the trend is steadily up (Beyers in the mid-40s, then 56, then 59), and his last two came in stakes: 4th at 89-1 in the $300K Simcoe and 3rd in the Bull Page. He&#x27;s proven on the synthetic (4 starts, two 3rds). Weak connections are the knock: Bynoe 6%, combo 5%. A fair price for a third-place type; a show saver more than a win play.</p>
+<p><strong>Slovan (20-1).</strong> Pass. Top Beyer 34, won a $25K maiden claimer at 1 1/16 miles last out, and now cuts back to 7f against stakes company. The barn has a nice 2-year-old ROI ($4.85) on a small sample, but the figures are nowhere close.</p>
+<h3>Bottom line</h3>
+<p>Signature Winner at 6-1 is the play: proven at the distance, hot barn, best combo ROI in the race, and his price is held up by a stablemate favorite. Magical Trickster at 4-1 is the second choice and the one to watch on the board (if he drifts toward 5-1 he&#x27;s live). It Wasn&#x27;t a Bluff at 8-1 is a small show saver at most. Check the tote at post: Signature Winner needs to stay at 7-2 or longer to remain on your list.</p></article>
+  <a class="back" href="../">← All races</a>
+</main>
+</body>
+</html>

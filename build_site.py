@@ -16,7 +16,6 @@ import html
 import json
 import os
 import re
-import subprocess
 from datetime import datetime
 
 HERE = os.path.dirname(os.path.abspath(__file__))
@@ -58,15 +57,65 @@ def esc(s):
     return html.escape(str(s or ""))
 
 
-def repo_blob_base():
-    """https://github.com/<owner>/<repo>/blob/main/ from the git remote, or None."""
-    try:
-        url = subprocess.run(["git", "remote", "get-url", "origin"], cwd=HERE,
-                             capture_output=True, text=True, timeout=10).stdout.strip()
-    except (OSError, subprocess.SubprocessError):
-        return None
-    m = re.search(r"github\.com[:/]([^/]+)/([^/]+?)(?:\.git)?$", url)
-    return f"https://github.com/{m.group(1)}/{m.group(2)}/blob/main/" if m else None
+def md_inline(s):
+    s = esc(s)
+    s = re.sub(r"\[([^\]]+)\]\((https?://[^)\s]+)\)", r'<a href="\2">\1</a>', s)
+    s = re.sub(r'(?<!href=")(?<!">)(https?://[^\s<]+)', r'<a href="\1">\1</a>', s)
+    s = re.sub(r"\*\*(.+?)\*\*", r"<strong>\1</strong>", s)
+    s = re.sub(r"(?<![\w*])\*(?!\s)(.+?)(?<!\s)\*(?![\w*])", r"<em>\1</em>", s)
+    s = re.sub(r"`([^`]+)`", r"<code>\1</code>", s)
+    return s
+
+
+def md_to_html(text):
+    """Small Markdown converter for the handicap write-ups: headings, paragraphs,
+    bullet and numbered lists, pipe tables, bold, italic, code and links. Kept
+    dependency-free so the unattended daily run never needs a pip install."""
+    out, para, items, list_tag, table = [], [], [], None, []
+
+    def flush():
+        nonlocal para, items, list_tag, table
+        if para:
+            out.append(f"<p>{md_inline(' '.join(para))}</p>")
+        if items:
+            out.append(f"<{list_tag}>" + "".join(f"<li>{md_inline(i)}</li>" for i in items) + f"</{list_tag}>")
+        if table:
+            cells = [[c.strip() for c in row.strip().strip("|").split("|")] for row in table]
+            body = [r for r in cells[1:] if not all(re.fullmatch(r":?-{2,}:?", c) for c in r)]
+            head = "".join(f"<th>{md_inline(c)}</th>" for c in cells[0])
+            rows = "".join("<tr>" + "".join(f"<td>{md_inline(c)}</td>" for c in r) + "</tr>" for r in body)
+            out.append(f'<div class="table-wrap"><table><thead><tr>{head}</tr></thead><tbody>{rows}</tbody></table></div>')
+        para, items, list_tag, table = [], [], None, []
+
+    for line in text.splitlines():
+        s = line.strip()
+        m_h = re.match(r"(#{1,4})\s+(.*)", s)
+        m_ul = re.match(r"[-*]\s+(.*)", s)
+        m_ol = re.match(r"\d+[.)]\s+(.*)", s)
+        if not s:
+            flush()
+        elif m_h:
+            flush()
+            level = min(len(m_h.group(1)) + 1, 4)  # the page title is the only h1
+            out.append(f"<h{level}>{md_inline(m_h.group(2))}</h{level}>")
+        elif s.startswith("|"):
+            if para or items:
+                flush()
+            table.append(s)
+        elif m_ul or m_ol:
+            tag = "ul" if m_ul else "ol"
+            if para or table or (list_tag and list_tag != tag):
+                flush()
+            list_tag = tag
+            items.append((m_ul or m_ol).group(1))
+        elif items and line[:1] in (" ", "\t"):
+            items[-1] += " " + s  # continuation of a list item
+        else:
+            if items or table:
+                flush()
+            para.append(s)
+    flush()
+    return "\n".join(out)
 
 
 def load(path):
@@ -117,7 +166,10 @@ def legs(races, prefix, bet_key):
     return out
 
 
-def build(rows, blob_base):
+def build(rows):
+    """Return (index page html, {race page filename: html})."""
+    hdir = os.path.join(HERE, "handicaps")
+    write_ups = {f[:-3] for f in os.listdir(hdir) if f.endswith(".md")} if os.path.isdir(hdir) else set()
     graded = [r for r in rows if r["b_wag"] > 0]
     top = strategy_stats(graded, "a_wag", "a_ret",
                          lambda r: r["a_fin"] == 1, lambda r: r["a_ret"] > 0)
@@ -192,10 +244,10 @@ def build(rows, blob_base):
                 f'<span class="pick-fin">{finish_txt(fin, status)}</span>'
                 f'<span class="pick-net">{result}</span></div><div class="pick-label">{label}</div>')
 
-    def race_card(r, upcoming=False):
-        fname = f'{r["race_date"]}_{r["track_code"]}_R{r["race_number"]}.md'
-        link = (f' · <a href="{blob_base}handicaps/{fname}">Handicap write-up</a>'
-                if blob_base and os.path.exists(os.path.join(HERE, "handicaps", fname)) else "")
+    def race_card(r, upcoming=False, show_link=True):
+        base = write_up_name(r)
+        link = (f' · <a href="races/{base}.html">Handicap write-up</a>'
+                if show_link and base in write_ups else "")
         date = datetime.strptime(r["race_date"], "%Y-%m-%d").strftime("%a %b %d")
         head = (f'<div class="race-head"><strong>{esc(r["track_name"])} R{esc(r["race_number"])}</strong>'
                 f'<span class="muted">{date}</span></div>'
@@ -220,7 +272,22 @@ def build(rows, blob_base):
         '<p class="muted">No graded races yet.</p>'
     added = two["net"] - top["net"]
 
-    return TEMPLATE.format(
+    pages = {}
+    for r in rows:
+        base = write_up_name(r)
+        if base not in write_ups:
+            continue
+        with open(os.path.join(hdir, base + ".md"), encoding="utf-8") as f:
+            text = f.read()
+        m = re.search(r"^#\s+(.+)$", text, re.M)
+        title = m.group(1).strip() if m else f'{r["track_name"]} R{r["race_number"]}'
+        text = re.sub(r"^#\s+.+$", "", text, count=1, flags=re.M)  # shown as the page title
+        is_pending = "pending" in ((r.get("status") or "").strip(), (r.get("second_status") or "").strip())
+        pages[base + ".html"] = RACE_TEMPLATE.format(
+            css=SHARED_CSS, title=esc(title), updated=updated,
+            card=race_card(r, is_pending, show_link=False), body=md_to_html(text))
+
+    index_html = TEMPLATE.format(
         updated=updated,
         n_races=two["races"],
         headline_top=money(top["net"], True), headline_top_cls=signcls(top["net"]),
@@ -233,6 +300,11 @@ def build(rows, blob_base):
         upcoming=upcoming_html, history=history_html,
         data=json.dumps(pts),
     )
+    return index_html, pages
+
+
+def write_up_name(r):
+    return f'{r["race_date"]}_{r["track_code"]}_R{r["race_number"]}'
 
 
 TEMPLATE = """<!doctype html>
@@ -423,17 +495,63 @@ function drawChart() {{
 """
 
 
+SHARED_CSS = re.search(r"<style>(.*?)</style>", TEMPLATE, re.S).group(1) \
+    .replace("{{", "{").replace("}}", "}")
+
+RACE_TEMPLATE = """<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{title}</title>
+<style>{css}
+.back {{ display: inline-block; margin: 4px 0 10px; font-size: 14px; text-decoration: none; }}
+.prose h2 {{ display: block; font-size: 17px; margin: 22px 0 8px; }}
+.prose h2:first-child {{ margin-top: 0; }}
+.prose h3, .prose h4 {{ font-size: 15px; margin: 18px 0 6px; text-transform: none; letter-spacing: 0; color: var(--ink); }}
+.prose p, .prose li {{ margin: 0 0 10px; }}
+.prose ul, .prose ol {{ padding-left: 20px; margin: 0 0 10px; }}
+.prose a {{ overflow-wrap: anywhere; }}
+.prose code {{ font-size: 13px; background: var(--page); padding: 1px 4px; border-radius: 4px; }}
+.table-wrap {{ overflow-x: auto; margin: 0 0 12px; }}
+.prose table {{ font-size: 13px; }}
+.prose td, .prose th {{ white-space: nowrap; }}
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="../">← All races</a>
+  <h1>{title}</h1>
+  <div class="muted" style="margin-bottom:12px">Updated {updated}</div>
+  {card}
+  <article class="card prose">{body}</article>
+  <a class="back" href="../">← All races</a>
+</main>
+</body>
+</html>
+"""
+
+
 def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--csv", default=os.path.join(HERE, "ledger.csv"))
     ap.add_argument("--out", default=os.path.join(HERE, "docs", "index.html"))
     args = ap.parse_args()
     rows = load(args.csv)
-    page = build(rows, repo_blob_base())
-    os.makedirs(os.path.dirname(args.out), exist_ok=True)
+    index_html, pages = build(rows)
+    out_dir = os.path.dirname(os.path.abspath(args.out))
+    races_dir = os.path.join(out_dir, "races")
+    os.makedirs(races_dir, exist_ok=True)
     with open(args.out, "w", encoding="utf-8") as f:
-        f.write(page)
-    print(f"Wrote {args.out}: {sum(1 for r in rows if r['b_wag'] > 0)} graded races.")
+        f.write(index_html)
+    for name, page in pages.items():
+        with open(os.path.join(races_dir, name), "w", encoding="utf-8") as f:
+            f.write(page)
+    for stale in set(os.listdir(races_dir)) - set(pages):  # write-up removed from the ledger
+        if stale.endswith(".html"):
+            os.remove(os.path.join(races_dir, stale))
+    print(f"Wrote {args.out} and {len(pages)} race pages: "
+          f"{sum(1 for r in rows if r['b_wag'] > 0)} graded races.")
 
 
 if __name__ == "__main__":

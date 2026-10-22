@@ -5,3 +5,4 @@
 2026-10-19 09:06 | graded: 2026-10-18 WO R8 Signature Winner 5th (-$6.00) | new pick: 2026-10-19 PRX R8 Maximus Meridius (7-2) | running net: -$5.00 | note: pick sits right on the 7-2 line; second choice Subrogate (5-1)
 2026-10-20 10:31 | graded: 2026-10-19 PRX R8 Maximus Meridius 4th (-$6.00) | new pick: 2026-10-20 PRX R8 Margie's Fun Son (6-1) | running net: -$11.00 | note: 1m stakes with heavy early speed; pick is the lone closer, 2nd choice Duration (5-1)
 2026-10-21 09:06 | graded: 2026-10-20 PRX R8 Margie's Fun Son 4th (-$6.00), Duration 5th (-$6.00) | new pick: 2026-10-21 KEE R7 Freddie B (5-1) / Bourbon Flight (7-2) | Top Pick net: -$17.00 | Top 2 net: -$23.00
+2026-10-22 09:06 | graded: 2026-10-21 KEE R7 Freddie B 1st (+$13.52), Bourbon Flight 8th (-$6.00) | new pick: 2026-10-22 KEE R7 Passionfruit (6-1) / Athenix (10-1) | Top Pick net: -$3.48 | Top 2 net: -$15.48 | note: refresh_excel.ps1 hit a COM disconnect on first try, succeeded on retry
