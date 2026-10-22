@@ -86,6 +86,15 @@ From the tracker folder, run:
 
 If step 1 says the file is open in Excel, or step 2 fails, the ledger is still correct: note `workbook not refreshed (<reason>)` in `run-log.md` and continue. The next run rebuilds it. If step 2 reports formula errors, list them in `run-log.md`.
 
-## Step 5: Log and finish
+## Step 5: Log, publish and finish
 
-Append to `run-log.md`: `YYYY-MM-DD HH:MM | graded: <race: top pick finish (net), 2nd pick finish (net)> | new pick: <date track R# top pick (odds) / 2nd pick (odds)> | Top Pick net: $X | Top 2 net: $Y`. Top Pick net = sum of `net` over rows with `status` graded. Top 2 net = that plus the sum of `second_net` over rows with `second_status` graded. Close the Chrome tabs you opened. End with a 2 to 3 line chat summary of the same.
+1. Append to `run-log.md`: `YYYY-MM-DD HH:MM | graded: <race: top pick finish (net), 2nd pick finish (net)> | new pick: <date track R# top pick (odds) / 2nd pick (odds)> | Top Pick net: $X | Top 2 net: $Y`. Top Pick net = sum of `net` over rows with `status` graded. Top 2 net = that plus the sum of `second_net` over rows with `second_status` graded.
+2. Publish the mobile results page (GitHub Pages serves `docs/index.html` from the `main` branch of `msvolos/WinnersGalore`). From the tracker folder:
+   ```
+   python build_site.py
+   git add -A
+   git commit -m "Daily update YYYY-MM-DD"
+   git push origin main
+   ```
+   Commit only files in this folder; `.gitignore` already leaves out the Excel workbook. Never force-push, rewrite history, or change git config or credentials. If the push fails (no network, sign-in expired), leave the commit in place, add `publish failed (<reason>)` to today's `run-log.md` line, commit that, and continue. The next run's push sends both.
+3. Close the Chrome tabs you opened. End with a 2 to 3 line chat summary of the same.
