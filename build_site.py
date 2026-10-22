@@ -284,10 +284,11 @@ def build(rows):
         text = re.sub(r"^#\s+.+$", "", text, count=1, flags=re.M)  # shown as the page title
         is_pending = "pending" in ((r.get("status") or "").strip(), (r.get("second_status") or "").strip())
         pages[base + ".html"] = RACE_TEMPLATE.format(
-            css=SHARED_CSS, title=esc(title), updated=updated,
+            css=SHARED_CSS, icon_tags=icon_tags("../"), title=esc(title), updated=updated,
             card=race_card(r, is_pending, show_link=False), body=md_to_html(text))
 
     index_html = TEMPLATE.format(
+        icon_tags=icon_tags(),
         updated=updated,
         n_races=two["races"],
         headline_top=money(top["net"], True), headline_top_cls=signcls(top["net"]),
@@ -313,6 +314,7 @@ TEMPLATE = """<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DRF Race Tracker</title>
+{icon_tags}
 <meta name="description" content="Daily DRF Race of the Day picks and $2 Win/Place/Show results: top pick vs top 2 picks.">
 <style>
 :root {{
@@ -495,6 +497,18 @@ function drawChart() {{
 """
 
 
+def icon_tags(prefix=""):
+    """Home-screen icon, favicon and app manifest links (prefix '../' for race pages)."""
+    return (f'<link rel="icon" href="{prefix}icon.svg" type="image/svg+xml">\n'
+            f'<link rel="icon" href="{prefix}favicon-32.png" sizes="32x32" type="image/png">\n'
+            f'<link rel="apple-touch-icon" href="{prefix}apple-touch-icon.png">\n'
+            f'<link rel="manifest" href="{prefix}manifest.webmanifest">\n'
+            '<meta name="theme-color" content="#1f4e3d">\n'
+            '<meta name="apple-mobile-web-app-title" content="Winners">\n'
+            '<meta name="mobile-web-app-capable" content="yes">\n'
+            '<meta name="apple-mobile-web-app-capable" content="yes">')
+
+
 SHARED_CSS = re.search(r"<style>(.*?)</style>", TEMPLATE, re.S).group(1) \
     .replace("{{", "{").replace("}}", "}")
 
@@ -504,6 +518,7 @@ RACE_TEMPLATE = """<!doctype html>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title}</title>
+{icon_tags}
 <style>{css}
 .back {{ display: inline-block; margin: 4px 0 10px; font-size: 14px; text-decoration: none; }}
 .prose h2 {{ display: block; font-size: 17px; margin: 22px 0 8px; }}

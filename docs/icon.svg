@@ -1,0 +1,33 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512">
+  <defs>
+    <radialGradient id="turf" cx="50%" cy="38%" r="75%">
+      <stop offset="0" stop-color="#2f7a5c"/>
+      <stop offset="0.6" stop-color="#1f4e3d"/>
+      <stop offset="1" stop-color="#0f2a20"/>
+    </radialGradient>
+    <linearGradient id="gold" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#ffe9a3"/>
+      <stop offset="0.45" stop-color="#e5b53a"/>
+      <stop offset="1" stop-color="#a8781a"/>
+    </linearGradient>
+    <linearGradient id="goldEdge" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#c89325"/>
+      <stop offset="1" stop-color="#6e4b0c"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" fill="url(#turf)"/>
+  <!-- faint track rails -->
+  <path d="M -20 452 Q 256 392 532 452" fill="none" stroke="#ffffff" stroke-opacity=".10" stroke-width="6"/>
+  <path d="M -20 478 Q 256 418 532 478" fill="none" stroke="#ffffff" stroke-opacity=".07" stroke-width="6"/>
+  <!-- horseshoe: dark edge, gold face, highlight -->
+  <path d="M 128 128 L 128 268 A 128 128 0 0 0 384 268 L 384 128" fill="none" stroke="url(#goldEdge)" stroke-width="74" stroke-linecap="butt"/>
+  <path d="M 128 128 L 128 268 A 128 128 0 0 0 384 268 L 384 128" fill="none" stroke="url(#gold)" stroke-width="64" stroke-linecap="butt"/>
+  <path d="M 128 128 L 128 268 A 128 128 0 0 0 384 268 L 384 128" fill="none" stroke="#fff6d6" stroke-opacity=".35" stroke-width="8"
+        transform="translate(-10 -6)" stroke-linecap="butt"/>
+  <!-- heel calks -->
+  <rect x="91.0" y="112" width="74" height="22" rx="5" fill="url(#goldEdge)"/>
+  <rect x="347.0" y="112" width="74" height="22" rx="5" fill="url(#goldEdge)"/>
+  <rect x="122.0" y="185.0" width="12" height="22" rx="6" fill="#3a2a05" opacity=".75" transform="rotate(0.0 128.0 196.0)"/><rect x="145.1" y="330.4" width="12" height="22" rx="6" fill="#3a2a05" opacity=".75" transform="rotate(55.0 151.1 341.4)"/><rect x="210.4" y="378.7" width="12" height="22" rx="6" fill="#3a2a05" opacity=".75" transform="rotate(18.0 216.4 389.7)"/><rect x="378.0" y="185.0" width="12" height="22" rx="6" fill="#3a2a05" opacity=".75" transform="rotate(0.0 384.0 196.0)"/><rect x="354.9" y="330.4" width="12" height="22" rx="6" fill="#3a2a05" opacity=".75" transform="rotate(-55.0 360.9 341.4)"/><rect x="289.6" y="378.7" width="12" height="22" rx="6" fill="#3a2a05" opacity=".75" transform="rotate(-18.0 295.6 389.7)"/>
+  <!-- winner's star -->
+  <polygon points="256.0,170.0 271.3,211.0 315.0,212.8 280.7,240.0 292.4,282.2 256.0,258.0 219.6,282.2 231.3,240.0 197.0,212.8 240.7,211.0" fill="#ffffff" stroke="#e5b53a" stroke-width="6" stroke-linejoin="round"/>
+</svg>
