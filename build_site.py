@@ -170,6 +170,8 @@ def build(rows):
     """Return (index page html, {race page filename: html})."""
     hdir = os.path.join(HERE, "handicaps")
     write_ups = {f[:-3] for f in os.listdir(hdir) if f.endswith(".md")} if os.path.isdir(hdir) else set()
+    rdir = os.path.join(HERE, "recaps")
+    recaps = {f[:-3] for f in os.listdir(rdir) if f.endswith(".md")} if os.path.isdir(rdir) else set()
     graded = [r for r in rows if r["b_wag"] > 0]
     top = strategy_stats(graded, "a_wag", "a_ret",
                          lambda r: r["a_fin"] == 1, lambda r: r["a_ret"] > 0)
@@ -246,7 +248,8 @@ def build(rows):
 
     def race_card(r, upcoming=False, show_link=True):
         base = write_up_name(r)
-        link = (f' · <a href="races/{base}.html">Handicap write-up</a>'
+        label = "Recap &amp; handicap" if base in recaps else "Handicap write-up"
+        link = (f' · <a href="races/{base}.html">{label}</a>'
                 if show_link and base in write_ups else "")
         date = datetime.strptime(r["race_date"], "%Y-%m-%d").strftime("%a %b %d")
         head = (f'<div class="race-head"><strong>{esc(r["track_name"])} R{esc(r["race_number"])}</strong>'
@@ -283,9 +286,15 @@ def build(rows):
         title = m.group(1).strip() if m else f'{r["track_name"]} R{r["race_number"]}'
         text = re.sub(r"^#\s+.+$", "", text, count=1, flags=re.M)  # shown as the page title
         is_pending = "pending" in ((r.get("status") or "").strip(), (r.get("second_status") or "").strip())
+        recap = ""
+        if base in recaps:
+            with open(os.path.join(rdir, base + ".md"), encoding="utf-8") as f:
+                rtext = re.sub(r"^#\s+.+$", "", f.read(), count=1, flags=re.M)
+            recap = (f'<h3>Race recap</h3><article class="card prose">{md_to_html(rtext)}</article>')
         pages[base + ".html"] = RACE_TEMPLATE.format(
             css=SHARED_CSS, icon_tags=icon_tags("../"), title=esc(title), updated=updated,
-            card=race_card(r, is_pending, show_link=False), body=md_to_html(text))
+            card=race_card(r, is_pending, show_link=False), recap=recap,
+            body=md_to_html(text))
 
     index_html = TEMPLATE.format(
         icon_tags=icon_tags(),
@@ -539,6 +548,8 @@ RACE_TEMPLATE = """<!doctype html>
   <h1>{title}</h1>
   <div class="muted" style="margin-bottom:12px">Updated {updated}</div>
   {card}
+  {recap}
+  <h3>Pre-race handicap</h3>
   <article class="card prose">{body}</article>
   <a class="back" href="../">← All races</a>
 </main>

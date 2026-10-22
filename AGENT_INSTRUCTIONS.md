@@ -5,7 +5,8 @@ Run this unattended every day. Do not ask the user questions. If something block
 Tracker folder: the folder this file is in (all paths below are relative to it).
 
 - `ledger.csv`: one row per Race of the Day (the source of truth)
-- `handicaps\`: the full write-up for each race
+- `handicaps\`: the full pre-race write-up for each race
+- `recaps\`: the post-race recap for each race (same file name as its handicap)
 - `DRF Tracker.xlsx`: formatted Excel workbook (dashboard KPIs, charts, ledger, bet log), rebuilt from `ledger.csv` every run by `build_workbook.py`. Never edit the workbook by hand; edit `ledger.csv` and rebuild. Do not create `summary.md`; the workbook replaces it.
 - `run-log.md`: one short line appended per run
 
@@ -13,6 +14,10 @@ Two strategies are tracked on every race:
 - **Top Pick:** $2 Win + $2 Place + $2 Show ($6) on the top pick.
 - **Top 2 Picks:** the same $6 WPS on the top pick **and** $6 WPS on the second choice ($12 per race).
 So every race needs results for both the top pick and the second choice. The workbook does all the strategy math; you only record each horse's result.
+
+There are two runs a day:
+- **Morning run (9 AM):** Steps 1 through 5, in order. Step 1 also writes a recap for any graded race that does not have one yet.
+- **Evening run (10 PM):** only grade and recap **today's** race, while DRF still shows its chart with trip notes for free. Do Step 1 and Step 1b for today's ledger row only, then Step 4 and Step 5. Skip Steps 2 and 3 (no handicapping). If today's race has not run yet or its result is not posted, write `<date> evening: result not posted yet` to `run-log.md`, publish nothing, and stop; the morning run will catch it.
 
 ## Browser
 
@@ -52,6 +57,37 @@ Second choice fields: `second_finish`, `second_win_payout`, `second_place_payout
 - If a horse **scratched**: set its status to `scratched`, wagered/returned/net = 0 (refund), and say so in `notes`.
 - If results are not posted yet (race cancelled or postponed), leave it `pending` and add a note. If a row is still pending 3+ days after `race_date`, set both statuses to `void`, with wagered/returned/net = 0.
 
+## Step 1b: Write the race recap
+
+For every graded race that has no file in `recaps\` yet, write `recaps\YYYY-MM-DD_TRACKCODE_R#.md` (same name as its handicap file). Look at `recaps\2026-10-21_KEE_R7.md` for the tone and shape.
+
+**Gather the facts:**
+- From the results JSON: finish order, the top three's $2 Win/Place/Show prices, `trackConditionDescription`, `distanceDescription`, `surfaceDescription`, the race name or class, fractions and final time (`r.fraction`: each `fractionN.timeInHundredths` plus `winningTime.timeInHundredths`), scratches, and the exacta and trifecta from `r.payoffs` (`wagerName`, `winningNumbers`, `payoffAmount`).
+- **Trip notes, only on race day:** open the race's `pp_url` the same day. If it shows the "$2 Mutuel Prices" block, the chart below it has a trip comment for every horse (e.g. "SHOWA broke a step slow, ... drove clear"). Use those for the "What happened" section. After race day the page is paywalled ("Buy Now"); do not buy anything. In that case, put this line right under the result: `*DRF's free chart with trip notes was no longer available when this recap was written, so it uses the official result only.*`
+- From the handicap write-up: the top pick's and second choice's cases, the pace read, the named risks, and what it said about the eventual winner.
+
+**Write it** with this shape:
+```
+# Recap: <Track> Race <N>, <Day Mon DD>
+
+**Result:** <Winner> won ($W, $P, $S), <2nd> 2nd, <3rd> 3rd. <Race name/class>, <distance> on a <condition> <surface> track in <final time> (<fractions>). Exacta <numbers> paid $<x>. <Scratches or "No scratches.">
+
+## Our picks
+- **<Top pick> (<ML>), top pick: <finish>.** <what its tickets paid> (**<+/- net>**).
+- **<Second pick> (<ML>), second pick: <finish>.** <...> (**<+/- net>**).
+- Top 2 Picks net for the race: **<+/- net>**.
+
+## What happened
+<How the race was run: pace (compare the fractions to the write-up's pace projection), where the winner and our picks were, trip trouble from the chart comments when available.>
+
+## Grading the handicap
+<What the write-up got right and wrong, honestly. Was the winner off the list, ranked, or dismissed? Did the named risk happen? Did a scratch call hold?>
+
+## Takeaway
+<One or two sentences: the lesson for the method, tied to patterns in earlier recaps when there is one.>
+```
+Rules: use the user's writing style (no em-dashes, American spelling, plain and confident, no "not this, but that" phrasing). Never invent trip details: describe positions or trouble only when the chart comments say so. A horse's approximate post-time odds are its $2 win price ÷ 2 − 1; when the winner or a pick went off below 3.5-1 even though its morning line was playable, say so, since the bet would not have qualified at post time. Keep it to about 250 to 350 words.
+
 ## Step 2: Find the race to handicap
 
 1. Open `https://www.drf.com/race-of-the-day`. The page says e.g. "THURSDAY'S FEATURED RACE / Keeneland - Race 8", and below that lists "Upcoming Race of the Day PPs".
@@ -88,7 +124,7 @@ If step 1 says the file is open in Excel, or step 2 fails, the ledger is still c
 
 ## Step 5: Log, publish and finish
 
-1. Append to `run-log.md`: `YYYY-MM-DD HH:MM | graded: <race: top pick finish (net), 2nd pick finish (net)> | new pick: <date track R# top pick (odds) / 2nd pick (odds)> | Top Pick net: $X | Top 2 net: $Y`. Top Pick net = sum of `net` over rows with `status` graded. Top 2 net = that plus the sum of `second_net` over rows with `second_status` graded.
+1. Append to `run-log.md`: `YYYY-MM-DD HH:MM | graded: <race: top pick finish (net), 2nd pick finish (net)> | recap: <race (trip notes | results only)> | new pick: <date track R# top pick (odds) / 2nd pick (odds)> | Top Pick net: $X | Top 2 net: $Y`. Top Pick net = sum of `net` over rows with `status` graded. Top 2 net = that plus the sum of `second_net` over rows with `second_status` graded. Start the line with `evening` after the time on evening runs.
 2. Publish the mobile results page (GitHub Pages serves `docs/index.html` from the `main` branch of `msvolos/WinnersGalore`). From the tracker folder:
    ```
    python build_site.py
