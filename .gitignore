@@ -1,0 +1,5 @@
+# Rebuilt every run from ledger.csv; the web page in docs/ replaces it online.
+DRF Tracker.xlsx
+~$*.xlsx
+__pycache__/
+*.pyc

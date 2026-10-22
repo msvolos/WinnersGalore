@@ -1,0 +1,7 @@
+2026-10-15 19:12 | graded: none | new pick: 2026-10-16 RP R8 Easy as Pie (9-2) | running net: $0.00 | note: first run; KEE R8 10/15 had already run, so handicapped next Race of the Day
+2026-10-16 09:05 | graded: none (RP R8 10/16 not yet run at check time) | new pick: none (today's RP R8 already in ledger; next up KEE R9 10/17) | running net: $0.00
+2026-10-17 09:07 | graded: 2026-10-16 RP R8 Easy as Pie 2nd (+$7.00) | new pick: 2026-10-17 KEE R9 Conceit (4-1) | running net: $7.00 | note: past-race PP page is now paywalled, graded from drf.com/results/resultDetails JSON
+2026-10-18 09:06 | graded: 2026-10-17 KEE R9 Conceit 4th (-$6.00) | new pick: 2026-10-18 WO R8 Signature Winner (6-1) | running net: $1.00 | note: WO is a Canadian track; DRF URLs use country CAN (results: /results/resultDetails/id/WO/country/CAN/date/10-18-2026)
+2026-10-19 09:06 | graded: 2026-10-18 WO R8 Signature Winner 5th (-$6.00) | new pick: 2026-10-19 PRX R8 Maximus Meridius (7-2) | running net: -$5.00 | note: pick sits right on the 7-2 line; second choice Subrogate (5-1)
+2026-10-20 10:31 | graded: 2026-10-19 PRX R8 Maximus Meridius 4th (-$6.00) | new pick: 2026-10-20 PRX R8 Margie's Fun Son (6-1) | running net: -$11.00 | note: 1m stakes with heavy early speed; pick is the lone closer, 2nd choice Duration (5-1)
+2026-10-21 09:06 | graded: 2026-10-20 PRX R8 Margie's Fun Son 4th (-$6.00), Duration 5th (-$6.00) | new pick: 2026-10-21 KEE R7 Freddie B (5-1) / Bourbon Flight (7-2) | Top Pick net: -$17.00 | Top 2 net: -$23.00
