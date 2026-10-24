@@ -9,3 +9,4 @@
 2026-10-22 22:07 evening | graded: 2026-10-22 KEE R7 Passionfruit 8th (-$6.00), Athenix 9th (-$6.00) | recap: 2026-10-22 KEE R7 (trip notes) | new pick: none (evening run) | Top Pick net: -$9.48 | Top 2 net: -$27.48 | note: refresh_excel.ps1 hit a COM disconnect on first try, succeeded on retry
 2026-10-23 09:05 BLOCKED: Chrome not connected / DRF signed out (KEE R9 10/23 PP page shows "Register to access" gate after reload; no pick made) | graded: none pending | Top Pick net: -$9.48 | Top 2 net: -$27.48
 2026-10-23 10:55 | graded: none pending | recap: none | new pick: 2026-10-23 KEE R9 Define (9-2) / Dakotah Blue (10-1) | Top Pick net: -$9.48 | Top 2 net: -$27.48 | note: rerun after DRF re-login (09:05 run was blocked)
+2026-10-23 22:07 evening | graded: 2026-10-23 KEE R9 Define 2nd (+$1.16), Dakotah Blue 3rd (-$0.38) | recap: 2026-10-23 KEE R9 (trip notes) | new pick: none (evening run) | Top Pick net: -$8.32 | Top 2 net: -$26.70
