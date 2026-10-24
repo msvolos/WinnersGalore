@@ -1,0 +1,134 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Keeneland Race 8, Sat Oct 24 2026</title>
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#1f4e3d">
+<meta name="apple-mobile-web-app-title" content="Winners">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
+  --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+  --pos: #006300; --neg: #c0302f;
+  --series-a: #2a78d6; --series-b: #eb6834; --series-s: #1baf7a;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+    --pos: #0ca30c; --neg: #e66767;
+    --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+  --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+  --pos: #0ca30c; --neg: #e66767;
+  --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink);
+  font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 16px 16px 48px; }
+h1 { font-size: 22px; margin: 4px 0 2px; }
+h2 { font-size: 16px; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+h3 { font-size: 15px; margin: 28px 0 10px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .04em; }
+.muted { color: var(--muted); font-weight: normal; }
+.pos { color: var(--pos); } .neg { color: var(--neg); }
+a { color: var(--series-a); }
+.card, .race { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+.hero { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 12px; }
+.hero .card { margin: 0; }
+.hero-label { font-size: 13px; color: var(--ink-2); display: flex; align-items: center; gap: 6px; }
+.hero-value { font-size: 30px; font-weight: 700; margin-top: 2px; }
+.added { font-size: 14px; color: var(--ink-2); margin: 0 0 12px; }
+.swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex: none; }
+.swatch.a { background: var(--series-a); } .swatch.b { background: var(--series-b); } .swatch.s { background: var(--series-s); }
+.tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.tile { background: var(--page); border-radius: 8px; padding: 8px; text-align: center; }
+.tile-label { font-size: 11px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .03em; }
+.tile-value { font-size: 18px; font-weight: 700; }
+.tile-sub { font-size: 11px; color: var(--muted); }
+.kv { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; margin: 12px 0 0; font-size: 14px; }
+.kv dt { color: var(--ink-2); } .kv dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+.legend { display: flex; gap: 16px; font-size: 13px; color: var(--ink-2); margin-bottom: 6px; }
+.legend span { display: flex; align-items: center; gap: 6px; }
+.chart-wrap { position: relative; }
+svg { display: block; width: 100%; height: auto; touch-action: pan-y; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 8px; font-size: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.12); display: none; white-space: nowrap; }
+.tip b { display: block; margin-bottom: 2px; }
+.tip div { display: flex; align-items: center; gap: 6px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { padding: 6px 4px; text-align: right; border-bottom: 1px solid var(--grid); }
+th:first-child, td:first-child { text-align: left; }
+thead th { font-size: 12px; color: var(--ink-2); font-weight: 600; }
+.note { font-size: 12px; color: var(--muted); margin: 8px 0 0; }
+.race-head { display: flex; justify-content: space-between; gap: 8px; }
+.race-sub { font-size: 13px; margin-bottom: 8px; }
+.pick { display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 8px; margin-top: 6px; }
+.pick-name { font-weight: 600; }
+.pick-fin { color: var(--ink-2); font-size: 14px; }
+.pick-net { min-width: 64px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.pick-label { font-size: 11px; color: var(--muted); margin-left: 18px; }
+.race-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; font-size: 13px;
+  margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--grid); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@media (max-width: 480px) {
+  .tiles { grid-template-columns: repeat(2, 1fr); }
+  .hero-value { font-size: 24px; }
+}
+
+.back { display: inline-block; margin: 4px 0 10px; font-size: 14px; text-decoration: none; }
+.prose h2 { display: block; font-size: 17px; margin: 22px 0 8px; }
+.prose h2:first-child { margin-top: 0; }
+.prose h3, .prose h4 { font-size: 15px; margin: 18px 0 6px; text-transform: none; letter-spacing: 0; color: var(--ink); }
+.prose p, .prose li { margin: 0 0 10px; }
+.prose ul, .prose ol { padding-left: 20px; margin: 0 0 10px; }
+.prose a { overflow-wrap: anywhere; }
+.prose code { font-size: 13px; background: var(--page); padding: 1px 4px; border-radius: 4px; }
+.table-wrap { overflow-x: auto; margin: 0 0 12px; }
+.prose table { font-size: 13px; }
+.prose td, .prose th { text-align: left; vertical-align: top; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="../">← All races</a>
+  <h1>Keeneland Race 8, Sat Oct 24 2026</h1>
+  <div class="muted" style="margin-bottom:12px">Updated Oct 24, 2026 9:06 AM</div>
+  <article class="race"><div class="race-head"><strong>Keeneland R8</strong><span class="muted">Sat Oct 24</span></div><div class="race-sub muted">Dirt 1 1/8m (G3 Fayette)</div><div class="pick"><span class="swatch a"></span><span class="pick-name">San Siro <span class="muted">(6-1)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">Top pick</div><div class="pick"><span class="swatch s"></span><span class="pick-name">Willy D&#x27;s <span class="muted">(8-1)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">2nd pick</div><div class="race-foot muted">Awaiting result</div></article>
+  
+  <h3>Pre-race handicap</h3>
+  <article class="card prose"><p>PP URL: <a href="https://www.drf.com/pp-details/10-24-2026/KEE/8/D/USA">https://www.drf.com/pp-details/10-24-2026/KEE/8/D/USA</a></p>
+<p>Grade 3 Fayette Stakes, 1 1/8 miles on the dirt, 3-year-olds and up, $350K, Beyer par 97. Post 4:44 PM ET. Twelve in the body of the race plus one also-eligible (So Sandy), no scratches yet. Odds are morning line (handicapped mid-morning, no live tote).</p>
+<h2>Off the list and probable scratches</h2>
+<ul><li><strong>Stars and Stripes (3-1).</strong> The one to beat on figures: a 100 Beyer running second to Forever Young in the Jockey Club Gold Cup G1, won the Ben Ali here in April, 3-for-3 at the distance. Under 7-2, so he is context only.</li><li><strong>So Sandy (20-1), also-eligible.</strong> Only gets in if someone in the body scratches. Pure speed (early pace 115) if he does draw in.</li><li><strong>Alexander Helios (20-1).</strong> Beyers 82 and 81 in two starts this year, per-start about $6,500. Joseph is 43% at the meet but the horse is going the wrong way.</li><li><strong>Gearing Up (30-1).</strong> 2-for-2 this year, but his 90 came in an N2X allowance and his best is well under par. Big class jump, and he adds more early speed.</li><li><strong>No Bien Ni Mal (Brz) (30-1).</strong> Won a Churchill N3X with a 94 last out but the chart says he bled. Machado 0-for-10 at the meet.</li></ul>
+<p>No probable scratches I can see; nobody shows a race in the last few days or an obvious cross-entry.</p>
+<h2>The pace</h2>
+<p>Plenty of speed for 1 1/8: Willy D&#x27;s (early pace 117), Gearing Up (117), This Is Uscar (108), plus Alexander Helios and Tumbarumba willing to press. That sets the race up for the late runners, and San Siro (late pace 121) and Tiztastic (115) have the best finishing numbers in the field.</p>
+<h2>Playable, ranked</h2>
+<p><strong>1. San Siro (6-1), top pick.</strong> Per-start about $49,400 on 7 starts this year, double last year&#x27;s $24,300, and the figures back up the money: 94 (3rd in the Ben Ali here), 96 (3rd in the Pimlico Special), a throwout 91 in the Cornhusker where he broke in and had no chance, then 98 winning a $110K allowance at Saratoga at today&#x27;s exact 1 1/8 and 97 drawing off by 4 1/2 in the Greenwood Cup. Two straight wins at or above par 97, proven at the distance (Dst 5-1-0-1, top 98), and the best closer in a race full of speed. Walsh is 21% at the meet. Risk: Hernandez Jr is 4% at the meet and the J/T pair is only 8% together, so the ride is the weak link.</p>
+<p><strong>2. Willy D&#x27;s (8-1), second choice.</strong> Highest per-start among the playable horses at about $193,000 on 5 starts this year (3 wins), up from $45,400 last year. Beyers 93 (won the Kentucky Cup Classic G3), 102 (won the Lake Ochita), throw out the 80 in a sloppy Stephen Foster G1, then 99 winning the Charles Town Classic G2 wire to wire. Proven at the trip (Dst 8-3-3-0, top 100). Maker is 24% at the meet and Velazquez/Maker are 24% with a $2.38 ROI. Risk: he is the main speed in a race with two or three others who want the lead, he carries top weight of 124, and Maker wins just 6% in graded stakes.</p>
+<p><strong>3. Hit Show (4-1).</strong> Playable by half a point. Last year&#x27;s Fayette winner (98) and 3-for-3 at Keeneland, Ortiz Jr 18% at the meet, J/T 27% at KEE. Per-start about $131,900 this year against $949,500 last year (a Dubai World Cup win), so he is fading off a huge 2025. Beyers 92, 90, 100 (2nd in the Suburban), then 86 flattening out in the Pacific Classic. Cox is 8% at this meet. He is 6 and the trend is down at the shortest price on the list, so he ranks third for value.</p>
+<p><strong>4. Tumbarumba (12-1), flyer.</strong> Per-start about $813,000 this year on three starts (all in the Middle East, 3rd in the Saudi Cup at 1 1/8), $41,600 last year. Off since the Dubai World Cup in March and first start for Brian Lynch, whose numbers are loud: first start with the barn 20% with a $6.99 ROI, off 180+ days 19% ($3.12), graded stakes 20% ($3.35). Gaffalione is 23% at the meet, and the works include a bullet 4f in :47 (1 of 104) and a bullet 5f in :59. Risk: seven months off and most of his US form is at a mile.</p>
+<p><strong>5. Tiztastic (10-1).</strong> Ran 103 in the Whitney and 99 for 3rd in the Suburban, so the top figure is there. But per-start is $41,400 this year after $111,000 last year, and he lost last out at 9-5 with a 93. Asmussen 24% at the meet. Flat trend.</p>
+<p><strong>6. Nevada Beach (6-1).</strong> Baffert (30% on the year) and a 101 Beyer last fall, Dst 5-3-0-1. Only two starts this year (per-start $18,000, leaning on last year&#x27;s $66,600); stumbled at the start in the Saudi Cup and then ran 93 for 3rd as the 6-5 favorite in the Goodwood off a long layoff. Second off the layoff could be better, but Arrieta is 5% at the meet and his 93 is a few points short.</p>
+<p><strong>7. This Is Uscar (10-1).</strong> Beyers 98, 102, 99 this year, per-start $36,600. Always close and rarely wins (4-for-21). Morales is 3% at the meet and he is part of the speed.</p>
+<p><strong>8. Silent Tactic (15-1).</strong> The 3-year-old (gets 2 lbs) won the Oklahoma Derby with a 96, per-start $186,600. Throw out the Travers (eased). Castellano is 0-for-6 at the meet and the Casse/Castellano combo is 0-for-8 at KEE. Figures top out a point under par.</p>
+<h2>Bottom line</h2>
+<p>San Siro at 6-1 is the play: two straight wins at par, proven at 1 1/8, and the best late kick in a race loaded with speed. Willy D&#x27;s at 8-1 is the second choice and the one to save with if the speed holds. Tumbarumba at 12-1 is a small flyer on the hot Lynch first-time angle. Stars and Stripes (3-1) is the horse to beat. Check the board: Hit Show at 4-1 could get bet under 7-2 by post time.</p></article>
+  <a class="back" href="../">← All races</a>
+</main>
+</body>
+</html>
