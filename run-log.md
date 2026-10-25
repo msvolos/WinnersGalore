@@ -12,3 +12,4 @@
 2026-10-23 22:07 evening | graded: 2026-10-23 KEE R9 Define 2nd (+$1.16), Dakotah Blue 3rd (-$0.38) | recap: 2026-10-23 KEE R9 (trip notes) | new pick: none (evening run) | Top Pick net: -$8.32 | Top 2 net: -$26.70
 2026-10-24 09:06 | graded: none pending | recap: none | new pick: 2026-10-24 KEE R8 San Siro (6-1) / Willy D's (8-1) | Top Pick net: -$8.32 | Top 2 net: -$26.70 | note: refresh_excel.ps1 hit a COM disconnect on first try, succeeded on retry
 2026-10-24 22:07 evening | graded: 2026-10-24 KEE R8 San Siro 8th (-$6.00), Willy D's 1st (+$24.70) | recap: 2026-10-24 KEE R8 (trip notes) | new pick: none (evening run) | Top Pick net: -$14.32 | Top 2 net: -$8.00 | note: refresh_excel.ps1 hit a COM disconnect on first try, succeeded on retry
+2026-10-25 09:06 | graded: none pending | recap: none | new pick: 2026-10-25 WO R9 Rapid Test (6-1) / Ready to Collect (10-1) | Top Pick net: -$14.32 | Top 2 net: -$8.00
