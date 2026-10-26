@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Horseshoe Indianapolis Race 7, Mon Oct 26 2026</title>
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#1f4e3d">
+<meta name="apple-mobile-web-app-title" content="Winners">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
+  --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+  --pos: #006300; --neg: #c0302f;
+  --series-a: #2a78d6; --series-b: #eb6834; --series-s: #1baf7a;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+    --pos: #0ca30c; --neg: #e66767;
+    --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+  --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+  --pos: #0ca30c; --neg: #e66767;
+  --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink);
+  font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 16px 16px 48px; }
+h1 { font-size: 22px; margin: 4px 0 2px; }
+h2 { font-size: 16px; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+h3 { font-size: 15px; margin: 28px 0 10px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .04em; }
+.muted { color: var(--muted); font-weight: normal; }
+.pos { color: var(--pos); } .neg { color: var(--neg); }
+a { color: var(--series-a); }
+.card, .race { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+.hero { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 12px; }
+.hero .card { margin: 0; }
+.hero-label { font-size: 13px; color: var(--ink-2); display: flex; align-items: center; gap: 6px; }
+.hero-value { font-size: 30px; font-weight: 700; margin-top: 2px; }
+.added { font-size: 14px; color: var(--ink-2); margin: 0 0 12px; }
+.swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex: none; }
+.swatch.a { background: var(--series-a); } .swatch.b { background: var(--series-b); } .swatch.s { background: var(--series-s); }
+.tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.tile { background: var(--page); border-radius: 8px; padding: 8px; text-align: center; }
+.tile-label { font-size: 11px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .03em; }
+.tile-value { font-size: 18px; font-weight: 700; }
+.tile-sub { font-size: 11px; color: var(--muted); }
+.kv { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; margin: 12px 0 0; font-size: 14px; }
+.kv dt { color: var(--ink-2); } .kv dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+.legend { display: flex; gap: 16px; font-size: 13px; color: var(--ink-2); margin-bottom: 6px; }
+.legend span { display: flex; align-items: center; gap: 6px; }
+.chart-wrap { position: relative; }
+svg { display: block; width: 100%; height: auto; touch-action: pan-y; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 8px; font-size: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.12); display: none; white-space: nowrap; }
+.tip b { display: block; margin-bottom: 2px; }
+.tip div { display: flex; align-items: center; gap: 6px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { padding: 6px 4px; text-align: right; border-bottom: 1px solid var(--grid); }
+th:first-child, td:first-child { text-align: left; }
+thead th { font-size: 12px; color: var(--ink-2); font-weight: 600; }
+.note { font-size: 12px; color: var(--muted); margin: 8px 0 0; }
+.race-head { display: flex; justify-content: space-between; gap: 8px; }
+.race-sub { font-size: 13px; margin-bottom: 8px; }
+.pick { display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 8px; margin-top: 6px; }
+.pick-name { font-weight: 600; }
+.pick-fin { color: var(--ink-2); font-size: 14px; }
+.pick-net { min-width: 64px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.pick-label { font-size: 11px; color: var(--muted); margin-left: 18px; }
+.race-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; font-size: 13px;
+  margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--grid); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@media (max-width: 480px) {
+  .tiles { grid-template-columns: repeat(2, 1fr); }
+  .hero-value { font-size: 24px; }
+}
+
+.back { display: inline-block; margin: 4px 0 10px; font-size: 14px; text-decoration: none; }
+.prose h2 { display: block; font-size: 17px; margin: 22px 0 8px; }
+.prose h2:first-child { margin-top: 0; }
+.prose h3, .prose h4 { font-size: 15px; margin: 18px 0 6px; text-transform: none; letter-spacing: 0; color: var(--ink); }
+.prose p, .prose li { margin: 0 0 10px; }
+.prose ul, .prose ol { padding-left: 20px; margin: 0 0 10px; }
+.prose a { overflow-wrap: anywhere; }
+.prose code { font-size: 13px; background: var(--page); padding: 1px 4px; border-radius: 4px; }
+.table-wrap { overflow-x: auto; margin: 0 0 12px; }
+.prose table { font-size: 13px; }
+.prose td, .prose th { text-align: left; vertical-align: top; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="../">← All races</a>
+  <h1>Horseshoe Indianapolis Race 7, Mon Oct 26 2026</h1>
+  <div class="muted" style="margin-bottom:12px">Updated Oct 26, 2026 9:08 AM</div>
+  <article class="race"><div class="race-head"><strong>Horseshoe Indianapolis R7</strong><span class="muted">Mon Oct 26</span></div><div class="race-sub muted">Turf 1m (F&amp;M OC15k/SAL10k)</div><div class="pick"><span class="swatch a"></span><span class="pick-name">Annie Express <span class="muted">(10-1)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">Top pick</div><div class="pick"><span class="swatch s"></span><span class="pick-name">Collected Bond <span class="muted">(5-1)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">2nd pick</div><div class="race-foot muted">Awaiting result</div></article>
+  
+  <h3>Pre-race handicap</h3>
+  <article class="card prose"><p>PP URL: <a href="https://www.drf.com/pp-details/10-26-2026/IND/7/D/USA">https://www.drf.com/pp-details/10-26-2026/IND/7/D/USA</a></p>
+<p>Optional claiming $15k / starter allowance $10k, fillies and mares 3 and up, 1 mile on the turf (firm), purse $23.1k, Beyer par 76. Fourteen entered, no scratches at handicap time. Odds are morning line (DRF Formulator, 9 AM).</p>
+<h2>Off the list</h2>
+<ul><li><strong>I Made It (5-2).</strong> Won the 7 1/2 furlong OC10k here on Oct 1 with a 70 Beyer, the best recent figure in the field, beating Ranch Life, Collected Bond and Annie Express. Stalker with Fosdick (19%) and Burgos. Short price, no value.</li><li><strong>Beach Dancer (3-1).</strong> Entered for main track only. Her only turf start produced a 20 Beyer. With the turf listed firm she should scratch.</li></ul>
+<p><strong>Probable scratch:</strong> Larksong (6-1) is the other main-track-only entry (7-for-10 on dirt this year, 0-for-1 on turf). Expect both MTO horses out, leaving 12. That takes two need-the-lead types out of the pace.</p>
+<h2>Average earnings per start</h2>
+<div class="table-wrap"><table><thead><tr><th>Horse</th><th>ML</th><th>2026</th><th>2025</th></tr></thead><tbody><tr><td>Collected Bond</td><td>5-1</td><td>$7,360 (4)</td><td>$388 (5)</td></tr><tr><td>Ziggzappa</td><td>20-1</td><td>$2,372 (8)</td><td>$4,462 (10)</td></tr><tr><td>Annie Express</td><td>10-1</td><td>$8,005 (8)</td><td>$8,513 (9)</td></tr><tr><td>Ziva</td><td>50-1</td><td>$494 (6)</td><td>$314 (1)</td></tr><tr><td>White Lilacs</td><td>12-1</td><td>$759 (6)</td><td>$6,166 (11)</td></tr><tr><td>Lady Blake</td><td>10-1</td><td>$2,823 (8)</td><td>$4,945 (8)</td></tr><tr><td>Lucky Shore</td><td>20-1</td><td>$1,062 (8)</td><td>$929 (9)</td></tr><tr><td>Ranch Life</td><td>8-1</td><td>$1,453 (8)</td><td>$2,199 (16)</td></tr><tr><td>I Made It</td><td>5-2</td><td>$5,027 (9)</td><td>$6,293 (7)</td></tr><tr><td>Ce La Vi Charli</td><td>6-1</td><td>$3,331 (9)</td><td>$8,138 (10)</td></tr><tr><td>Airo Dinero</td><td>8-1</td><td>$2,859 (9)</td><td>$2,969 (11)</td></tr><tr><td>Cause Ima Rose</td><td>20-1</td><td>$873 (6)</td><td>$466 (6)</td></tr><tr><td>Beach Dancer (MTO)</td><td>3-1</td><td>$7,313 (3)</td><td>$14,487 (7)</td></tr><tr><td>Larksong (MTO)</td><td>6-1</td><td>$5,084 (10)</td><td>$2,438 (10)</td></tr></tbody></table></div>
+<h2>Pace</h2>
+<p>Plenty of early speed even without the MTO pair: White Lilacs (Early 98), Lady Blake (96), I Made It (88), Annie Express (87) and Collected Bond (85). Annie Express and Collected Bond dueled with each other on Oct 1 at 7 1/2 furlongs and both gave way. The closers are Ziggzappa and Lucky Shore (Late 90), Ce La Vi Charli and Airo Dinero (81) and Ranch Life (77). Recent recaps say the projected pace collapse has failed more often than not, so this read leans on figures first and pace second.</p>
+<h2>Playable horses, ranked</h2>
+<p><strong>1. Annie Express (10-1), top pick.</strong> Best per-start among the playable horses in both years ($8.0k and $8.5k), and the course horse: 11-5-1-1 on the Indiana Grand turf for $136k. Her figures sit closest to par of anyone playable who is sound: 71 winning an N2X allowance here in June, 67, 66, a 63 in the Peony H. ($100k) and a 67 on Sep 16 finishing 3rd at this exact OC15k level, ahead of Ranch Life, Lady Blake and Ziggzappa. I am throwing out the Oct 1 line (28 Beyer at 1.10-1): it came at 7 1/2 furlongs, short of her best trip, in a head-to-head duel with Collected Bond that cooked them both. Back at a mile, dropping out of stakes and OC30k company. Connections are fair: Rechy is 13% with a strong turf stat (21%, $3.87 ROI), Sanjur 12% picks up the mount. The risk is the last-out flop: if that 28 means something is wrong, she is a throw-out, and she has faded when the early pace was hot.</p>
+<p><strong>2. Collected Bond (5-1), second choice.</strong> The improver. Three-for-four this year with a $7.4k per-start on a small sample, the kind of number worth a look. Beyers climbed 46, 58, 63, the last two wins at a mile and 1 1/16 on this turf (&quot;3p, rally&quot; and &quot;duel, bid, mild drive&quot;), so she can rate or go. I am excusing the 55 on Oct 1 for the same reason as Annie Express: the shorter trip and the duel. Davis is 13% with a 14% turf stat ($2.85 ROI); Moncada is 11% and the J/T is weak (8%). The catch is class and figures: up from $12.5k claiming, and her 63 top is 13 points under par.</p>
+<p><strong>3. Ziggzappa (20-1), flyer.</strong> The distance specialist: 18-9-2-1 at a mile on turf and 20-9-2-1 on turf overall, with figures up to 79. She is 7 and fading (64, 63, 62, then a 45 at this level last out with &quot;no factor&quot;), so this is a connections bet: Grubbs is 27% at the meet and 37% on turf ($4.51 ROI), and Jimenez is 24% this year. Best late kick in the field if the speed does come back.</p>
+<p><strong>4. Ranch Life (8-1).</strong> The only one in the race with a clean rising line: 56, 57, 61, 62, the 62 a 3rd behind I Made It on Oct 1 after being impeded. She was a closing 4th at 72-1 at this level on Sep 16. Concepcion is 18% at the meet. But per-start is low, her top is 14 under par, and the trainer is 9% on turf. Win money only if you buy the pace.</p>
+<p><strong>5. Ce La Vi Charli (6-1).</strong> On paper the class of the playable horses: won an OC20k at a mile on this turf in July with a 75 (par level), 8-3-0-0 at the distance, and Garcia/Mendoza are 24% together at the meet ($2.64). But she was pulled up and vanned off on Aug 19, has two trainer scratches since, and is now entered for a $10k tag. A drop like that off an injury is a warning sign. Pass at 6-1.</p>
+<p><strong>6. Lady Blake (10-1).</strong> Won a 1-mile turf claimer here in August with a 67, then a 56 and 5th at this level. Seven-pound apprentice and a 2-for-4 J/T sample help, but Meeks is 8% and she is another speed horse in a crowded front end.</p>
+<p><strong>7. Airo Dinero (8-1).</strong> Steady 55 to 64 shipper with a vet scratch on Oct 6 and a trainer who is 0-for-4 at the meet. Pass.</p>
+<p>The rest (Ziva, White Lilacs, Lucky Shore, Cause Ima Rose) lack the figures or the barn. White Lilacs&#x27;s trainer is 0-for-36 this year.</p>
+<h2>Bottom line</h2>
+<p>Annie Express at 10-1 is the play: best per-start, a proven course horse and figures near par, with the last line tossed. Collected Bond at 5-1 is the second choice for the Top 2 ticket. Ziggzappa at 20-1 is a small flyer on the Grubbs turf angle. Watch the board: if Annie Express is pounded below 7-2 she is off the list, and the MTO scratches should push the other prices up a bit.</p></article>
+  <a class="back" href="../">← All races</a>
+</main>
+</body>
+</html>
