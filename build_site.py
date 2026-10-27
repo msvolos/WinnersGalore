@@ -220,6 +220,34 @@ def build(rows):
   </dl>
 </section>'''
 
+    def reason_table():
+        """Results by the main reason each horse was picked, both pick slots combined."""
+        stats = {}
+        for r in graded:
+            for bet, reason, fin, ret, wag in (
+                    (r["a_bet"], r.get("pick_reason"), r["a_fin"], r["a_ret"], r["a_wag"]),
+                    (r["s_bet"], r.get("second_reason"), r["s_fin"], r["s_ret"], r["s_wag"])):
+                reason = (reason or "").strip()
+                if not bet or not reason:
+                    continue
+                s = stats.setdefault(reason, [0, 0, 0, 0.0, 0.0])
+                s[0] += 1
+                s[1] += fin == 1
+                s[2] += bool(fin and fin <= 3)
+                s[3] += ret
+                s[4] += wag
+        if not stats:
+            return '<p class="muted">No tagged picks yet.</p>'
+        body = "".join(
+            f'<tr><th scope="row">{esc(k)}</th><td>{n}</td><td>{w}</td><td>{itm}</td>'
+            f'<td class="{signcls(ret - wag)}">{money(ret - wag, True)}</td>'
+            f'<td class="{signcls(ret - wag)}">{pct((ret - wag) / wag if wag else 0, True)}</td></tr>'
+            for k, (n, w, itm, ret, wag) in sorted(stats.items(), key=lambda kv: kv[1][3] - kv[1][4], reverse=True))
+        return (f'<table><thead><tr><th>Reason</th><th>Bets</th><th>Won</th><th>Top 3</th><th>Net</th>'
+                f'<th>ROI</th></tr></thead><tbody>{body}</tbody></table>'
+                '<p class="note">The main case for each pick, top and 2nd picks combined. '
+                'Small samples: a single result can swing a row.</p>')
+
     def leg_table():
         a, s = legs(graded, "", "a_bet"), legs(graded, "second_", "s_bet")
         body = "".join(
@@ -307,6 +335,7 @@ def build(rows):
         strat_top=strat_card("Top Pick", "a", top, "$6"),
         strat_two=strat_card("Top 2 Picks", "b", two, "$12"),
         legs=leg_table(),
+        reasons=reason_table(),
         upcoming=upcoming_html, history=history_html,
         data=json.dumps(pts),
     )
@@ -432,6 +461,9 @@ thead th {{ font-size: 12px; color: var(--ink-2); font-weight: 600; }}
 
   <h3>Return by bet type</h3>
   <section class="card">{legs}</section>
+
+  <h3>Results by pick reason</h3>
+  <section class="card">{reasons}</section>
 
   <h3>Race history</h3>
   {history}

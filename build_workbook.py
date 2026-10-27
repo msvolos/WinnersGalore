@@ -55,7 +55,11 @@ CSV_FIELDS = [
     ("second_finish", "2nd Finish"), ("second_win_payout", "2nd Win Paid"),
     ("second_place_payout", "2nd Place Paid"), ("second_show_payout", "2nd Show Paid"),
     ("second_wagered", "2nd Wagered"), ("second_returned", "2nd Returned"), ("second_net", "2nd Net"),
+    ("pick_reason", "Pick Reason"), ("second_reason", "2nd Reason"),
+    ("pick_post_odds", "Pick Post Odds (to 1)"), ("second_post_odds", "2nd Post Odds (to 1)"),
 ]
+REASONS = ["at-par", "best-figure", "class", "course-distance", "earnings", "improver",
+           "pace-closer", "speed", "other"]
 HELPERS = [
     ("p_odds", "Pick Odds (to 1)"), ("p_band", "Pick Odds Band"), ("p_fin", "Pick Finish Group"),
     ("month", "Month"), ("s_odds", "2nd Odds (to 1)"), ("s_band", "2nd Odds Band"),
@@ -69,7 +73,8 @@ COL = {f: get_column_letter(i) for i, (f, _) in enumerate(CSV_FIELDS + HELPERS, 
 DATE_COLS = {"race_date", "handicapped_on", "graded_on"}
 NUM_COLS = {"race_number", "finish_position", "win_payout", "place_payout", "show_payout",
             "wagered", "winner_win_payout", "second_finish", "second_win_payout",
-            "second_place_payout", "second_show_payout", "second_wagered"}
+            "second_place_payout", "second_show_payout", "second_wagered",
+            "pick_post_odds", "second_post_odds"}
 FORMULA_FIELDS = {"returned", "net", "second_returned", "second_net"}
 SETTLED = ("graded", "scratched", "void", "no_play")
 BANDS = ["Under 7-2", "7-2 to 5-1", "6-1 to 10-1", "Over 10-1"]
@@ -208,7 +213,7 @@ def build_ledger(wb, rows):
         ws.conditional_formatting.add(rng, CellIsRule(operator="lessThan", formula=["0"],
                                       fill=PatternFill("solid", fgColor="FFC7CE")))
     # Tint the second-pick block so the two picks are easy to tell apart.
-    for field, _ in CSV_FIELDS[23:]:
+    for field, _ in CSV_FIELDS[23:33]:
         ws[f"{COL[field]}1"].fill = PatternFill("solid", fgColor="8C7319")
     for field in ("b_wag", "b_ret", "b_net", "b_cash", "b_won"):
         ws[f"{COL[field]}1"].fill = PatternFill("solid", fgColor=BLUE)
@@ -526,8 +531,32 @@ def build_dashboard(wb, rows, log_last):
     n_t = group_table(ttop, 2, "Performance by Track", "track_code", tracks)
     n_m = group_table(ttop, 9, "Performance by Month", "month", months)
 
+    # By pick reason: why each horse was picked, for both pick slots.
+    rtop = ttop + max(n_t, n_m) + 4
+    section(ws, f"B{rtop-1}", "Performance by Pick Reason")
+    reason_rows = []
+    for k, reason in enumerate(REASONS):
+        rr = rtop + 1 + k
+        ca = f'{L("status")},{G},{L("pick_reason")},B{rr}'
+        cs = f'{L("second_status")},{G},{L("second_reason")},B{rr}'
+        reason_rows.append([
+            reason, f"=COUNTIFS({ca})", f'=COUNTIFS({ca},{L("finish_position")},"<=3")',
+            f"=SUMIFS({L('net')},{ca})",
+            f"=COUNTIFS({cs})", f'=COUNTIFS({cs},{L("second_finish")},"<=3")',
+            f"=SUMIFS({L('second_net')},{cs})",
+            f"=C{rr}+F{rr}", f"=IFERROR((D{rr}+G{rr})/I{rr},0)", f"=E{rr}+H{rr}",
+            f"=IFERROR(K{rr}/(SUMIFS({L('wagered')},{ca})+SUMIFS({L('second_wagered')},{cs})),0)",
+        ])
+    table(ws, rtop, 2, ["Pick Reason", "As Top Pick", "Top 3", "Net", "As 2nd Pick", "Top 3",
+                        "Net", "All Bets", "Top-3 Rate", "All Net", "All ROI"],
+          reason_rows, ["@", "0", "0", MONEY, "0", "0", MONEY, "0", PCT, MONEY, PCT],
+          fills=[GREEN] * 4 + [GOLD] * 3 + [BLUE] * 4)
+    ws[f"B{rtop+len(REASONS)+1}"] = ("Pick Reason = the main case for the pick, tagged when it is made. "
+                                      "Tags are defined in AGENT_INSTRUCTIONS.md.")
+    ws[f"B{rtop+len(REASONS)+1}"].font = font(size=8, italic=True, color="808080")
+
     # Charts.
-    crow = ttop + max(n_t, n_m) + 3
+    crow = rtop + len(REASONS) + 3
     cats = Reference(blog, min_col=1, min_row=2, max_row=last)
 
     ch1 = LineChart()
