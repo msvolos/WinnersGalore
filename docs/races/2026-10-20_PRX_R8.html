@@ -18,7 +18,7 @@
   --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
   --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
   --pos: #006300; --neg: #c0302f;
-  --series-a: #2a78d6; --series-b: #eb6834; --series-s: #1baf7a;
+  --series-a: #2a78d6; --series-b: #eb6834; --series-s: #1baf7a; --series-r: #8a5cd0;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -26,7 +26,7 @@
     --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
     --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
     --pos: #0ca30c; --neg: #e66767;
-    --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70;
+    --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
   }
 }
 :root[data-theme="dark"] {
@@ -34,7 +34,7 @@
   --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
   --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
   --pos: #0ca30c; --neg: #e66767;
-  --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70;
+  --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
 }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--page); color: var(--ink);
@@ -53,7 +53,7 @@ a { color: var(--series-a); }
 .hero-value { font-size: 30px; font-weight: 700; margin-top: 2px; }
 .added { font-size: 14px; color: var(--ink-2); margin: 0 0 12px; }
 .swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex: none; }
-.swatch.a { background: var(--series-a); } .swatch.b { background: var(--series-b); } .swatch.s { background: var(--series-s); }
+.swatch.a { background: var(--series-a); } .swatch.b { background: var(--series-b); } .swatch.s { background: var(--series-s); } .swatch.r { background: var(--series-r); }
 .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
 .tile { background: var(--page); border-radius: 8px; padding: 8px; text-align: center; }
 .tile-label { font-size: 11px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .03em; }
@@ -106,7 +106,7 @@ thead th { font-size: 12px; color: var(--ink-2); font-weight: 600; }
 <main>
   <a class="back" href="../">← All races</a>
   <h1>Parx Racing Race 8 – Tue Oct 20, 2026</h1>
-  <div class="muted" style="margin-bottom:12px">Updated Oct 27, 2026 9:51 AM</div>
+  <div class="muted" style="margin-bottom:12px">Updated Oct 27, 2026 4:10 PM</div>
   <article class="race"><div class="race-head"><strong>Parx Racing R8</strong><span class="muted">Tue Oct 20</span></div><div class="race-sub muted">Dirt 1m ($75k stakes)</div><div class="pick"><span class="swatch a"></span><span class="pick-name">Margie&#x27;s Fun Son <span class="muted">(6-1)</span></span><span class="pick-fin">4th</span><span class="pick-net"><span class="neg">−$6.00</span></span></div><div class="pick-label">Top pick</div><div class="pick"><span class="swatch s"></span><span class="pick-name">Duration <span class="muted">(5-1)</span></span><span class="pick-fin">5th</span><span class="pick-net"><span class="neg">−$6.00</span></span></div><div class="pick-label">2nd pick</div><div class="race-foot"><span>Top 2 net: <b class="neg">−$12.00</b></span><span class="muted">Won by Wild Vine ($3.40)</span></div></article>
   <h3>Race recap</h3><article class="card prose"><p><strong>Result:</strong> Wild Vine won ($3.40, $2.60, $2.10), Dreambuilder 2nd, Bartlett 3rd. M.P. Ballezzi Appreciation Mile, 1 mile on a fast dirt track in 1:37.31 (:23.84, :46.97, 1:11.49, 1:23.96). Exacta 3-1 paid $16.20. No scratches.</p>
 <p><em>DRF&#x27;s free chart with trip notes was no longer available when this recap was written, so it uses the official result only.</em></p>

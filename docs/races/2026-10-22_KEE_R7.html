@@ -18,7 +18,7 @@
   --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
   --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
   --pos: #006300; --neg: #c0302f;
-  --series-a: #2a78d6; --series-b: #eb6834; --series-s: #1baf7a;
+  --series-a: #2a78d6; --series-b: #eb6834; --series-s: #1baf7a; --series-r: #8a5cd0;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -26,7 +26,7 @@
     --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
     --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
     --pos: #0ca30c; --neg: #e66767;
-    --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70;
+    --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
   }
 }
 :root[data-theme="dark"] {
@@ -34,7 +34,7 @@
   --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
   --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
   --pos: #0ca30c; --neg: #e66767;
-  --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70;
+  --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
 }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--page); color: var(--ink);
@@ -53,7 +53,7 @@ a { color: var(--series-a); }
 .hero-value { font-size: 30px; font-weight: 700; margin-top: 2px; }
 .added { font-size: 14px; color: var(--ink-2); margin: 0 0 12px; }
 .swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex: none; }
-.swatch.a { background: var(--series-a); } .swatch.b { background: var(--series-b); } .swatch.s { background: var(--series-s); }
+.swatch.a { background: var(--series-a); } .swatch.b { background: var(--series-b); } .swatch.s { background: var(--series-s); } .swatch.r { background: var(--series-r); }
 .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
 .tile { background: var(--page); border-radius: 8px; padding: 8px; text-align: center; }
 .tile-label { font-size: 11px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .03em; }
@@ -106,8 +106,8 @@ thead th { font-size: 12px; color: var(--ink-2); font-weight: 600; }
 <main>
   <a class="back" href="../">← All races</a>
   <h1>Keeneland Race 7, Thu Oct 22 2026</h1>
-  <div class="muted" style="margin-bottom:12px">Updated Oct 27, 2026 9:51 AM</div>
-  <article class="race"><div class="race-head"><strong>Keeneland R7</strong><span class="muted">Thu Oct 22</span></div><div class="race-sub muted">Dirt 1 1/16m (F&amp;M Alw 120k N1X)</div><div class="pick"><span class="swatch a"></span><span class="pick-name">Passionfruit <span class="muted">(6-1)</span></span><span class="pick-fin">8th</span><span class="pick-net"><span class="neg">−$6.00</span></span></div><div class="pick-label">Top pick</div><div class="pick"><span class="swatch s"></span><span class="pick-name">Athenix <span class="muted">(10-1)</span></span><span class="pick-fin">9th</span><span class="pick-net"><span class="neg">−$6.00</span></span></div><div class="pick-label">2nd pick</div><div class="race-foot"><span>Top 2 net: <b class="neg">−$12.00</b></span><span class="muted">Won by Atropa ($5.86)</span></div></article>
+  <div class="muted" style="margin-bottom:12px">Updated Oct 27, 2026 4:10 PM</div>
+  <article class="race"><div class="race-head"><strong>Keeneland R7</strong><span class="muted">Thu Oct 22</span></div><div class="race-sub muted">Dirt 1 1/16m (F&amp;M Alw 120k N1X)</div><div class="pick"><span class="swatch a"></span><span class="pick-name">Passionfruit <span class="muted">(6-1)</span></span><span class="pick-fin">8th</span><span class="pick-net"><span class="neg">−$6.00</span></span></div><div class="pick-label">Top pick · went off 13-1</div><div class="pick"><span class="swatch s"></span><span class="pick-name">Athenix <span class="muted">(10-1)</span></span><span class="pick-fin">9th</span><span class="pick-net"><span class="neg">−$6.00</span></span></div><div class="pick-label">2nd pick</div><div class="race-foot"><span>Top 2 net: <b class="neg">−$12.00</b></span><span class="muted">Won by Atropa ($5.86)</span></div></article>
   <h3>Race recap</h3><article class="card prose"><p><strong>Result:</strong> Atropa won ($5.86, $4.42, $3.30), Maria Louise 2nd, Leinani 3rd. Fillies and mares Allowance N1X ($120,000), 1 1/16 miles on a fast dirt track in 1:44.07 (:24.26, :48.53, 1:12.92, 1:37.65). Exacta 6-2 paid $17.74 and the trifecta $53.27 (50-cent). No scratches.</p>
 <h2>Our picks</h2>
 <ul><li><strong>Passionfruit (6-1), top pick: 8th.</strong> Returned $0 (<strong>−$6.00</strong>).</li><li><strong>Athenix (10-1), second pick: 9th.</strong> Returned $0 (<strong>−$6.00</strong>).</li><li>Top 2 Picks net for the race: <strong>−$12.00</strong>.</li></ul>

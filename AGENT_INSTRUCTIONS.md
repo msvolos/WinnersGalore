@@ -54,7 +54,7 @@ Grade the top pick (`pick_horse`) and the second choice (`second_choice`) the sa
 Top pick fields: `finish_position`, `win_payout`, `place_payout`, `show_payout` (what its tickets paid, 0 where they lost), `wagered` = 6, `returned`, `net` = returned − 6, `winner`, `winner_win_payout`, `graded_on` = today, `status` = `graded`.
 Second choice fields: `second_finish`, `second_win_payout`, `second_place_payout`, `second_show_payout`, `second_wagered` = 6, `second_returned`, `second_net` = returned − 6, `second_status` = `graded`.
 
-**Post-time odds** (`pick_post_odds`, `second_post_odds`): each horse's final odds, as a decimal "to 1" number (e.g. `3.8` for 19-5, `13` for 13-1). Grading stays on the morning line; these columns are for checking later whether the 3.5-to-1 rule would have kept a pick at post time.
+**Post-time odds** (`pick_post_odds`, `second_post_odds`): each horse's final odds, as a decimal "to 1" number (e.g. `3.8` for 19-5, `13` for 13-1). Grading stays on the morning line. These columns feed a paper-test strategy in the workbook and site, the post-time odds rule: bet the top pick if it went off at 3.5-1 or longer, else the second pick if it did, else no bet. A race only counts for that test when the needed final odds are recorded, so fill both picks' odds every time you can.
 - Best source, race day only: the chart on the race's `pp_url`, whose "Odds $1" column lists every starter's final odds (the evening run should always fill these).
 - Otherwise, a winner's odds are its $2 win price ÷ 2 − 1 (e.g. $9.60 → `3.8`), and a recap's trip notes may state a horse's price. If neither source gives a horse's odds, leave it blank. Never guess.
 

@@ -7,6 +7,8 @@ on a phone and needs nothing else.
 Strategies, same as the workbook:
   Top Pick:    $2 Win/Place/Show ($6) on the top pick
   Top 2 Picks: $6 WPS on the top pick plus $6 WPS on the second choice ($12)
+  Post-odds rule (paper test): $6 WPS on the top pick if it went off at 3.5-1+,
+    else on the 2nd pick if it did, else no bet
 
 Usage: python build_site.py [--csv ledger.csv] [--out docs/index.html]
 """
@@ -19,6 +21,7 @@ import re
 from datetime import datetime
 
 HERE = os.path.dirname(os.path.abspath(__file__))
+RULE_MIN = 3.5  # the skill's minimum odds, applied to final odds
 
 
 def num(v):
@@ -132,7 +135,33 @@ def load(path):
         r["b_wag"], r["b_ret"] = r["a_wag"] + r["s_wag"], r["a_ret"] + r["s_ret"]
         r["a_fin"] = int(num(r.get("finish_position"))) if r["a_bet"] and r.get("finish_position") else None
         r["s_fin"] = int(num(r.get("second_finish"))) if r["s_bet"] and r.get("second_finish") else None
+        r["r_side"] = rule_side(r)
+        r["r_wag"] = r["a_wag"] if r["r_side"] == "top" else r["s_wag"] if r["r_side"] == "second" else 0.0
+        r["r_ret"] = r["a_ret"] if r["r_side"] == "top" else r["s_ret"] if r["r_side"] == "second" else 0.0
     return rows
+
+
+def post_odds(v):
+    v = (v or "").strip()
+    return num(v) if v else None
+
+
+def rule_side(r):
+    """Post-odds rule: 'top', 'second', 'pass', 'unknown' (a needed final price
+    was not recorded) or None (top pick not graded)."""
+    if not r["a_bet"]:
+        return None
+    a = post_odds(r.get("pick_post_odds"))
+    if a is None:
+        return "unknown"
+    if a >= RULE_MIN:
+        return "top"
+    if not r["s_bet"]:
+        return "pass"
+    s = post_odds(r.get("second_post_odds"))
+    if s is None:
+        return "unknown"
+    return "second" if s >= RULE_MIN else "pass"
 
 
 def strategy_stats(races, wag_key, ret_key, won, cashed):
@@ -248,6 +277,32 @@ def build(rows):
                 '<p class="note">The main case for each pick, top and 2nd picks combined. '
                 'Small samples: a single result can swing a row.</p>')
 
+    def rule_card():
+        judged = [r for r in graded if r["r_side"] in ("top", "second", "pass")]
+        count = lambda side: sum(1 for r in graded if r["r_side"] == side)  # noqa: E731
+        wag, ret = sum(r["r_wag"] for r in judged), sum(r["r_ret"] for r in judged)
+        twag, tret = sum(r["a_wag"] for r in judged), sum(r["a_ret"] for r in judged)
+        net, tnet = ret - wag, tret - twag
+        roi, troi = (net / wag if wag else 0.0), (tnet / twag if twag else 0.0)
+        return f'''
+<section class="card strat">
+  <h2><span class="swatch r"></span>Post-time odds rule <span class="muted">(paper test)</span></h2>
+  <div class="tiles">
+    {tile("Net", money(net, True), f"{len(judged)} races judged", signcls(net))}
+    {tile("ROI", pct(roi, True), "net ÷ wagered", signcls(roi))}
+    {tile("Top pick, same races", money(tnet, True), pct(troi, True) + " ROI", signcls(tnet))}
+    {tile("Rule added", money(net - tnet, True), "vs top pick", signcls(net - tnet))}
+  </div>
+  <dl class="kv">
+    <dt>Kept the top pick</dt><dd>{count("top")}</dd>
+    <dt>Switched to the 2nd pick</dt><dd>{count("second")}</dd>
+    <dt>Passed (both under 7-2)</dt><dd>{count("pass")}</dd>
+    <dt>Not judged (final odds missing)</dt><dd>{count("unknown")}</dd>
+  </dl>
+  <p class="note">Bet the top pick only if it went off at 3.5-1 or longer. If it didn't, bet the 2nd pick
+    if it did, else no bet. Only races with recorded final odds count, so the top pick is shown on the same races.</p>
+</section>'''
+
     def leg_table():
         a, s = legs(graded, "", "a_bet"), legs(graded, "second_", "s_bet")
         body = "".join(
@@ -265,8 +320,11 @@ def build(rows):
             return ordinal(fin)
         return status.replace("_", " ") or "–"
 
-    def pick_line(label, key, horse, odds, fin, status, ret, wag):
+    def pick_line(label, key, horse, odds, fin, status, ret, wag, post=None):
         net = ret - wag
+        po = post_odds(post)
+        if po is not None:
+            label += f" · went off {po:g}-1"
         result = (f'<span class="{signcls(net)}">{money(net, True)}</span>'
                   if (status or "").strip() == "graded" else "")
         return (f'<div class="pick"><span class="swatch {key}"></span>'
@@ -284,9 +342,9 @@ def build(rows):
                 f'<span class="muted">{date}</span></div>'
                 f'<div class="race-sub muted">{esc(r.get("surface"))}</div>')
         picks = (pick_line("Top pick", "a", r["pick_horse"], r["pick_ml_odds"], r["a_fin"],
-                           r.get("status"), r["a_ret"], r["a_wag"])
+                           r.get("status"), r["a_ret"], r["a_wag"], r.get("pick_post_odds"))
                  + pick_line("2nd pick", "s", r["second_choice"], r.get("second_ml_odds"), r["s_fin"],
-                             r.get("second_status"), r["s_ret"], r["s_wag"]))
+                             r.get("second_status"), r["s_ret"], r["s_wag"], r.get("second_post_odds")))
         if upcoming:
             foot = f'<div class="race-foot muted">Awaiting result{link}</div>'
         else:
@@ -334,6 +392,7 @@ def build(rows):
         sec_net=money(sec["net"], True), sec_roi=pct(sec["roi"], True),
         strat_top=strat_card("Top Pick", "a", top, "$6"),
         strat_two=strat_card("Top 2 Picks", "b", two, "$12"),
+        strat_rule=rule_card(),
         legs=leg_table(),
         reasons=reason_table(),
         upcoming=upcoming_html, history=history_html,
@@ -360,7 +419,7 @@ TEMPLATE = """<!doctype html>
   --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
   --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
   --pos: #006300; --neg: #c0302f;
-  --series-a: #2a78d6; --series-b: #eb6834; --series-s: #1baf7a;
+  --series-a: #2a78d6; --series-b: #eb6834; --series-s: #1baf7a; --series-r: #8a5cd0;
 }}
 @media (prefers-color-scheme: dark) {{
   :root:not([data-theme="light"]) {{
@@ -368,7 +427,7 @@ TEMPLATE = """<!doctype html>
     --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
     --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
     --pos: #0ca30c; --neg: #e66767;
-    --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70;
+    --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
   }}
 }}
 :root[data-theme="dark"] {{
@@ -376,7 +435,7 @@ TEMPLATE = """<!doctype html>
   --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
   --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
   --pos: #0ca30c; --neg: #e66767;
-  --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70;
+  --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
 }}
 * {{ box-sizing: border-box; }}
 body {{ margin: 0; background: var(--page); color: var(--ink);
@@ -395,7 +454,7 @@ a {{ color: var(--series-a); }}
 .hero-value {{ font-size: 30px; font-weight: 700; margin-top: 2px; }}
 .added {{ font-size: 14px; color: var(--ink-2); margin: 0 0 12px; }}
 .swatch {{ width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex: none; }}
-.swatch.a {{ background: var(--series-a); }} .swatch.b {{ background: var(--series-b); }} .swatch.s {{ background: var(--series-s); }}
+.swatch.a {{ background: var(--series-a); }} .swatch.b {{ background: var(--series-b); }} .swatch.s {{ background: var(--series-s); }} .swatch.r {{ background: var(--series-r); }}
 .tiles {{ display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }}
 .tile {{ background: var(--page); border-radius: 8px; padding: 8px; text-align: center; }}
 .tile-label {{ font-size: 11px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .03em; }}
@@ -458,6 +517,7 @@ thead th {{ font-size: 12px; color: var(--ink-2); font-weight: 600; }}
   <h3>Strategies</h3>
   {strat_top}
   {strat_two}
+  {strat_rule}
 
   <h3>Return by bet type</h3>
   <section class="card">{legs}</section>
@@ -470,7 +530,7 @@ thead th {{ font-size: 12px; color: var(--ink-2); font-weight: 600; }}
 
   <p class="note">Top Pick = $2 Win + $2 Place + $2 Show on the top pick from the handicap-race method.
     Top 2 Picks = the same on the top pick and the second choice. Scratched picks are refunded.
-    Morning-line odds shown. For tracking only; no real bets placed.</p>
+    Morning-line odds shown, with final odds where recorded. For tracking only; no real bets placed.</p>
 </main>
 <script>
 const pts = {data};

@@ -18,7 +18,7 @@
   --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
   --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
   --pos: #006300; --neg: #c0302f;
-  --series-a: #2a78d6; --series-b: #eb6834; --series-s: #1baf7a;
+  --series-a: #2a78d6; --series-b: #eb6834; --series-s: #1baf7a; --series-r: #8a5cd0;
 }
 @media (prefers-color-scheme: dark) {
   :root:not([data-theme="light"]) {
@@ -26,7 +26,7 @@
     --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
     --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
     --pos: #0ca30c; --neg: #e66767;
-    --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70;
+    --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
   }
 }
 :root[data-theme="dark"] {
@@ -34,7 +34,7 @@
   --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
   --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
   --pos: #0ca30c; --neg: #e66767;
-  --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70;
+  --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
 }
 * { box-sizing: border-box; }
 body { margin: 0; background: var(--page); color: var(--ink);
@@ -53,7 +53,7 @@ a { color: var(--series-a); }
 .hero-value { font-size: 30px; font-weight: 700; margin-top: 2px; }
 .added { font-size: 14px; color: var(--ink-2); margin: 0 0 12px; }
 .swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex: none; }
-.swatch.a { background: var(--series-a); } .swatch.b { background: var(--series-b); } .swatch.s { background: var(--series-s); }
+.swatch.a { background: var(--series-a); } .swatch.b { background: var(--series-b); } .swatch.s { background: var(--series-s); } .swatch.r { background: var(--series-r); }
 .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
 .tile { background: var(--page); border-radius: 8px; padding: 8px; text-align: center; }
 .tile-label { font-size: 11px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .03em; }
@@ -106,7 +106,7 @@ thead th { font-size: 12px; color: var(--ink-2); font-weight: 600; }
 <main>
   <a class="back" href="../">← All races</a>
   <h1>Horseshoe Indianapolis Race 7, Tue Oct 27 2026</h1>
-  <div class="muted" style="margin-bottom:12px">Updated Oct 27, 2026 9:51 AM</div>
+  <div class="muted" style="margin-bottom:12px">Updated Oct 27, 2026 4:10 PM</div>
   <article class="race"><div class="race-head"><strong>Horseshoe Indianapolis R7</strong><span class="muted">Tue Oct 27</span></div><div class="race-sub muted">Turf 1m (F&amp;M Alw 46k N1X)</div><div class="pick"><span class="swatch a"></span><span class="pick-name">Never Really Know (Ire) <span class="muted">(8-1)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">Top pick</div><div class="pick"><span class="swatch s"></span><span class="pick-name">Cinquante Cinq (Ire) <span class="muted">(9-2)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">2nd pick</div><div class="race-foot muted">Awaiting result</div></article>
   
   <h3>Pre-race handicap</h3>

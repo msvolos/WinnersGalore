@@ -7,6 +7,9 @@ betting strategies on each Race of the Day:
   Top Pick:    $2 Win/Place/Show ($6) on the top pick only
   Top 2 Picks: $6 WPS on the top pick plus $6 WPS on the second choice ($12)
 
+plus a paper test of a post-time odds rule: $6 WPS on the top pick if it went
+off at 3.5-1 or longer, else on the second pick if it did, else no bet.
+
 It also shows the second pick on its own so you can see what it adds. Every KPI
 is an Excel formula over the Ledger sheet, so edits there recalculate.
 
@@ -32,6 +35,7 @@ MAX_ROW = 5000  # KPI formulas cover Ledger rows 2..MAX_ROW
 GREEN = "1F4E3D"   # top pick
 GOLD = "C9A227"    # second pick
 BLUE = "2F5597"    # top 2 combined
+RULE = "7030A0"    # post-odds rule (paper test)
 LIGHT = "E8F0EC"
 GREY = "F2F2F2"
 MONEY = '$#,##0.00;[Red]($#,##0.00);"-"'
@@ -67,7 +71,11 @@ HELPERS = [
     ("a_wag", "Top Pick Wagered"), ("a_ret", "Top Pick Returned"), ("a_net", "Top Pick Net"),
     ("b_wag", "Top 2 Wagered"), ("b_ret", "Top 2 Returned"), ("b_net", "Top 2 Net"),
     ("b_cash", "Top 2 Cashed"), ("b_won", "Top 2 Had Winner"),
+    ("r_side", "Post-Odds Rule Bet"), ("r_wag", "Rule Wagered"), ("r_ret", "Rule Returned"),
+    ("r_net", "Rule Net"), ("r_twag", "Top Pick Wagered (Rule Races)"),
+    ("r_tnet", "Top Pick Net (Rule Races)"),
 ]
+RULE_MIN = 3.5  # the skill's minimum odds, applied to final odds
 COL = {f: get_column_letter(i) for i, (f, _) in enumerate(CSV_FIELDS + HELPERS, start=1)}
 
 DATE_COLS = {"race_date", "handicapped_on", "graded_on"}
@@ -181,6 +189,19 @@ def build_ledger(wb, rows):
         ws[c["b_cash"]] = f'=IF({c["b_wag"]}>0,IF({c["b_ret"]}>0,1,0),"")'
         ws[c["b_won"]] = (f'=IF({c["b_wag"]}>0,IF(OR(AND({a_g},{c["finish_position"]}=1),'
                           f'AND({s_g},{c["second_finish"]}=1)),1,0),"")')
+        # Post-odds rule: top pick if it went off at 3.5-1+, else the 2nd pick if it
+        # did, else pass. "unknown" when a needed final price was not recorded.
+        ppo, spo = c["pick_post_odds"], c["second_post_odds"]
+        ws[c["r_side"]] = (f'=IF(NOT({a_g}),"",IF({ppo}="","unknown",IF({ppo}>={RULE_MIN},"top",'
+                           f'IF(NOT({s_g}),"pass",IF({spo}="","unknown",'
+                           f'IF({spo}>={RULE_MIN},"second","pass"))))))')
+        side = c["r_side"]
+        ws[c["r_wag"]] = f'=IF({side}="top",{c["wagered"]},IF({side}="second",{c["second_wagered"]},0))'
+        ws[c["r_ret"]] = f'=IF({side}="top",{c["returned"]},IF({side}="second",{c["second_returned"]},0))'
+        ws[c["r_net"]] = f'={c["r_ret"]}-{c["r_wag"]}'
+        judged = f'OR({side}="top",{side}="second",{side}="pass")'
+        ws[c["r_twag"]] = f'=IF({judged},{c["a_wag"]},0)'
+        ws[c["r_tnet"]] = f'=IF({judged},{c["a_net"]},0)'
         if r.get("pp_url"):
             ws[c["pp_url"]].hyperlink = r["pp_url"]
             ws[c["pp_url"]].value = "PPs"
@@ -189,7 +210,8 @@ def build_ledger(wb, rows):
     money = {"win_payout", "place_payout", "show_payout", "wagered", "returned", "net",
              "winner_win_payout", "second_win_payout", "second_place_payout", "second_show_payout",
              "second_wagered", "second_returned", "second_net",
-             "a_wag", "a_ret", "a_net", "b_wag", "b_ret", "b_net"}
+             "a_wag", "a_ret", "a_net", "b_wag", "b_ret", "b_net",
+             "r_wag", "r_ret", "r_net", "r_twag", "r_tnet"}
     for row in ws.iter_rows(min_row=2, max_row=last, max_col=len(COL)):
         for cell in row:
             cell.font = font()
@@ -206,7 +228,7 @@ def build_ledger(wb, rows):
                 cell.number_format = ODDS
             elif field == "pp_url" and cell.value:
                 cell.font = font(color="0563C1", underline="single")
-    for field in ("net", "second_net", "a_net", "b_net"):
+    for field in ("net", "second_net", "a_net", "b_net", "r_net", "r_tnet"):
         rng = f"{COL[field]}2:{COL[field]}{MAX_ROW}"
         ws.conditional_formatting.add(rng, CellIsRule(operator="greaterThan", formula=["0"],
                                       fill=PatternFill("solid", fgColor="C6EFCE")))
@@ -217,6 +239,8 @@ def build_ledger(wb, rows):
         ws[f"{COL[field]}1"].fill = PatternFill("solid", fgColor="8C7319")
     for field in ("b_wag", "b_ret", "b_net", "b_cash", "b_won"):
         ws[f"{COL[field]}1"].fill = PatternFill("solid", fgColor=BLUE)
+    for field in ("r_side", "r_wag", "r_ret", "r_net", "r_twag", "r_tnet"):
+        ws[f"{COL[field]}1"].fill = PatternFill("solid", fgColor=RULE)
     widths = {"race_date": 11, "track_name": 15, "surface": 16, "pick_horse": 18,
               "second_choice": 18, "winner": 17, "notes": 50}
     for field, col in COL.items():
@@ -555,8 +579,36 @@ def build_dashboard(wb, rows, log_last):
                                       "Tags are defined in AGENT_INSTRUCTIONS.md.")
     ws[f"B{rtop+len(REASONS)+1}"].font = font(size=8, italic=True, color="808080")
 
+    # Post-odds rule, compared with the top pick on the same races.
+    qtop = rtop + len(REASONS) + 5
+    section(ws, f"B{qtop-1}", "Post-Time Odds Rule (paper test)")
+    side = L("r_side")
+    q_rows = [
+        ["Races judged (final odds known)", f'=COUNTIF({side},"top")+COUNTIF({side},"second")+COUNTIF({side},"pass")',
+         f'=C{qtop+1}'],
+        ["  Kept the top pick", f'=COUNTIF({side},"top")', ""],
+        ["  Switched to the 2nd pick", f'=COUNTIF({side},"second")', ""],
+        ["  Passed (both under 7-2)", f'=COUNTIF({side},"pass")', ""],
+        ["Not judged (final odds missing)", f'=COUNTIF({side},"unknown")', ""],
+        ["Wagered", f"=SUM({L('r_wag')})", f"=SUM({L('r_twag')})"],
+        ["Returned", f"=SUM({L('r_ret')})", f"=SUM({L('r_twag')})+SUM({L('r_tnet')})"],
+        ["Net profit / loss", f"=SUM({L('r_net')})", f"=SUM({L('r_tnet')})"],
+        ["ROI", f"=IFERROR(C{qtop+8}/C{qtop+6},0)", f"=IFERROR(D{qtop+8}/D{qtop+6},0)"],
+    ]
+    table(ws, qtop, 2, ["Metric", "Post-Odds Rule", "Top Pick (same races)"], q_rows,
+          ["@", "0", "0"], fills=[RULE, RULE, GREEN])
+    for i in range(6, 9):
+        for col in "CD":
+            ws[f"{col}{qtop+i}"].number_format = MONEY
+    for col in "CD":
+        ws[f"{col}{qtop+9}"].number_format = PCT
+    ws[f"B{qtop+len(q_rows)+1}"] = ("Rule: bet the top pick if its final odds were 3.5-1 or longer, else the 2nd "
+                                     "pick if its were, else no bet. Grading of the main strategies stays on the "
+                                     "morning line.")
+    ws[f"B{qtop+len(q_rows)+1}"].font = font(size=8, italic=True, color="808080")
+
     # Charts.
-    crow = rtop + len(REASONS) + 3
+    crow = qtop + len(q_rows) + 3
     cats = Reference(blog, min_col=1, min_row=2, max_row=last)
 
     ch1 = LineChart()
