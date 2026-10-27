@@ -1,0 +1,137 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Horseshoe Indianapolis Race 7, Tue Oct 27 2026</title>
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#1f4e3d">
+<meta name="apple-mobile-web-app-title" content="Winners">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
+  --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+  --pos: #006300; --neg: #c0302f;
+  --series-a: #2a78d6; --series-b: #eb6834; --series-s: #1baf7a;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+    --pos: #0ca30c; --neg: #e66767;
+    --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+  --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+  --pos: #0ca30c; --neg: #e66767;
+  --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink);
+  font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 16px 16px 48px; }
+h1 { font-size: 22px; margin: 4px 0 2px; }
+h2 { font-size: 16px; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+h3 { font-size: 15px; margin: 28px 0 10px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .04em; }
+.muted { color: var(--muted); font-weight: normal; }
+.pos { color: var(--pos); } .neg { color: var(--neg); }
+a { color: var(--series-a); }
+.card, .race { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+.hero { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 12px; }
+.hero .card { margin: 0; }
+.hero-label { font-size: 13px; color: var(--ink-2); display: flex; align-items: center; gap: 6px; }
+.hero-value { font-size: 30px; font-weight: 700; margin-top: 2px; }
+.added { font-size: 14px; color: var(--ink-2); margin: 0 0 12px; }
+.swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex: none; }
+.swatch.a { background: var(--series-a); } .swatch.b { background: var(--series-b); } .swatch.s { background: var(--series-s); }
+.tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.tile { background: var(--page); border-radius: 8px; padding: 8px; text-align: center; }
+.tile-label { font-size: 11px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .03em; }
+.tile-value { font-size: 18px; font-weight: 700; }
+.tile-sub { font-size: 11px; color: var(--muted); }
+.kv { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; margin: 12px 0 0; font-size: 14px; }
+.kv dt { color: var(--ink-2); } .kv dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+.legend { display: flex; gap: 16px; font-size: 13px; color: var(--ink-2); margin-bottom: 6px; }
+.legend span { display: flex; align-items: center; gap: 6px; }
+.chart-wrap { position: relative; }
+svg { display: block; width: 100%; height: auto; touch-action: pan-y; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 8px; font-size: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.12); display: none; white-space: nowrap; }
+.tip b { display: block; margin-bottom: 2px; }
+.tip div { display: flex; align-items: center; gap: 6px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { padding: 6px 4px; text-align: right; border-bottom: 1px solid var(--grid); }
+th:first-child, td:first-child { text-align: left; }
+thead th { font-size: 12px; color: var(--ink-2); font-weight: 600; }
+.note { font-size: 12px; color: var(--muted); margin: 8px 0 0; }
+.race-head { display: flex; justify-content: space-between; gap: 8px; }
+.race-sub { font-size: 13px; margin-bottom: 8px; }
+.pick { display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 8px; margin-top: 6px; }
+.pick-name { font-weight: 600; }
+.pick-fin { color: var(--ink-2); font-size: 14px; }
+.pick-net { min-width: 64px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.pick-label { font-size: 11px; color: var(--muted); margin-left: 18px; }
+.race-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; font-size: 13px;
+  margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--grid); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@media (max-width: 480px) {
+  .tiles { grid-template-columns: repeat(2, 1fr); }
+  .hero-value { font-size: 24px; }
+}
+
+.back { display: inline-block; margin: 4px 0 10px; font-size: 14px; text-decoration: none; }
+.prose h2 { display: block; font-size: 17px; margin: 22px 0 8px; }
+.prose h2:first-child { margin-top: 0; }
+.prose h3, .prose h4 { font-size: 15px; margin: 18px 0 6px; text-transform: none; letter-spacing: 0; color: var(--ink); }
+.prose p, .prose li { margin: 0 0 10px; }
+.prose ul, .prose ol { padding-left: 20px; margin: 0 0 10px; }
+.prose a { overflow-wrap: anywhere; }
+.prose code { font-size: 13px; background: var(--page); padding: 1px 4px; border-radius: 4px; }
+.table-wrap { overflow-x: auto; margin: 0 0 12px; }
+.prose table { font-size: 13px; }
+.prose td, .prose th { text-align: left; vertical-align: top; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="../">← All races</a>
+  <h1>Horseshoe Indianapolis Race 7, Tue Oct 27 2026</h1>
+  <div class="muted" style="margin-bottom:12px">Updated Oct 27, 2026 9:07 AM</div>
+  <article class="race"><div class="race-head"><strong>Horseshoe Indianapolis R7</strong><span class="muted">Tue Oct 27</span></div><div class="race-sub muted">Turf 1m (F&amp;M Alw 46k N1X)</div><div class="pick"><span class="swatch a"></span><span class="pick-name">Never Really Know (Ire) <span class="muted">(8-1)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">Top pick</div><div class="pick"><span class="swatch s"></span><span class="pick-name">Cinquante Cinq (Ire) <span class="muted">(9-2)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">2nd pick</div><div class="race-foot muted">Awaiting result</div></article>
+  
+  <h3>Pre-race handicap</h3>
+  <article class="card prose"><p>PP URL: <a href="https://www.drf.com/pp-details/10-27-2026/IND/7/D/USA">https://www.drf.com/pp-details/10-27-2026/IND/7/D/USA</a></p>
+<p>Allowance N1X ($46.2k), fillies and mares 3 and up, 1 mile on the turf (firm), Beyer par 78. Twelve in the main body, Dreaming of Joy entered main track only, and three also-eligibles (Max, Temple Temptress, Donna Strada). No scratches at handicap time. Odds are morning line (DRF Formulator, 9 AM).</p>
+<h2>Off the list</h2>
+<ul><li><strong>Collective Beauty (3-1).</strong> Class of the field on figures: a 75 last out leading at this exact mile here (Sep 14, caught late in an N1X), plus graded-stakes-placed form at Kentucky Downs last year. Cox (21% at meet) and De La Cruz (17%), J/T 29% at IND. Short price, no value, and she is the speed of the speed.</li><li><strong>Dreaming of Joy (5-2, MTO).</strong> Entered for main track only. With the turf firm she should scratch.</li><li><strong>Max (5-2, AE #14).</strong> Also-eligible and also entered in tomorrow&#x27;s Race 8 here, so she is unlikely to run today.</li></ul>
+<p><strong>Probable scratches:</strong> Ring Rights (15-1) is entered at Churchill Thursday (CD R6), and Screamin Nina (10-1) is entered in tomorrow&#x27;s Race 7 here. Temple Temptress and Donna Strada (AEs) are both entered tomorrow too. If Ring Rights scratches, the field loses its deepest closer (Late 106).</p>
+<h2>Average earnings per start</h2>
+<div class="table-wrap"><table><thead><tr><th>Horse</th><th>ML</th><th>2026</th><th>2025</th></tr></thead><tbody><tr><td>Let&#x27;s Go Barbie</td><td>10-1</td><td>$5,516 (8)</td><td>none</td></tr><tr><td>Kenz</td><td>12-1</td><td>$1,260 (3)</td><td>$36,223 (3)</td></tr><tr><td>Collective Beauty</td><td>3-1</td><td>$2,963 (4)</td><td>$16,213 (4)</td></tr><tr><td>Take My Picture</td><td>12-1</td><td>$3,574 (9)</td><td>$9,051 (6)</td></tr><tr><td>Ring Rights</td><td>15-1</td><td>$9,473 (5)</td><td>none</td></tr><tr><td>Screamin Nina</td><td>10-1</td><td>$18,173 (9)</td><td>$6,118 (7)</td></tr><tr><td>Cinquante Cinq (Ire)</td><td>9-2</td><td>$8,000 (3)</td><td>none</td></tr><tr><td>Sudden Rise</td><td>8-1</td><td>$7,040 (5)</td><td>$8,080 (6)</td></tr><tr><td>Soaring Angel</td><td>10-1</td><td>$840 (5)</td><td>$16,333 (3)</td></tr><tr><td>Surprenant Cocca</td><td>10-1</td><td>$3,807 (8)</td><td>$8,034 (4)</td></tr><tr><td>Stormy Paradise</td><td>10-1</td><td>$1,504 (5)</td><td>$2,837 (11)</td></tr><tr><td>Never Really Know (Ire)</td><td>8-1</td><td>$3,633 (5)</td><td>$18,780 (2)</td></tr><tr><td>Dreaming of Joy (MTO)</td><td>5-2</td><td>$5,508 (5)</td><td>none</td></tr></tbody></table></div>
+<p>Screamin Nina&#x27;s number is inflated by Indiana-bred stakes money on dirt. Kenz and Soaring Angel earned last year&#x27;s money in maiden wins and black-type placings and have done nothing since. Never Really Know is lightly raced last year, so her 2025 number is a small sample; her 2026 number was held down by an off-turf dirt try and one bad Churchill line.</p>
+<h2>Pace</h2>
+<p>Real early speed: Surprenant Cocca (Early 99), Collective Beauty (98), Cinquante Cinq (97), Kenz (94) and Stormy Paradise (85). Collective Beauty and Surprenant Cocca both want the rail-side lead, and Kenz and Stormy Paradise will not want to sit. The closers are Ring Rights (Late 106, probable scratch), Sudden Rise (92), Take My Picture (84) and the stalker-closers Cinquante Cinq (84) and Never Really Know (79). Recent recaps show the projected pace collapse has not been reliable, so the pace read here is a tiebreaker only.</p>
+<h2>Playable horses, ranked</h2>
+<p><strong>1. Never Really Know (Ire) (8-1), top pick.</strong> The mile is her trip: 4-2-0-2 at the distance and 2-1-0-1 on this course. Her turf figures are climbing and sitting at the top of the playable group: 66, 72 (won Sep 3 here, rallied 2-wide and lasted), 72 (3rd Sep 28 at this exact mile in an OC20k as the 2-1 favorite, finished well on the rail). I am throwing out the 35 at Churchill in April (weakened badly, wide) and the 52 on dirt at Fair Grounds (wrong surface). Last year&#x27;s per-start ($18.8k on two starts) shows she was a useful filly early, and the Irish pedigree (No Nay Never) fits firm turf. Norm Casse wins at 16% on turf with a $2.27 ROI and Murrill rides at 16% at the meet. Stalking style should get a tracking trip behind a contested pace. The risk is the class step from claiming and OC20k company into an open N1X allowance, and her 72 still needs a few points to reach par 78.</p>
+<p><strong>2. Cinquante Cinq (Ire) (9-2), second choice.</strong> The improver. Beyers 64, 68, 71 in three career starts, all on this turf course, and the 71 came winning her maiden at today&#x27;s exact mile by three lengths after an awkward start and a rally from 5th. Riley Mott wins at 23% at the meet, Achard 19%, and the pair are 32% together at Indiana Grand with a $3.63 ROI, the best combo number in the race. Per-start of $8.0k on three starts. The catch is the price: 9-2 with these connections could easily go under 7-2 at post, which would take her off the list. Also a first start against winners.</p>
+<p><strong>3. Sudden Rise (8-1), flyer.</strong> Matches the 72 top figure, earned winning an Indiana-bred N2X allowance at this mile on Sep 10. Turf line is 6-2-1-0 here, and she has a real closing kick (Late 92) for a race with speed on the rail. Per-start steady at $7.0k/$8.1k. The knock is the barn: Michelle Elliott is 5% at the meet and the J/T is 1-for-14. Her open-company form is a step below the state-bred wins.</p>
+<p><strong>4. Screamin Nina (10-1), if she runs.</strong> Best per-start in the field and Fosdick/Moncada are 30% together here with a $3.35 ROI, but she is entered back tomorrow and her best work is on dirt. Turf figures top out at 64. Probable scratch.</p>
+<p><strong>5. Let&#x27;s Go Barbie (10-1).</strong> Turf maiden-claiming winner, figures flat at 64 to 68. Needs a big jump to reach par.</p>
+<p><strong>6. Surprenant Cocca (10-1).</strong> Ran an 83 last fall in New York but has been 50 to 70 this year, Brownfield is 0-for-15 at the meet, and she will be hung out in the speed fight.</p>
+<p><strong>7. Take My Picture (12-1).</strong> Hard-knocking 5-year-old (19 turf starts) with a 75 in a stakes at Lone Star in July, but 61 and 63 since and the new barn is 0-for-12 on turf.</p>
+<p><strong>Tossed:</strong> Kenz (first time turf off a fading 53, Asmussen 4% with first-time turfers), Soaring Angel (figures falling from 54 to 28/46), Stormy Paradise (sprinter stretching out, gave way in her last route), Ring Rights (probable scratch).</p>
+<h2>Bottom line</h2>
+<p>Never Really Know at 8-1 is the play: proven at the mile and the course, rising turf figures, fair barn. Cinquante Cinq is the second choice and the one to key with her, provided she holds 7-2 or better on the board. Sudden Rise is a small flyer at 8-1 for the late kick. Watch the board for Collective Beauty getting hammered, which only helps the prices on the others, and for the Ring Rights and Screamin Nina scratches.</p></article>
+  <a class="back" href="../">← All races</a>
+</main>
+</body>
+</html>
