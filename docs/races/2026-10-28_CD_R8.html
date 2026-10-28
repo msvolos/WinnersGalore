@@ -1,0 +1,140 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Churchill Downs Race 8, Wed Oct 28 2026</title>
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#1f4e3d">
+<meta name="apple-mobile-web-app-title" content="Winners">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
+  --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+  --pos: #006300; --neg: #c0302f;
+  --series-a: #2a78d6; --series-b: #eb6834; --series-s: #1baf7a; --series-r: #8a5cd0;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+    --pos: #0ca30c; --neg: #e66767;
+    --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+  --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+  --pos: #0ca30c; --neg: #e66767;
+  --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink);
+  font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 16px 16px 48px; }
+h1 { font-size: 22px; margin: 4px 0 2px; }
+h2 { font-size: 16px; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+h3 { font-size: 15px; margin: 28px 0 10px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .04em; }
+.muted { color: var(--muted); font-weight: normal; }
+.pos { color: var(--pos); } .neg { color: var(--neg); }
+a { color: var(--series-a); }
+.card, .race { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+.hero { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 12px; }
+.hero .card { margin: 0; }
+.hero-label { font-size: 13px; color: var(--ink-2); display: flex; align-items: center; gap: 6px; }
+.hero-value { font-size: 30px; font-weight: 700; margin-top: 2px; }
+.added { font-size: 14px; color: var(--ink-2); margin: 0 0 12px; }
+.swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex: none; }
+.swatch.a { background: var(--series-a); } .swatch.b { background: var(--series-b); } .swatch.s { background: var(--series-s); } .swatch.r { background: var(--series-r); }
+.tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.tile { background: var(--page); border-radius: 8px; padding: 8px; text-align: center; }
+.tile-label { font-size: 11px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .03em; }
+.tile-value { font-size: 18px; font-weight: 700; }
+.tile-sub { font-size: 11px; color: var(--muted); }
+.kv { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; margin: 12px 0 0; font-size: 14px; }
+.kv dt { color: var(--ink-2); } .kv dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+.legend { display: flex; gap: 16px; font-size: 13px; color: var(--ink-2); margin-bottom: 6px; }
+.legend span { display: flex; align-items: center; gap: 6px; }
+.chart-wrap { position: relative; }
+svg { display: block; width: 100%; height: auto; touch-action: pan-y; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 8px; font-size: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.12); display: none; white-space: nowrap; }
+.tip b { display: block; margin-bottom: 2px; }
+.tip div { display: flex; align-items: center; gap: 6px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { padding: 6px 4px; text-align: right; border-bottom: 1px solid var(--grid); }
+th:first-child, td:first-child { text-align: left; }
+thead th { font-size: 12px; color: var(--ink-2); font-weight: 600; }
+.note { font-size: 12px; color: var(--muted); margin: 8px 0 0; }
+.race-head { display: flex; justify-content: space-between; gap: 8px; }
+.race-sub { font-size: 13px; margin-bottom: 8px; }
+.pick { display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 8px; margin-top: 6px; }
+.pick-name { font-weight: 600; }
+.pick-fin { color: var(--ink-2); font-size: 14px; }
+.pick-net { min-width: 64px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.pick-label { font-size: 11px; color: var(--muted); margin-left: 18px; }
+.race-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; font-size: 13px;
+  margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--grid); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@media (max-width: 480px) {
+  .tiles { grid-template-columns: repeat(2, 1fr); }
+  .hero-value { font-size: 24px; }
+}
+
+.back { display: inline-block; margin: 4px 0 10px; font-size: 14px; text-decoration: none; }
+.prose h2 { display: block; font-size: 17px; margin: 22px 0 8px; }
+.prose h2:first-child { margin-top: 0; }
+.prose h3, .prose h4 { font-size: 15px; margin: 18px 0 6px; text-transform: none; letter-spacing: 0; color: var(--ink); }
+.prose p, .prose li { margin: 0 0 10px; }
+.prose ul, .prose ol { padding-left: 20px; margin: 0 0 10px; }
+.prose a { overflow-wrap: anywhere; }
+.prose code { font-size: 13px; background: var(--page); padding: 1px 4px; border-radius: 4px; }
+.table-wrap { overflow-x: auto; margin: 0 0 12px; }
+.prose table { font-size: 13px; }
+.prose td, .prose th { text-align: left; vertical-align: top; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="../">← All races</a>
+  <h1>Churchill Downs Race 8, Wed Oct 28 2026</h1>
+  <div class="muted" style="margin-bottom:12px">Updated Oct 28, 2026 9:07 AM</div>
+  <article class="race"><div class="race-head"><strong>Churchill Downs R8</strong><span class="muted">Wed Oct 28</span></div><div class="race-sub muted">Turf 5 1/2f (OC 80k/N2X)</div><div class="pick"><span class="swatch a"></span><span class="pick-name">Initialize <span class="muted">(7-2)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">Top pick</div><div class="pick"><span class="swatch s"></span><span class="pick-name">Utopian <span class="muted">(10-1)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">2nd pick</div><div class="race-foot muted">Awaiting result</div></article>
+  
+  <h3>Pre-race handicap</h3>
+  <article class="card prose"><p>PP URL: <a href="https://www.drf.com/pp-details/10-28-2026/CD/8/D/USA">https://www.drf.com/pp-details/10-28-2026/CD/8/D/USA</a></p>
+<p>Optional claiming $80,000 / N2X, 3 and up, 5 1/2 furlongs on the turf, purse $134K, Beyer par 92. Twelve in the main body plus three also-eligibles (The Minkster, B D Valeski, Cheval de Guerre). No scratches at handicap time. Odds are morning line (DRF Formulator, 9 AM).</p>
+<h2>Off the list</h2>
+<p>Nobody. The shortest price is Initialize at 7-2, which sits right on the line, so the whole field is playable on the morning line. Initialize is the one most likely to get bet below 7-2 by post time.</p>
+<p><strong>Probable non-starters:</strong> Sprint Out Pass (30-1) is already entered at Mahoning Valley (Race 7) on Nov 2, and he is a dirt horse (0-for-5 on turf). The three also-eligibles only draw in if the main body loses horses, so treat them as long shots to run.</p>
+<h2>Average earnings per start</h2>
+<div class="table-wrap"><table><thead><tr><th>Horse</th><th>ML</th><th>2026</th><th>2025</th></tr></thead><tbody><tr><td>Initialize</td><td>7-2</td><td>$16,555 (8)</td><td>$14,464 (5)</td></tr><tr><td>Bal a Kazoo</td><td>30-1</td><td>$3,239 (6)</td><td>$2,202 (6)</td></tr><tr><td>Sprint Out Pass</td><td>30-1</td><td>$4,538 (12)</td><td>$7,038 (14)</td></tr><tr><td>Corona de Oro</td><td>15-1</td><td>$28,596 (9)</td><td>$5,670 (2)</td></tr><tr><td>Ortley Avenue (Ire)</td><td>9-2</td><td>$32,775 (3)</td><td>$19,350 (4)</td></tr><tr><td>Smokey Smokey</td><td>6-1</td><td>$10,852 (2)</td><td>$20,472 (3)</td></tr><tr><td>Utopian</td><td>10-1</td><td>$15,867 (8)</td><td>$9,526 (5)</td></tr><tr><td>Our Starry Night</td><td>8-1</td><td>$10,417 (6)</td><td>$26,214 (6)</td></tr><tr><td>Moon Sniper</td><td>15-1</td><td>$25,025 (3)</td><td>$2,336 (5)</td></tr><tr><td>Ganaas</td><td>10-1</td><td>$18,917 (4)</td><td>$26,035 (4)</td></tr><tr><td>Twilight Delight</td><td>6-1</td><td>$18,478 (4)</td><td>$39,610 (3)</td></tr><tr><td>Mountain Bear (Ire)</td><td>8-1</td><td>$5,274 (4)</td><td>$19,233 (4)</td></tr></tbody></table></div>
+<p>Corona de Oro&#x27;s number is dirt stakes money (2nd in the El Paso Derby), and Smokey Smokey&#x27;s and Mountain Bear&#x27;s 2026 boxes are small samples, so lean on last year for them.</p>
+<h2>The pace</h2>
+<p>This race is loaded with speed. Initialize and Ortley Avenue both carry a TimeformUS early pace of 119, with Moon Sniper (114), Our Starry Night (111) and Twilight Delight (103) also wanting to be close. The only real closers are Mountain Bear (late 91) and the turf-debuting Corona de Oro (late 102). The recent recaps say the same thing four races running: the projected speed meltdown has not happened, and the top-figure horse near the front has kept winning. I am weighting that here.</p>
+<h2>Playable horses, ranked</h2>
+<p><strong>1. Initialize (7-2).</strong> Best figures in the field and the best connections. Per-start is $16.6k this year on eight starts (4 wins), up from $14.5k last year. His last three Beyers are 91, 87, 91, the 91 last out coming at this exact OC 80k/N2X level at Kentucky Downs, where he set the pace inside and was caught on the wire by a neck. That is one point off par, and nothing else on the playable list has run higher than 87 this year. He is 1-for-2 at Churchill on turf and 4-for-13 on turf overall. Irad Ortiz Jr. (24%) and Maker (18%) are 29% together at CD with a $2.36 ROI. The risk is the price and the pace: he and Ortley Avenue both want the lead, and he is 7-2 on the line with the kind of connections that get bet, so he may not qualify at post.</p>
+<p><strong>2. Utopian (10-1).</strong> The improver. Per-start climbed from $9.5k to $15.9k. Beyers run 67 (excused, a sloppy-track route), 79 when 3rd in a claimer at Indiana, then an 86 winning a $123k N1X here on Sep 26 at today&#x27;s exact 5 1/2 furlongs, saving ground and winning a duel. So he is 1-for-1 over this course at this trip. Camejo is 19% and hits 31% with last-out winners and 26% second off a 45 to 180 day break. Beschizza is a 7% rider, though the J/T pair is 2-for-4. The catch is the N1X to N2X jump with an 86 that still sits six points under par.</p>
+<p><strong>3. Our Starry Night (8-1).</strong> Ran a big 86 at 22-1 to finish 2nd in a Keeneland N2X on Oct 4, beating Ortley Avenue, Twilight Delight, Moon Sniper and Mountain Bear, all back here. He is 0-2-0 in five CD turf starts and was 2nd at this exact level here in May. The figure line is jagged (84, 82, 76, 69, 86) and he is another need-the-lead type in a race full of them. Gutierrez 11%, Bauer 14%.</p>
+<p><strong>4. Smokey Smokey (6-1).</strong> Best course and distance form on paper (CD turf 2-0-1-0 with an 89, 4-0-3-0 at the trip, 90 top). He is off since Feb 18 and his last two were 77 and 78 on synthetic, so the trend is down, but Riley Mott takes over and his barn is 22% off 180-day layoffs ($3.09) and 29% in turf sprints ($4.51). Torres is 11% and the J/T is 10% at CD. Live, though he needs a race back from eight months off to fire.</p>
+<p><strong>5. Ortley Avenue (Ire) (9-2).</strong> Highest 2026 per-start ($32.8k on three starts) and 5-1-2-1 at the trip, but the Beyers are flat to slipping (86, 87, 84), and he was caught at the eighth pole and settled for 3rd as the 5-2 favorite at Keeneland last out. He will be in a speed fight with Initialize. Gaffalione 15%, Weaver 16%, J/T 24%.</p>
+<p><strong>6. Twilight Delight (6-1).</strong> Three-year-old with an 84 twice in his last two (an N1X win, then a willing 4th after a bump at Keeneland). Ortiz J.L. 23% and Leitch is 33% in turf sprints. 84 is well short of par.</p>
+<p><strong>7. Mountain Bear (Ire) (8-1).</strong> The class closer: a 98 lifetime top and a 93 at CD in 2025, and an 86 when 2nd at 7f against this level in September. Toss the Keeneland 75, where he was stymied at the eighth pole. He is a router at heart (1 start at the trip, a 75), and Corrales (11%) and Sweezey (14%) are light.</p>
+<p><strong>8. Ganaas (10-1).</strong> Rising turf line (74, 79, 85), 3rd behind Mountain Bear at KD. McKeever is 0-for-5 in turf sprints and 4% on turf with a $0.24 ROI. Hard to back.</p>
+<p><strong>9. Corona de Oro (15-1).</strong> First time on turf for a 3-year-old who ran 92 on dirt in the El Paso Derby. Stewart is 14% with first-time turfers ($1.71) and 16% in turf sprints ($2.48), and the colt has a string of bullet works at Churchill, including :35 1/5 for 3 furlongs on Oct 22. A real flyer if he handles the grass.</p>
+<p>The rest (Moon Sniper with figures falling 90, 80, 65; Bal a Kazoo, winless this year; Sprint Out Pass, a dirt horse entered elsewhere) are tosses. Among the also-eligibles, B D Valeski and The Minkster would be minor factors if they drew in.</p>
+<h2>Bottom line</h2>
+<p>Initialize at 7-2 is the top pick. He has the top figure (91, one off par), the speed, and a 29% J/T at Churchill, and the last four recaps have all been won by the speed or the top-figure horse. Utopian at 10-1 is the second choice and the value side of the ticket: he already beat N1X company over this exact course and trip and is still improving. If Initialize drops below 7-2 at post, Utopian is the play. Corona de Oro at 15-1 is the flyer for the first-time turf angle and the bullet works.</p>
+<p>Want a printable one-page sheet for the track? Just ask.</p></article>
+  <a class="back" href="../">← All races</a>
+</main>
+</body>
+</html>
