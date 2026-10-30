@@ -22,3 +22,4 @@
 2026-10-28 22:08 evening | graded: 2026-10-28 CD R8 Initialize 2nd (+$2.76), Utopian 10th (-$6.00) | recap: 2026-10-28 CD R8 (trip notes) | new pick: none (evening run) | Top Pick net: -$29.56 | Top 2 net: -$19.04 | note: workbook rebuilt but not refreshed (refresh_excel.ps1 COM disconnect on save, then file locked by the orphaned headless Excel from that attempt; next run will rebuild)
 2026-10-29 09:07 | graded: none pending | recap: none | new pick: 2026-10-29 CD R6 Marcinkowski (9-2) / Charm of Venice (4-1) | Top Pick net: -$29.56 | Top 2 net: -$19.04
 2026-10-29 22:07 evening | graded: 2026-10-29 CD R6 Marcinkowski 5th (-$6.00), Charm of Venice (GB) 3rd (-$3.50) | recap: 2026-10-29 CD R6 (trip notes) | new pick: none (evening run) | Top Pick net: -$35.56 | Top 2 net: -$28.54
+2026-10-30 09:06 | graded: none pending | recap: none | new pick: 2026-10-30 KEE R9 American History (9-2) / Salahudin (6-1) | Top Pick net: -$35.56 | Top 2 net: -$28.54

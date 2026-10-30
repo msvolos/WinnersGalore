@@ -1,0 +1,131 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Keeneland Race 9, Fri Oct 30 2026</title>
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#1f4e3d">
+<meta name="apple-mobile-web-app-title" content="Winners">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
+  --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+  --pos: #006300; --neg: #c0302f;
+  --series-a: #2a78d6; --series-b: #eb6834; --series-s: #1baf7a; --series-r: #8a5cd0;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+    --pos: #0ca30c; --neg: #e66767;
+    --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+  --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+  --pos: #0ca30c; --neg: #e66767;
+  --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink);
+  font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 16px 16px 48px; }
+h1 { font-size: 22px; margin: 4px 0 2px; }
+h2 { font-size: 16px; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+h3 { font-size: 15px; margin: 28px 0 10px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .04em; }
+.muted { color: var(--muted); font-weight: normal; }
+.pos { color: var(--pos); } .neg { color: var(--neg); }
+a { color: var(--series-a); }
+.card, .race { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+.hero { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 12px; }
+.hero .card { margin: 0; }
+.hero-label { font-size: 13px; color: var(--ink-2); display: flex; align-items: center; gap: 6px; }
+.hero-value { font-size: 30px; font-weight: 700; margin-top: 2px; }
+.added { font-size: 14px; color: var(--ink-2); margin: 0 0 12px; }
+.swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex: none; }
+.swatch.a { background: var(--series-a); } .swatch.b { background: var(--series-b); } .swatch.s { background: var(--series-s); } .swatch.r { background: var(--series-r); }
+.tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.tile { background: var(--page); border-radius: 8px; padding: 8px; text-align: center; }
+.tile-label { font-size: 11px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .03em; }
+.tile-value { font-size: 18px; font-weight: 700; }
+.tile-sub { font-size: 11px; color: var(--muted); }
+.kv { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; margin: 12px 0 0; font-size: 14px; }
+.kv dt { color: var(--ink-2); } .kv dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+.legend { display: flex; gap: 16px; font-size: 13px; color: var(--ink-2); margin-bottom: 6px; }
+.legend span { display: flex; align-items: center; gap: 6px; }
+.chart-wrap { position: relative; }
+svg { display: block; width: 100%; height: auto; touch-action: pan-y; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 8px; font-size: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.12); display: none; white-space: nowrap; }
+.tip b { display: block; margin-bottom: 2px; }
+.tip div { display: flex; align-items: center; gap: 6px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { padding: 6px 4px; text-align: right; border-bottom: 1px solid var(--grid); }
+th:first-child, td:first-child { text-align: left; }
+thead th { font-size: 12px; color: var(--ink-2); font-weight: 600; }
+.note { font-size: 12px; color: var(--muted); margin: 8px 0 0; }
+.race-head { display: flex; justify-content: space-between; gap: 8px; }
+.race-sub { font-size: 13px; margin-bottom: 8px; }
+.pick { display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 8px; margin-top: 6px; }
+.pick-name { font-weight: 600; }
+.pick-fin { color: var(--ink-2); font-size: 14px; }
+.pick-net { min-width: 64px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.pick-label { font-size: 11px; color: var(--muted); margin-left: 18px; }
+.race-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; font-size: 13px;
+  margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--grid); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@media (max-width: 480px) {
+  .tiles { grid-template-columns: repeat(2, 1fr); }
+  .hero-value { font-size: 24px; }
+}
+
+.back { display: inline-block; margin: 4px 0 10px; font-size: 14px; text-decoration: none; }
+.prose h2 { display: block; font-size: 17px; margin: 22px 0 8px; }
+.prose h2:first-child { margin-top: 0; }
+.prose h3, .prose h4 { font-size: 15px; margin: 18px 0 6px; text-transform: none; letter-spacing: 0; color: var(--ink); }
+.prose p, .prose li { margin: 0 0 10px; }
+.prose ul, .prose ol { padding-left: 20px; margin: 0 0 10px; }
+.prose a { overflow-wrap: anywhere; }
+.prose code { font-size: 13px; background: var(--page); padding: 1px 4px; border-radius: 4px; }
+.table-wrap { overflow-x: auto; margin: 0 0 12px; }
+.prose table { font-size: 13px; }
+.prose td, .prose th { text-align: left; vertical-align: top; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="../">← All races</a>
+  <h1>Keeneland Race 9, Fri Oct 30 2026</h1>
+  <div class="muted" style="margin-bottom:12px">Updated Oct 30, 2026 9:06 AM</div>
+  <article class="race"><div class="race-head"><strong>Keeneland R9</strong><span class="muted">Fri Oct 30</span></div><div class="race-sub muted">Dirt 1 1/16m (G1 Breeders&#x27; Cup Juvenile)</div><div class="pick"><span class="swatch a"></span><span class="pick-name">American History <span class="muted">(9-2)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">Top pick</div><div class="pick"><span class="swatch s"></span><span class="pick-name">Salahudin <span class="muted">(6-1)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">2nd pick</div><div class="race-foot muted">Awaiting result</div></article>
+  
+  <h3>Pre-race handicap</h3>
+  <article class="card prose"><p>PP URL: <a href="https://www.drf.com/pp-details/10-30-2026/KEE/9/D/USA">https://www.drf.com/pp-details/10-30-2026/KEE/9/D/USA</a></p>
+<p>The Grade 1 Breeders&#x27; Cup Juvenile for 2-year-olds, 1 1/16 miles on the dirt, purse $2M, Beyer par 97. Eight entered, six runners after scratches. Post 4:55 PM ET. Odds are morning line (DRF Formulator, 9 AM).</p>
+<h2>Off the list</h2>
+<p><strong>Hughes (1-1)</strong> is the class of the race: 4-for-4, the only triple-digit figure in the field (100 winning the American Pharoah G1 at this distance), and Prat with Baffert (38% together). He is also no price, so he is the horse to beat and the reason the others pay.</p>
+<p><strong>Scratched:</strong> Gaudreau (8-1, Chad Brown) and Earth Song (20-1). Gaudreau beat Coach Pope in August, so his exit removes one live closer and tightens the field to six.</p>
+<h2>Pace</h2>
+<p>Three horses want the front on TimeformUS early pace: Coach Pope 113, He Is No Lie 112 (from post 8), and Hughes 106, with Salahudin 99 not far off. DRF&#x27;s notes call the race light on pace, but those numbers say the early half should be honest, which is the setup a late runner needs.</p>
+<h2>Playable horses, ranked</h2>
+<p><strong>1. American History (9-2)</strong> is the play. Best per-start money in the race ($230,607 on 2 starts, $461,213 total) and a rising line, 73 to 85, the 85 coming when he won the Breeders&#x27; Futurity G1 at this exact track and distance on Oct 3 after breaking slow, beating Coach Pope by a length. He owns the best late pace in the field (TimeformUS late 97, next best 76), and if the three speed horses press each other he is the one coming. Pletcher and Velazquez are 39% at Keeneland ($2.87 ROI), and the 4-furlong bullet here Oct 14 (best of 30) says he is fit. The risk: his 85 is 15 points below Hughes&#x27;s 100, and if Hughes gets loose on an easy lead, there is nobody to run down.</p>
+<p><strong>2. Salahudin (6-1)</strong> is the improver. Unbeaten in three, figures climbing every start (58, 75, 83), and $130,724 per start. He beat He Is No Lie in the Iroquois G3 at a mile at Churchill after blowing the start and going wide, which is a better effort than the 83 reads. Baffert wins 29% (32% at 31 to 60 days) and the works are bullets (Oct 25 CD :47 best of 80). The catches: first try at 1 1/16, a third different rider in three starts, and he is Baffert&#x27;s second string behind the favorite.</p>
+<p><strong>3. Coach Pope (4-1)</strong> has the top figure among the playable horses (88 in August) but it has slid since (88, 86, 83) and he already lost to American History at this trip. Ortiz with McPeek is strong (33% together), but McPeek is only 8% in graded stakes ($0.57), and he will be in the speed fight from post 7. Fair, flat, and under the bigger prices.</p>
+<p><strong>4. Damavand (20-1)</strong> is the flyer. Pletcher has won this race three of the last four years, the colt won his maiden at this track and distance Oct 4 in a duel after being bumped and carried wide, and his figures went 62 to 75 with a bullet work Oct 14. The 75 is far from par, so he needs a big jump, but at 20-1 he fits a small saver.</p>
+<p><strong>5. He Is No Lie (15-1)</strong> has speed and an honest second in the Iroquois (82), and the stumbled 52 at Del Mar is excused. Post 8 forces him to use himself early against Coach Pope and Hughes, and O&#x27;Neill is 6% in graded stakes. Pass.</p>
+<h2>Bottom line</h2>
+<p>American History at 9-2 is the bet: course-and-distance G1 winner, rising figures, best closing kick, and a pace setup that should help him. Salahudin at 6-1 is the second choice on the rising line and the Baffert barn. Damavand at 20-1 is a small flyer. Watch the board: American History could get bet under 7-2 as the clear second choice, and if he does the play shifts to Salahudin.</p></article>
+  <a class="back" href="../">← All races</a>
+</main>
+</body>
+</html>
