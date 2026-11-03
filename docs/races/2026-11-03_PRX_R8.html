@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Parx Racing Race 8, Tue Nov 3 2026</title>
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#1f4e3d">
+<meta name="apple-mobile-web-app-title" content="Winners">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
+  --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+  --pos: #006300; --neg: #c0302f;
+  --series-a: #2a78d6; --series-b: #eb6834; --series-s: #1baf7a; --series-r: #8a5cd0;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+    --pos: #0ca30c; --neg: #e66767;
+    --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+  --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+  --pos: #0ca30c; --neg: #e66767;
+  --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink);
+  font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 16px 16px 48px; }
+h1 { font-size: 22px; margin: 4px 0 2px; }
+h2 { font-size: 16px; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+h3 { font-size: 15px; margin: 28px 0 10px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .04em; }
+.muted { color: var(--muted); font-weight: normal; }
+.pos { color: var(--pos); } .neg { color: var(--neg); }
+a { color: var(--series-a); }
+.card, .race { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+.hero { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 12px; }
+.hero .card { margin: 0; }
+.hero-label { font-size: 13px; color: var(--ink-2); display: flex; align-items: center; gap: 6px; }
+.hero-value { font-size: 30px; font-weight: 700; margin-top: 2px; }
+.added { font-size: 14px; color: var(--ink-2); margin: 0 0 12px; }
+.swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex: none; }
+.swatch.a { background: var(--series-a); } .swatch.b { background: var(--series-b); } .swatch.s { background: var(--series-s); } .swatch.r { background: var(--series-r); }
+.tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.tile { background: var(--page); border-radius: 8px; padding: 8px; text-align: center; }
+.tile-label { font-size: 11px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .03em; }
+.tile-value { font-size: 18px; font-weight: 700; }
+.tile-sub { font-size: 11px; color: var(--muted); }
+.kv { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; margin: 12px 0 0; font-size: 14px; }
+.kv dt { color: var(--ink-2); } .kv dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+.legend { display: flex; gap: 16px; font-size: 13px; color: var(--ink-2); margin-bottom: 6px; }
+.legend span { display: flex; align-items: center; gap: 6px; }
+.chart-wrap { position: relative; }
+svg { display: block; width: 100%; height: auto; touch-action: pan-y; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 8px; font-size: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.12); display: none; white-space: nowrap; }
+.tip b { display: block; margin-bottom: 2px; }
+.tip div { display: flex; align-items: center; gap: 6px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { padding: 6px 4px; text-align: right; border-bottom: 1px solid var(--grid); }
+th:first-child, td:first-child { text-align: left; }
+thead th { font-size: 12px; color: var(--ink-2); font-weight: 600; }
+.note { font-size: 12px; color: var(--muted); margin: 8px 0 0; }
+.race-head { display: flex; justify-content: space-between; gap: 8px; }
+.race-sub { font-size: 13px; margin-bottom: 8px; }
+.pick { display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 8px; margin-top: 6px; }
+.pick-name { font-weight: 600; }
+.pick-fin { color: var(--ink-2); font-size: 14px; }
+.pick-net { min-width: 64px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.pick-label { font-size: 11px; color: var(--muted); margin-left: 18px; }
+.race-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; font-size: 13px;
+  margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--grid); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@media (max-width: 480px) {
+  .tiles { grid-template-columns: repeat(2, 1fr); }
+  .hero-value { font-size: 24px; }
+}
+
+.back { display: inline-block; margin: 4px 0 10px; font-size: 14px; text-decoration: none; }
+.prose h2 { display: block; font-size: 17px; margin: 22px 0 8px; }
+.prose h2:first-child { margin-top: 0; }
+.prose h3, .prose h4 { font-size: 15px; margin: 18px 0 6px; text-transform: none; letter-spacing: 0; color: var(--ink); }
+.prose p, .prose li { margin: 0 0 10px; }
+.prose ul, .prose ol { padding-left: 20px; margin: 0 0 10px; }
+.prose a { overflow-wrap: anywhere; }
+.prose code { font-size: 13px; background: var(--page); padding: 1px 4px; border-radius: 4px; }
+.table-wrap { overflow-x: auto; margin: 0 0 12px; }
+.prose table { font-size: 13px; }
+.prose td, .prose th { text-align: left; vertical-align: top; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="../">← All races</a>
+  <h1>Parx Racing Race 8, Tue Nov 3 2026</h1>
+  <div class="muted" style="margin-bottom:12px">Updated Nov 3, 2026 9:06 AM</div>
+  <article class="race"><div class="race-head"><strong>Parx Racing R8</strong><span class="muted">Tue Nov 03</span></div><div class="race-sub muted">Dirt 1m 70y (OC 50k/C)</div><div class="pick"><span class="swatch a"></span><span class="pick-name">Dreambuilder <span class="muted">(7-2)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">Top pick</div><div class="pick"><span class="swatch s"></span><span class="pick-name">Happy Offering <span class="muted">(5-1)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">2nd pick</div><div class="race-foot muted">Awaiting result</div></article>
+  
+  <h3>Pre-race handicap</h3>
+  <article class="card prose"><p>PP URL: <a href="https://www.drf.com/pp-details/11-03-2026/PRX/8/D/USA">https://www.drf.com/pp-details/11-03-2026/PRX/8/D/USA</a></p>
+<p>Optional claiming $50,000 / allowance for 3-year-olds and up, 1 mile 70 yards on the dirt, purse $52,000, Beyer par not listed. Nine entered, no scratches. Post 3:14 PM ET. Odds are morning line (DRF Formulator, 9 AM).</p>
+<h2>Off the list</h2>
+<p><strong>Preacha Meyers (3-1)</strong> is the horse to beat. Six wins in nine starts this year ($20,600 a start), 4-for-5 at Parx, 3-for-4 at the distance, and he won this exact OC 50k/C level last out with an 87 after a race-long duel. Ness is 25% and 27% off a win. No price.</p>
+<p>No probable scratches. Nobody is cross-entered or shows a line too recent to run back.</p>
+<h2>Pace</h2>
+<p>There is a lot of early speed. Happy Offering (TimeformUS early pace 102) and Freedom&#x27;s Echo (101) are the quickest, with Big Blue Line and Preacha Meyers (97) and Red Zone Runner (96) right there. Expect a contested half. The best late numbers belong to Waitlist (99), Just a Fair Shake (91) and In Spades (87). Dreambuilder (late 84) is a stalker who can sit off the speed.</p>
+<h2>Playable horses, ranked</h2>
+<p><strong>1. Dreambuilder (7-2)</strong> has the best recent figure in the field and the clearest upward line: 76, 82, 90. The 82 was a 5 1/4-length win at this exact OC 50k/C level at Parx in August (&quot;stalked, bid, handily&quot;), and the 90 came last out when 2nd by 1 1/2 in a $75k stakes, rallying along the rail. Per-start is $8,621 this year and $10,449 last year, and he is 3-2-0 in 8 starts at Parx. Paco Lopez (21%, 25% this year) and Preciado (22%) are 25% together at Parx ($1.55), and the barn hits 27% in allowance races. He can stalk the speed duel instead of being in it. The risk: he is 0-for-4 at 1 mile 70 yards (all before this form turn), and with the top figure he may be bet under 7-2. Pass him if he goes off shorter.</p>
+<p><strong>2. Happy Offering (5-1)</strong> has the most money per start in the field ($18,608 on 9 starts this year, three wins and four 2nds) and is 3-2-1 in 6 tries at this distance. Figures 87, 85, 79, 81 put him right with Preacha Meyers. Pennington is 16%, Spina 13%. The concerns: he is the fastest horse early and will have company, he is first time at Parx, and he has run 2nd or 3rd three straight times as the favorite, which says he finds one too many late.</p>
+<p><strong>3. Waitlist (8-1)</strong> is the pace-collapse play. Best late pace in the race (99), won his last start at Parx (77, swung wide and drew clear), and the barn angle is strong: Dunn/Martinez are 33% at Parx ($2.77) and Dunn is 50% with last-out winners ($6.94). Per-start $11,021. The figures (77, 82, 83, 78) are a step below the top two and he moves up from an OC 25k.</p>
+<p><strong>4. Big Blue Line (9-2)</strong> ran 2nd at this level last out (84) and his line is rising (79, 81, 84), with Sanchez (28%) riding. But he is 0-for-9 this year at seven, and he will be part of the speed fight.</p>
+<p><strong>5. In Spades (8-1)</strong> is a Parx lifer (39 starts here, 5 wins at the distance) with a high per-start number on Pennsylvania-bred bonuses. Figures 82 then 77; Rangel is 8%.</p>
+<p><strong>6. Red Zone Runner (8-1)</strong>, <strong>Freedom&#x27;s Echo (12-1)</strong> and <strong>Just a Fair Shake (10-1)</strong> all fall short on figures. Red Zone Runner&#x27;s best dirt-fast figure is a 73, Freedom&#x27;s Echo is stuck around 74 and will be in the speed duel with a 10-pound apprentice, and Just a Fair Shake (79, 76, 59, 76) has been away since an illness scratch for a barn that is 0-for-5 at the meet.</p>
+<h2>Bottom line</h2>
+<p>Dreambuilder at 7-2 is the bet if he holds the price: the top and rising figure, a win at this level, a good trip setup off the speed, and a 25% local combo. Happy Offering at 5-1 is the second choice on per-start money and distance record. Waitlist at 8-1 is the flyer if the speed fight collapses.</p></article>
+  <a class="back" href="../">← All races</a>
+</main>
+</body>
+</html>
