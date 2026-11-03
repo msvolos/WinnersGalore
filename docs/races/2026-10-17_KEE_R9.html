@@ -12,6 +12,25 @@
 <meta name="apple-mobile-web-app-title" content="Winners">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<script>
+(function () {
+  const build = "20261103091105";
+  function check() {
+    fetch("../version.txt?t=" + Date.now(), {cache: "no-store"})
+      .then(r => r.ok ? r.text() : build)
+      .then(v => {
+        v = v.trim();
+        const u = new URL(location.href);
+        // Skip if we already asked for this build and still got an old copy.
+        if (v && v !== build && u.searchParams.get("v") !== v) { u.searchParams.set("v", v); location.replace(u); }
+      })
+      .catch(() => {});
+  }
+  check();
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) check(); });
+  addEventListener("pageshow", e => { if (e.persisted) check(); });
+})();
+</script>
 <style>
 :root {
   color-scheme: light;
@@ -106,7 +125,7 @@ thead th { font-size: 12px; color: var(--ink-2); font-weight: 600; }
 <main>
   <a class="back" href="../">← All races</a>
   <h1>Keeneland Race 9, Saturday October 17, 2026</h1>
-  <div class="muted" style="margin-bottom:12px">Updated Nov 3, 2026 9:06 AM</div>
+  <div class="muted" style="margin-bottom:12px">Updated Nov 3, 2026 9:11 AM</div>
   <article class="race"><div class="race-head"><strong>Keeneland R9</strong><span class="muted">Sat Oct 17</span></div><div class="race-sub muted">Dirt 7f (G2 Raven Run)</div><div class="pick"><span class="swatch a"></span><span class="pick-name">Conceit <span class="muted">(4-1)</span></span><span class="pick-fin">4th</span><span class="pick-net"><span class="neg">−$6.00</span></span></div><div class="pick-label">Top pick</div><div class="pick"><span class="swatch s"></span><span class="pick-name">Percy&#x27;s Bar <span class="muted">(6-1)</span></span><span class="pick-fin">9th</span><span class="pick-net"><span class="neg">−$6.00</span></span></div><div class="pick-label">2nd pick</div><div class="race-foot"><span>Top 2 net: <b class="neg">−$12.00</b></span><span class="muted">Won by Movie Night ($9.84)</span></div></article>
   <h3>Race recap</h3><article class="card prose"><p><strong>Result:</strong> Movie Night won ($9.84, $5.56, $4.48), Mythical 2nd, Army&#x27;s Marauder 3rd. Grade 2 Raven Run, 7 furlongs on a fast dirt track in 1:23.28 (:22.75, :45.84, 1:10.34). Exacta 11-2 paid $93.58 and the trifecta $1,621.80. Yo Fancy scratched.</p>
 <p><em>DRF&#x27;s free chart with trip notes was no longer available when this recap was written, so it uses the official result only.</em></p>

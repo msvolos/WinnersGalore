@@ -12,6 +12,25 @@
 <meta name="apple-mobile-web-app-title" content="Winners">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<script>
+(function () {
+  const build = "20261103091105";
+  function check() {
+    fetch("../version.txt?t=" + Date.now(), {cache: "no-store"})
+      .then(r => r.ok ? r.text() : build)
+      .then(v => {
+        v = v.trim();
+        const u = new URL(location.href);
+        // Skip if we already asked for this build and still got an old copy.
+        if (v && v !== build && u.searchParams.get("v") !== v) { u.searchParams.set("v", v); location.replace(u); }
+      })
+      .catch(() => {});
+  }
+  check();
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) check(); });
+  addEventListener("pageshow", e => { if (e.persisted) check(); });
+})();
+</script>
 <style>
 :root {
   color-scheme: light;
@@ -106,7 +125,7 @@ thead th { font-size: 12px; color: var(--ink-2); font-weight: 600; }
 <main>
   <a class="back" href="../">← All races</a>
   <h1>Remington Park Race 8, Fri Oct 16 2026</h1>
-  <div class="muted" style="margin-bottom:12px">Updated Nov 3, 2026 9:06 AM</div>
+  <div class="muted" style="margin-bottom:12px">Updated Nov 3, 2026 9:11 AM</div>
   <article class="race"><div class="race-head"><strong>Remington Park R8</strong><span class="muted">Fri Oct 16</span></div><div class="race-sub muted">Dirt 6f</div><div class="pick"><span class="swatch a"></span><span class="pick-name">Easy as Pie <span class="muted">(9-2)</span></span><span class="pick-fin">2nd</span><span class="pick-net"><span class="pos">+$7.00</span></span></div><div class="pick-label">Top pick</div><div class="pick"><span class="swatch s"></span><span class="pick-name">Missin Hollywood <span class="muted">(8-1)</span></span><span class="pick-fin">11th</span><span class="pick-net"><span class="neg">−$6.00</span></span></div><div class="pick-label">2nd pick</div><div class="race-foot"><span>Top 2 net: <b class="pos">+$1.00</b></span><span class="muted">Won by Connors Outlaw ($47.60)</span></div></article>
   <h3>Race recap</h3><article class="card prose"><p><strong>Result:</strong> Connors Outlaw won ($47.60, $18.20, $6.40), Easy as Pie 2nd, Cajun Stoops 3rd. Oklahoma Classics Sprint, 6 furlongs on a fast dirt track in 1:10.69 (:22.05, :45.41, :57.89). Exacta 3-1 paid $376.20. No scratches.</p>
 <p><em>DRF&#x27;s free chart with trip notes was no longer available when this recap was written, so it uses the official result only.</em></p>

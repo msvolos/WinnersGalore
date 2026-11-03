@@ -12,6 +12,25 @@
 <meta name="apple-mobile-web-app-title" content="Winners">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<script>
+(function () {
+  const build = "20261103091105";
+  function check() {
+    fetch("version.txt?t=" + Date.now(), {cache: "no-store"})
+      .then(r => r.ok ? r.text() : build)
+      .then(v => {
+        v = v.trim();
+        const u = new URL(location.href);
+        // Skip if we already asked for this build and still got an old copy.
+        if (v && v !== build && u.searchParams.get("v") !== v) { u.searchParams.set("v", v); location.replace(u); }
+      })
+      .catch(() => {});
+  }
+  check();
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) check(); });
+  addEventListener("pageshow", e => { if (e.persisted) check(); });
+})();
+</script>
 <meta name="description" content="Daily DRF Race of the Day picks and $2 Win/Place/Show results: top pick vs top 2 picks.">
 <style>
 :root {
@@ -94,7 +113,7 @@ thead th { font-size: 12px; color: var(--ink-2); font-weight: 600; }
 <body>
 <main>
   <h1>DRF Race of the Day Tracker</h1>
-  <div class="muted">Updated Nov 3, 2026 9:06 AM · 16 races graded</div>
+  <div class="muted">Updated Nov 3, 2026 9:11 AM · 16 races graded</div>
 
   <div class="hero">
     <div class="card"><div class="hero-label"><span class="swatch a"></span>Top Pick net</div>

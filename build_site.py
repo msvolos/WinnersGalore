@@ -378,12 +378,14 @@ def build(rows):
                 rtext = re.sub(r"^#\s+.+$", "", f.read(), count=1, flags=re.M)
             recap = (f'<h3>Race recap</h3><article class="card prose">{md_to_html(rtext)}</article>')
         pages[base + ".html"] = RACE_TEMPLATE.format(
-            css=SHARED_CSS, icon_tags=icon_tags("../"), title=esc(title), updated=updated,
+            css=SHARED_CSS, icon_tags=icon_tags("../"), fresh_tag=fresh_tag("../"),
+            title=esc(title), updated=updated,
             card=race_card(r, is_pending, show_link=False), recap=recap,
             body=md_to_html(text))
 
     index_html = TEMPLATE.format(
         icon_tags=icon_tags(),
+        fresh_tag=fresh_tag(),
         updated=updated,
         n_races=two["races"],
         headline_top=money(top["net"], True), headline_top_cls=signcls(top["net"]),
@@ -412,6 +414,7 @@ TEMPLATE = """<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>DRF Race Tracker</title>
 {icon_tags}
+{fresh_tag}
 <meta name="description" content="Daily DRF Race of the Day picks and $2 Win/Place/Show results: top pick vs top 2 picks.">
 <style>
 :root {{
@@ -610,6 +613,33 @@ def icon_tags(prefix=""):
             '<meta name="apple-mobile-web-app-capable" content="yes">')
 
 
+BUILD_ID = datetime.now().strftime("%Y%m%d%H%M%S")
+
+
+def fresh_tag(prefix=""):
+    """Reload the page when a newer build is published (phones and the home-screen
+    app keep old copies), by checking version.txt and busting the cache with ?v=."""
+    return f"""<script>
+(function () {{
+  const build = "{BUILD_ID}";
+  function check() {{
+    fetch("{prefix}version.txt?t=" + Date.now(), {{cache: "no-store"}})
+      .then(r => r.ok ? r.text() : build)
+      .then(v => {{
+        v = v.trim();
+        const u = new URL(location.href);
+        // Skip if we already asked for this build and still got an old copy.
+        if (v && v !== build && u.searchParams.get("v") !== v) {{ u.searchParams.set("v", v); location.replace(u); }}
+      }})
+      .catch(() => {{}});
+  }}
+  check();
+  document.addEventListener("visibilitychange", () => {{ if (!document.hidden) check(); }});
+  addEventListener("pageshow", e => {{ if (e.persisted) check(); }});
+}})();
+</script>"""
+
+
 SHARED_CSS = re.search(r"<style>(.*?)</style>", TEMPLATE, re.S).group(1) \
     .replace("{{", "{").replace("}}", "}")
 
@@ -620,6 +650,7 @@ RACE_TEMPLATE = """<!doctype html>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>{title}</title>
 {icon_tags}
+{fresh_tag}
 <style>{css}
 .back {{ display: inline-block; margin: 4px 0 10px; font-size: 14px; text-decoration: none; }}
 .prose h2 {{ display: block; font-size: 17px; margin: 22px 0 8px; }}
@@ -665,6 +696,8 @@ def main():
     for name, page in pages.items():
         with open(os.path.join(races_dir, name), "w", encoding="utf-8") as f:
             f.write(page)
+    with open(os.path.join(out_dir, "version.txt"), "w", encoding="utf-8") as f:
+        f.write(BUILD_ID + "\n")  # read by fresh_tag() to spot an out-of-date page
     for stale in set(os.listdir(races_dir)) - set(pages):  # write-up removed from the ledger
         if stale.endswith(".html"):
             os.remove(os.path.join(races_dir, stale))
