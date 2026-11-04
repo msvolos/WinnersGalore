@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Churchill Downs Race 9, Wed Nov 4 2026</title>
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#1f4e3d">
+<meta name="apple-mobile-web-app-title" content="Winners">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script>
+(function () {
+  const build = "20261104090709";
+  function check() {
+    fetch("../version.txt?t=" + Date.now(), {cache: "no-store"})
+      .then(r => r.ok ? r.text() : build)
+      .then(v => {
+        v = v.trim();
+        const u = new URL(location.href);
+        // Skip if we already asked for this build and still got an old copy.
+        if (v && v !== build && u.searchParams.get("v") !== v) { u.searchParams.set("v", v); location.replace(u); }
+      })
+      .catch(() => {});
+  }
+  check();
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) check(); });
+  addEventListener("pageshow", e => { if (e.persisted) check(); });
+})();
+</script>
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
+  --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+  --pos: #006300; --neg: #c0302f;
+  --series-a: #2a78d6; --series-b: #eb6834; --series-s: #1baf7a; --series-r: #8a5cd0;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+    --pos: #0ca30c; --neg: #e66767;
+    --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+  --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+  --pos: #0ca30c; --neg: #e66767;
+  --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink);
+  font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 16px 16px 48px; }
+h1 { font-size: 22px; margin: 4px 0 2px; }
+h2 { font-size: 16px; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+h3 { font-size: 15px; margin: 28px 0 10px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .04em; }
+.muted { color: var(--muted); font-weight: normal; }
+.pos { color: var(--pos); } .neg { color: var(--neg); }
+a { color: var(--series-a); }
+.card, .race { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+.hero { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 12px; }
+.hero .card { margin: 0; }
+.hero-label { font-size: 13px; color: var(--ink-2); display: flex; align-items: center; gap: 6px; }
+.hero-value { font-size: 30px; font-weight: 700; margin-top: 2px; }
+.added { font-size: 14px; color: var(--ink-2); margin: 0 0 12px; }
+.swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex: none; }
+.swatch.a { background: var(--series-a); } .swatch.b { background: var(--series-b); } .swatch.s { background: var(--series-s); } .swatch.r { background: var(--series-r); }
+.tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.tile { background: var(--page); border-radius: 8px; padding: 8px; text-align: center; }
+.tile-label { font-size: 11px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .03em; }
+.tile-value { font-size: 18px; font-weight: 700; }
+.tile-sub { font-size: 11px; color: var(--muted); }
+.kv { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; margin: 12px 0 0; font-size: 14px; }
+.kv dt { color: var(--ink-2); } .kv dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+.legend { display: flex; gap: 16px; font-size: 13px; color: var(--ink-2); margin-bottom: 6px; }
+.legend span { display: flex; align-items: center; gap: 6px; }
+.chart-wrap { position: relative; }
+svg { display: block; width: 100%; height: auto; touch-action: pan-y; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 8px; font-size: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.12); display: none; white-space: nowrap; }
+.tip b { display: block; margin-bottom: 2px; }
+.tip div { display: flex; align-items: center; gap: 6px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { padding: 6px 4px; text-align: right; border-bottom: 1px solid var(--grid); }
+th:first-child, td:first-child { text-align: left; }
+thead th { font-size: 12px; color: var(--ink-2); font-weight: 600; }
+.note { font-size: 12px; color: var(--muted); margin: 8px 0 0; }
+.race-head { display: flex; justify-content: space-between; gap: 8px; }
+.race-sub { font-size: 13px; margin-bottom: 8px; }
+.pick { display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 8px; margin-top: 6px; }
+.pick-name { font-weight: 600; }
+.pick-fin { color: var(--ink-2); font-size: 14px; }
+.pick-net { min-width: 64px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.pick-label { font-size: 11px; color: var(--muted); margin-left: 18px; }
+.race-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; font-size: 13px;
+  margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--grid); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@media (max-width: 480px) {
+  .tiles { grid-template-columns: repeat(2, 1fr); }
+  .hero-value { font-size: 24px; }
+}
+
+.back { display: inline-block; margin: 4px 0 10px; font-size: 14px; text-decoration: none; }
+.prose h2 { display: block; font-size: 17px; margin: 22px 0 8px; }
+.prose h2:first-child { margin-top: 0; }
+.prose h3, .prose h4 { font-size: 15px; margin: 18px 0 6px; text-transform: none; letter-spacing: 0; color: var(--ink); }
+.prose p, .prose li { margin: 0 0 10px; }
+.prose ul, .prose ol { padding-left: 20px; margin: 0 0 10px; }
+.prose a { overflow-wrap: anywhere; }
+.prose code { font-size: 13px; background: var(--page); padding: 1px 4px; border-radius: 4px; }
+.table-wrap { overflow-x: auto; margin: 0 0 12px; }
+.prose table { font-size: 13px; }
+.prose td, .prose th { text-align: left; vertical-align: top; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="../">← All races</a>
+  <h1>Churchill Downs Race 9, Wed Nov 4 2026</h1>
+  <div class="muted" style="margin-bottom:12px">Updated Nov 4, 2026 9:07 AM</div>
+  <article class="race"><div class="race-head"><strong>Churchill Downs R9</strong><span class="muted">Wed Nov 04</span></div><div class="race-sub muted">Dirt 1 1/16m (F&amp;M OC 80k/N2X)</div><div class="pick"><span class="swatch a"></span><span class="pick-name">Ile de La Cite <span class="muted">(5-1)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">Top pick</div><div class="pick"><span class="swatch s"></span><span class="pick-name">Resist <span class="muted">(8-1)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">2nd pick</div><div class="race-foot muted">Awaiting result</div></article>
+  
+  <h3>Pre-race handicap</h3>
+  <article class="card prose"><p>PP URL: <a href="https://www.drf.com/pp-details/11-04-2026/CD/9/D/USA">https://www.drf.com/pp-details/11-04-2026/CD/9/D/USA</a></p>
+<p>Optional claiming $80,000 / allowance (N2X) for fillies and mares, 1 1/16 miles on the dirt, purse $134,000, Beyer par 85. Ten entered, no scratches. Post 4:55 PM ET. Odds are morning line (DRF Formulator, 9 AM).</p>
+<h2>Off the list</h2>
+<p><strong>Clairita (5-2)</strong> is the horse to beat. 2-for-2 at Churchill (one of those an 86 on a sloppy track), second at this exact OC 80k/N2X level at Keeneland last out as the 6-5 favorite, and Alvarado/Bauer are 38% together at CD. Her recent figures (81, 82) sit just under par. No price.</p>
+<p>No probable scratches. Nobody is cross-entered. Rando&#x27;s last entry (Keeneland 10/7) was a vet scratch (injured), so she comes back off a question mark.</p>
+<h2>Pace</h2>
+<p>Plenty of speed. TimeformUS early pace: Athaliah 110, Ile de La Cite 106, Shilling 102, Clairita 99, Rando 94. Resist (late 94) and Being Myself (late 93) are the best late runners. Expect an honest pace with three or four hustling early.</p>
+<h2>Playable, ranked</h2>
+<p><strong>1. Ile de La Cite (5-1).</strong> The best per-start in the field ($44,700 on 3 starts this year, two wins), and the figure line is the sell: 60, 69, 81, climbing every start. The 81 came winning an N1X at this exact track and trip (CD 1 1/16) on September 26, when she shook clear and held. Gaffalione/Walsh are 24% together at CD ($2.48), Walsh 17% on the year and 22% off a win. Proven at the track, the distance and the surface, with nothing to project. The risk: she is a speed horse in a race full of speed (Athaliah and Shilling will want the lead too), and the 81 is still 4 under par and a point or so under Clairita.</p>
+<p><strong>2. Resist (8-1).</strong> The class here. A 3-year-old who ran in the Kentucky Oaks (79, a throw-out line after she broke out and brushed the gate from post 13), was third in the $300k Bourbonette and the Cincinnati Trophy, and won an OC 62k at Turfway. Per-start $30,400 this year on 4 starts, second best in the field. She gets 118 lbs against the older mares at 121 to 123, and her late pace (94) is the best in the race with a speed fight shaping up in front of her. Drury is 40% at the meet and 23% off 180+ day layoffs; Hernandez/Drury 23% at CD ($2.47). The catch: six months off since the Oaks, and most of her form is on Turfway&#x27;s synthetic (only one fast-dirt start).</p>
+<p><strong>3. Being Myself (7-2).</strong> Right on the line. Per-start $45,300 last year, $10,800 this year, and the figures are going the wrong way: 83, 79, 74 (turf), 73. The last one at CD (5th after a bump at the break, 7 wide, gaining) is excusable, but DeVaux is 0-for-5 at the meet and DeVaux/Saez are 0-for-17 together. She will likely be bet under 7-2.</p>
+<p><strong>4. Shilling (9-2).</strong> Ortiz/McPeek are 36% at CD and she has been a stakes horse (third in the Leslie&#x27;s Lady at 79). But her best work is in sprints, her two-turn figures are 66 and 64, and she is off since August after an illness scratch. Another speed horse in a speed race.</p>
+<p><strong>5. Athaliah (8-1).</strong> First time on fast dirt after a turf career (74s), with back-to-back bullet works at CD (4f :47, 1/34 and 1/45) and a Gun Runner pedigree that should like dirt. The fastest early speed here (110), which helps and hurts. A flyer.</p>
+<p><strong>6. Rando (20-1).</strong> Owns the top recent figure (86 winning an N1X at Ellis in August), but the line is erratic (81, 62, 74, 73, 86, 72), she was 6th in this level at CD in September, and she returns off a vet scratch.</p>
+<p><strong>7. Tapit Quick (10-1).</strong> Stewart/Gutierrez are 38% together at CD ($6.80), but she is a sprinter (0 starts at the distance) with figures falling (76, 70, 70).</p>
+<p><strong>8. Clay Basket (30-1)</strong> and <strong>Flash Wear (30-1).</strong> Clay Basket is a Beulah allowance winner (69s) on a huge class jump. Flash Wear has been off form all year; blinkers on for a 6% barn.</p>
+<h2>Bottom line</h2>
+<p>Ile de La Cite at 5-1 is the play: rising figures, proven at the exact track and trip, and the best per-start on the board. Resist at 8-1 is the second choice, the class horse with the best late pace if the speed burns up. Athaliah at 8-1 is a small flyer on the bullet works and the surface switch. Watch the board: Being Myself only qualifies if she stays at 7-2 or longer.</p></article>
+  <a class="back" href="../">← All races</a>
+</main>
+</body>
+</html>
