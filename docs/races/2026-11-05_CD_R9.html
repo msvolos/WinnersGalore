@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Churchill Downs Race 9, Thu Nov 5 2026</title>
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#1f4e3d">
+<meta name="apple-mobile-web-app-title" content="Winners">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script>
+(function () {
+  const build = "20261105090651";
+  function check() {
+    fetch("../version.txt?t=" + Date.now(), {cache: "no-store"})
+      .then(r => r.ok ? r.text() : build)
+      .then(v => {
+        v = v.trim();
+        const u = new URL(location.href);
+        // Skip if we already asked for this build and still got an old copy.
+        if (v && v !== build && u.searchParams.get("v") !== v) { u.searchParams.set("v", v); location.replace(u); }
+      })
+      .catch(() => {});
+  }
+  check();
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) check(); });
+  addEventListener("pageshow", e => { if (e.persisted) check(); });
+})();
+</script>
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
+  --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+  --pos: #006300; --neg: #c0302f;
+  --series-a: #2a78d6; --series-b: #eb6834; --series-s: #1baf7a; --series-r: #8a5cd0;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+    --pos: #0ca30c; --neg: #e66767;
+    --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+  --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+  --pos: #0ca30c; --neg: #e66767;
+  --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink);
+  font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 16px 16px 48px; }
+h1 { font-size: 22px; margin: 4px 0 2px; }
+h2 { font-size: 16px; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+h3 { font-size: 15px; margin: 28px 0 10px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .04em; }
+.muted { color: var(--muted); font-weight: normal; }
+.pos { color: var(--pos); } .neg { color: var(--neg); }
+a { color: var(--series-a); }
+.card, .race { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+.hero { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 12px; }
+.hero .card { margin: 0; }
+.hero-label { font-size: 13px; color: var(--ink-2); display: flex; align-items: center; gap: 6px; }
+.hero-value { font-size: 30px; font-weight: 700; margin-top: 2px; }
+.added { font-size: 14px; color: var(--ink-2); margin: 0 0 12px; }
+.swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex: none; }
+.swatch.a { background: var(--series-a); } .swatch.b { background: var(--series-b); } .swatch.s { background: var(--series-s); } .swatch.r { background: var(--series-r); }
+.tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.tile { background: var(--page); border-radius: 8px; padding: 8px; text-align: center; }
+.tile-label { font-size: 11px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .03em; }
+.tile-value { font-size: 18px; font-weight: 700; }
+.tile-sub { font-size: 11px; color: var(--muted); }
+.kv { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; margin: 12px 0 0; font-size: 14px; }
+.kv dt { color: var(--ink-2); } .kv dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+.legend { display: flex; gap: 16px; font-size: 13px; color: var(--ink-2); margin-bottom: 6px; }
+.legend span { display: flex; align-items: center; gap: 6px; }
+.chart-wrap { position: relative; }
+svg { display: block; width: 100%; height: auto; touch-action: pan-y; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 8px; font-size: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.12); display: none; white-space: nowrap; }
+.tip b { display: block; margin-bottom: 2px; }
+.tip div { display: flex; align-items: center; gap: 6px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { padding: 6px 4px; text-align: right; border-bottom: 1px solid var(--grid); }
+th:first-child, td:first-child { text-align: left; }
+thead th { font-size: 12px; color: var(--ink-2); font-weight: 600; }
+.note { font-size: 12px; color: var(--muted); margin: 8px 0 0; }
+.race-head { display: flex; justify-content: space-between; gap: 8px; }
+.race-sub { font-size: 13px; margin-bottom: 8px; }
+.pick { display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 8px; margin-top: 6px; }
+.pick-name { font-weight: 600; }
+.pick-fin { color: var(--ink-2); font-size: 14px; }
+.pick-net { min-width: 64px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.pick-label { font-size: 11px; color: var(--muted); margin-left: 18px; }
+.race-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; font-size: 13px;
+  margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--grid); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@media (max-width: 480px) {
+  .tiles { grid-template-columns: repeat(2, 1fr); }
+  .hero-value { font-size: 24px; }
+}
+
+.back { display: inline-block; margin: 4px 0 10px; font-size: 14px; text-decoration: none; }
+.prose h2 { display: block; font-size: 17px; margin: 22px 0 8px; }
+.prose h2:first-child { margin-top: 0; }
+.prose h3, .prose h4 { font-size: 15px; margin: 18px 0 6px; text-transform: none; letter-spacing: 0; color: var(--ink); }
+.prose p, .prose li { margin: 0 0 10px; }
+.prose ul, .prose ol { padding-left: 20px; margin: 0 0 10px; }
+.prose a { overflow-wrap: anywhere; }
+.prose code { font-size: 13px; background: var(--page); padding: 1px 4px; border-radius: 4px; }
+.table-wrap { overflow-x: auto; margin: 0 0 12px; }
+.prose table { font-size: 13px; }
+.prose td, .prose th { text-align: left; vertical-align: top; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="../">← All races</a>
+  <h1>Churchill Downs Race 9, Thu Nov 5 2026</h1>
+  <div class="muted" style="margin-bottom:12px">Updated Nov 5, 2026 9:06 AM</div>
+  <article class="race"><div class="race-head"><strong>Churchill Downs R9</strong><span class="muted">Thu Nov 05</span></div><div class="race-sub muted">Dirt 1m (Alw 127k N1X)</div><div class="pick"><span class="swatch a"></span><span class="pick-name">Penalty Box <span class="muted">(9-2)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">Top pick</div><div class="pick"><span class="swatch s"></span><span class="pick-name">Don&#x27;s Winner <span class="muted">(6-1)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">2nd pick</div><div class="race-foot muted">Awaiting result</div></article>
+  
+  <h3>Pre-race handicap</h3>
+  <article class="card prose"><p>PP URL: <a href="https://www.drf.com/pp-details/11-05-2026/CD/9/D/USA">https://www.drf.com/pp-details/11-05-2026/CD/9/D/USA</a></p>
+<p>1 mile on the dirt, 3yo+ allowance, $127k, N1X. Beyer par 92. Post 4:55 PM ET. Twelve in the body of the race plus four also-eligibles (13 to 16), who only run if scratches open spots. Odds are morning line (no live tote at write-up time), so check the board at post.</p>
+<h2>Off the list and probable scratches</h2>
+<p>Zimmer (6-5) is off the list on the odds rule. He is the class of the field on paper: a 102 Beyer winning a Belmont maiden by daylight in his only start, early pace 113, Stidham with Gaffalione. That figure is 10 over par, but it came in a 6 furlong sprint, he is first time around two turns, and he will be a short price. He sets the shape of the race (he wants the lead or close to it), and he is the horse to beat.</p>
+<p>Spirit of Royal (50-1) is listed as entered on Nov 8 at Churchill (Race 8), so he is a probable scratch here. A scratch would let the first also-eligible (Sixtyseven Mustang) into the field.</p>
+<h2>Playable horses, ranked</h2>
+<p><strong>1. Penalty Box (9-2)</strong> - the top pick. Per-start of about $23.6k on 4 starts this year (and $10.7k on 6 last year, all maiden races with three seconds and a third). The trend is the sell: Beyers 84 (winning a CD maiden at 7f), then 73, 85 and 91 in three N1X/N2L routes, that 91 coming here at Churchill on Sept 23 when he vied, got the lead and only yielded the last sixteenth. It is the best recent figure among the playable horses by six points and sits one under par. He is 3-1-1-1 at Churchill and has hit the board in 4 of 5 at the distance. Curtis/McCarthy are 28% together at CD with a $3.03 ROI, a real positive for a 9-2 shot. The risk is the pace: his early figure (113) matches Zimmer and Charlie Foxtrot (114) adds more speed, and he has been a hard-knocker who finds one or two better (1 win in 10). If he gets brave on the lead with Zimmer, he can come up short again.</p>
+<p><strong>2. Don&#x27;s Winner (6-1)</strong> - the improver and second choice. Per-start of $21.3k on 5 starts, all this year. Beyers 80 (2nd in a CD maiden at 7f), 70 on slop, 69 on turf (excuse both as surface experiments), then 81 winning a CD maiden at 1 1/8 on Sept 27 when he rallied 3-4 wide and drove past. That is a rising dirt route line, and the TimeformUS late figure (79) says he will sit off a speed-heavy pace. Joe Sharp is 23% at the meet (3 for 13) and 23% off a win, Luis Saez is 19% at the meet, and the pair are 18% at CD. Risk: first try against winners, and the 81 is 11 under par.</p>
+<p><strong>3. Pimlott (15-1)</strong> - the flyer. Per-start $21.2k on 3 starts. Beyers 82 (won a 7f maiden), 85 at a mile against N2L (5th, beaten about a length, waiting and brushed at the 3/16), then a 26 at Keeneland Oct 4 after a bumped start. Throw that line out. The 85 is the second best recent figure among the playable horses and it came at today&#x27;s distance. Walsh is 17% this year, but Carlos Torres is only 6% at the meet (1 for 18). At 15-1, a small win bet if he gets back to the 85.</p>
+<p><strong>4. Mister Punch (8-1)</strong> - the hot barn. Brad Cox is 5 for 11 (45%) at the meet and 26% off 180+ days, Prat is 25%, first-time Lasix. But he has not run since being eased in a stakes on Dec 20, 2025, and his best figure is an 80 winning a CD maiden a year ago. Bullet work Oct 16 at Turfway (4f :47.3, 1 of 44). The barn makes him dangerous at a price, the numbers do not.</p>
+<p><strong>5. Sweet Freedom (12-1)</strong> - per-start $23.2k on 4 starts this year, Beyers 76, 80, 84, 82, a 3rd in this same N1X condition at CD in June. But he is a sprinter (most of his best work at 6 1/2 to 7 furlongs), off since June 3, and Medina is 7% this year (4% off 61-180 days).</p>
+<p><strong>6. Charlie Foxtrot (30-1)</strong> - per-start $23.1k this year, Beyers rising 60, 68, 78, 80, but all in sprints and he has never routed on dirt. Early 114 makes him a pace factor who should tire.</p>
+<p><strong>7. Tripp&#x27;s Promise (20-1)</strong> - per-start $9.5k this year ($35.8k last year off a stakes placing). Flat at 65 to 74, Romans/Corrales 5% together at CD.</p>
+<p><strong>8. Sure to Appeal (20-1)</strong> - Lynch is 38% at the meet, but the figures (65, 66, 73) are 19 under par.</p>
+<p><strong>9. I Did I Did (20-1)</strong> - 77, 74, then a 55 when he faded in May. Off five months, declining.</p>
+<p><strong>10. Bridgesong (15-1)</strong> - won a CD maiden at 1 1/16 with a 78, then a 72 in a Keeneland N1X. Per-start $5.1k. Too slow.</p>
+<p>Also-eligibles if they draw in: Commentate (8-1) has the best late pace (89) and Ortiz/DeVaux at 25% CD, but a 76 Beyer in a 7f maiden. Laughnowcrylater (10-1) won a CD starter allowance at a mile with a 77 (life best 89 a year ago), and Sixtyseven Mustang (15-1) and Blue Forty Two (20-1) are both in the 70s.</p>
+<h2>Bottom line</h2>
+<p>Penalty Box at 9-2 is the play: best figure among the horses you can bet, one under par, proven at Churchill and the distance, and a CD jockey/trainer combo with a $3.03 ROI. Don&#x27;s Winner at 6-1 is the second choice, a rising router who should get the pace to close into. Pimlott at 15-1 is the flyer if you excuse the bumped start last out. Zimmer is the one to beat at 6-5, and watch Spirit of Royal, who is likely to scratch to run Sunday.</p></article>
+  <a class="back" href="../">← All races</a>
+</main>
+</body>
+</html>
