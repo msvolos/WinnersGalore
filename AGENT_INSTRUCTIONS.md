@@ -90,7 +90,7 @@ For every graded race that has no file in `recaps\` yet, write `recaps\YYYY-MM-D
 ## Takeaway
 <One or two sentences: the lesson for the method, tied to patterns in earlier recaps when there is one.>
 ```
-Rules: use the user's writing style (no em-dashes, American spelling, plain and confident, no "not this, but that" phrasing). Never invent trip details: describe positions or trouble only when the chart comments say so. A horse's approximate post-time odds are its $2 win price ÷ 2 − 1; when the winner or a pick went off below 3.5-1 even though its morning line was playable, say so, since the bet would not have qualified at post time. Keep it to about 250 to 350 words.
+Rules: use the user's writing style (no em-dashes, American spelling, plain and confident, no "not this, but that" phrasing). Never invent trip details: describe positions or trouble only when the chart comments say so. A horse's approximate post-time odds are its $2 win price ÷ 2 − 1; when a pick went off below the minimum price the write-up gave it (or below 2-1), say so, since the bet would not have qualified at post time. Keep it to about 250 to 350 words.
 
 ## Step 2: Find the race to handicap
 
@@ -111,7 +111,7 @@ Rules: use the user's writing style (no em-dashes, American spelling, plain and 
 ## Step 3: Handicap it and record both picks
 
 1. Open the race's PP URL in Chrome. Wait, scroll to the bottom so all horses load, and read the full page text. Confirm the horse count matches "Show Horses (N/N)" and that the "Register to access" gate is absent.
-2. Use the Skill tool to run **`anthropic-skills:handicap-race`**, giving it the full PP text and naming the race (track, race number, date). This is an unattended run, so do not ask the user anything (which race, whether to print a sheet, etc.). Follow the skill's method fully, including the 3.5-to-1 minimum odds rule and its listed scratches. The skill names a top pick and a second choice; record both.
+2. Use the Skill tool to run **`anthropic-skills:handicap-race`**, giving it the full PP text and naming the race (track, race number, date). This is an unattended run, so do not ask the user anything (which race, whether to print a sheet, etc.). Follow the skill's method fully, including its fair-odds line on the contenders (favorites included), the 2-1 price floor, and its listed scratches. Use the morning line as the odds (there is no live tote in the morning). The skill names a top pick and a second choice; record both, even when it says neither is an overlay at the morning line. (Races before 2026-11-07 were picked under the old hard 3.5-to-1 rule.)
 3. Save the full write-up to `handicaps\YYYY-MM-DD_TRACKCODE_R#.md` (race date), with the PP URL at the top.
 4. Append one row to `ledger.csv`: race_date (YYYY-MM-DD), track_code, track_name, race_number, surface (and distance), pp_url, pick_program, pick_horse, pick_ml_odds (e.g. 8-1), second_choice, handicapped_on = today, status = `pending`, wagered = 6, notes = one-line reason for the pick, second_program, second_ml_odds, second_status = `pending`, second_wagered = 6, `pick_reason` and `second_reason` (see the tags below). Leave the other result fields blank.
    - **Pick reason tags.** For each pick, record the one tag that best names the main case the write-up makes for it (the reason it is ranked where it is), from this fixed list:
@@ -125,7 +125,8 @@ Rules: use the user's writing style (no em-dashes, American spelling, plain and 
      - `earnings`: the per-start earnings screen is the main angle
      - `other`: none of the above (say what in `notes`)
      Tag the honest main reason, not a flattering one. These tags are for checking later which kinds of picks pay off.
-   - If the skill finds no horse at 3.5-1 or longer worth playing, record `status` = `no_play` (and `second_status` = `no_play`) with wagered/returned/net = 0 and the reason in notes.
+   - Start `notes` with each pick's win % and value ratio from the skill's table, e.g. `Value: top 22% / 1.32 (overlay), 2nd 25% / 1.12 (fair).` so value calls can be checked against results later.
+   - If the skill finds no contender at 2-1 or longer worth naming, record `status` = `no_play` (and `second_status` = `no_play`) with wagered/returned/net = 0 and the reason in notes.
    - If it names a top pick but no second choice, set `second_status` = `no_play` and `second_wagered` = 0.
    - Quote any CSV field that contains a comma. Keep the header row and column order unchanged.
 

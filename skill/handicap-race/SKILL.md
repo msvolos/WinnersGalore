@@ -1,24 +1,33 @@
 ---
 name: handicap-race
 description: >-
-  Handicap a horse race using Mike's value-hunting method (average earnings per
-  start, recent form trend, jockey/trainer win rates, and a 3.5-to-1 minimum
-  odds rule for finding a diamond in the rough). Use this whenever the user
-  provides Daily Racing Form past performances (as a PDF, pasted text, or an
-  open Chrome tab) and wants to handicap, analyze, break down, or pick a race,
-  find value plays or longshots, or asks who to bet. Trigger even if the user
-  does not say the word "handicap" as long as racing past performances are
-  involved and they want an opinion on the race.
+  Handicap a horse race using Mike's value method (average earnings per start,
+  recent form trend, jockey/trainer win rates, then a fair-odds line on the
+  real contenders to find the horse whose price beats its chance). Use this
+  whenever the user provides Daily Racing Form past performances (as a PDF,
+  pasted text, or an open Chrome tab) and wants to handicap, analyze, break
+  down, or pick a race, find value plays or overlays, or asks who to bet.
+  Trigger even if the user does not say the word "handicap" as long as racing
+  past performances are involved and they want an opinion on the race.
 ---
 
 # Handicap a Race (Mike's Method)
 
-Mike bets small win amounts and hunts for value, so the whole job is finding a
-**diamond in the rough**: a horse the crowd is underrating that his numbers say
-is live. Speed alone does not win him money because the fast, obvious horses are
-bet down below a price worth taking. Keep that goal in front of you the whole
-time. A correct handicap that only crowns the 7-5 favorite has failed him, even
-if that horse wins.
+Mike bets small win/place/show amounts and wants the best return over time.
+The job has two halves, in this order:
+
+1. **Find the horses most likely to win.** Judge the whole field on figures,
+   form and connections, favorites included.
+2. **Bet the one whose price is better than its chance.** Put a fair-odds line
+   on the real contenders and play the horse the board is underpricing.
+
+A big price on its own is not value, and a short price on its own is not a
+reason to pass. Value is the gap between the horse's real chance and the odds.
+Mike's own tracked results drove this: picks at 7-2 to 5-1 held up, picks
+reaching past 5-1 lost close to half their stake, and the morning-line
+favorite outperformed both of the old picks. The old hard 3.5-to-1 floor kept
+throwing out the most likely winners and kept pushing the pick toward
+longshots.
 
 ## Step 0 - Get the past performances
 
@@ -50,30 +59,30 @@ prior year from the yearly box:
 avg earnings/start = year earnings / year starts
 ```
 
-This is Mike's first screen because it rewards horses that show up and hit the
-board against their class, not just the odd big score. Two judgment calls matter:
+This is a screen that rewards horses that show up and hit the board against
+their class. Two judgment calls matter:
 
 - **Lightly raced this year gets weighted toward last year.** If a horse has
   only one or two starts this year, its current per-start number is noisy, so
-  lean on last year's figure and treat this year as a small sample. Mike calls
-  this out specifically.
+  lean on last year's figure and treat this year as a small sample.
 - **A high per-start on few starts is a flag to investigate, not an automatic
   knock.** A horse who is 2-for-3 this year with a fat per-start number is
-  exactly the improving type worth a look, especially at a price.
+  often the improving type worth a look.
 
-Lay the numbers out so the comparison is visible, then move on. Do not rank yet.
+Lay the numbers out so the comparison is visible, then move on. Per-start is a
+tiebreaker later, never the main case for a pick.
 
 ## Step 2 - Recent form trend
 
 Read each horse's last three or four race lines and ask one question: **is this
-horse getting stronger or weaker?** Look at the Beyer Speed Figures (the number
-after the date/conditions), finishing positions, beaten lengths, and the trip
-comment on the right.
+horse getting stronger or weaker?** Look at the Beyer Speed Figures, finishing
+positions, beaten lengths, and the trip comment on the right. Compare the best
+recent figure to the race's Beyer par.
 
 - Rising Beyers, sharper finishes, and "gaining", "willingly", "drew clear"
-  comments mean a horse on the improve. That is the good kind.
+  comments mean a horse on the improve.
 - Falling figures and "faded", "no rally", "outrun" mean a horse going the
-  wrong way, discount it even if the connections are strong.
+  wrong way. Discount it even if the connections are strong.
 - **Excuse a legitimately bad line.** A troubled trip ("blocked", "steadied",
   "broke slow", "wide"), or an obvious experiment (a sprinter tried around two
   turns, a turf horse on dirt, a big class jump) can be struck through rather
@@ -88,68 +97,125 @@ their names, e.g. `.21` = 21%). Also use, when shown:
 - The **jockey/trainer combo** line (win % and ROI, often written like
   `J/T 2025-26 WO (53 .32 $2.35)` meaning 53 starts, 32% wins, $2.35 return per
   $2). A strong combo ROI is a real positive.
-- The **closer-look / trainer paragraph**, which often flags angles like "wins
-  at 18% with first-time turfers" or "this barn hits the board 40% with
-  longshots at an average payoff of $13.93". For Mike's longshot hunting, a
-  low win-percent barn that is known for live prices can be a plus, not a minus.
+- The **closer-look / trainer paragraph**, which flags angles like "wins at
+  18% with first-time turfers" or "hits the board 40% with longshots at an
+  average payoff of $13.93".
 
-Strong connections raise confidence; weak win rates are a caution unless the
-price and the longshot angle justify it.
+Strong connections raise a horse's chance. Weak win rates lower it. A rider
+under about 10% at the meet (or 0-for-the-meet on a real sample), or a J/T
+combo under 10%, keeps a horse out of the top-pick spot; every top pick with
+that flag missed the board in Mike's tracked races. A longshot-barn angle can
+earn a horse the flyer spot, not the top spot.
 
-## Step 4 - Apply the 3.5-to-1 odds rule
+## Step 4 - Name the contenders (whole field, favorites included)
 
-Mike will not bet a horse at shorter than **3.5 to 1** (7/2). The stake is too
-small to bother below that. So:
+Pick out the three to five horses with a real chance to win, regardless of
+price. Use the factors above, in this order of weight:
 
-- Take the morning-line odds for each horse. Anything **shorter than 3.5-1**
-  (7-2), for example 7-5, 8-5, 2-1, 5-2, 3-1, is **off his list**. Name these
-  horses and note if they are the class of the field, but set them aside. They
-  are context for the shape of the race, not plays.
-- Everything **3.5-1 (7/2) or longer** is playable and gets ranked.
-- Morning line is only an estimate. If live tote odds are available (from the
-  Chrome tab), prefer them and say which you used. Remind Mike that a horse can
-  drift onto or off his list by post time, so the final call is the board.
+1. **Figures and trend.** The best recent Beyers (at or near par, or the best
+   in the field) on a rising or steady line.
+2. **Connections.** Jockey, trainer and combo win rates.
+3. **Smart context** that changes how much to trust the numbers:
+   - **Surface and distance switches.** First time on turf, first sprint after
+     routes, first time long, dirt-to-synthetic, and so on. A horse **proven
+     on today's surface and distance** (check the surface record line, e.g.
+     `Turf(328) 5 2 2 0`) is more reliable than one projecting to it.
+   - **Class moves.** Dropping in class after facing tougher is a positive;
+     jumping from claimers or maidens into a stakes is a question to raise.
+   - **Pace.** Note who wants the lead and who closes. Use it as a tiebreaker
+     only. A projected pace collapse is never the main reason to rate a horse
+     highly: speed held up more often than it collapsed in Mike's tracked
+     races, and closers picked on a pace meltdown went 0 for 5 in the money.
+   - **Probable scratches.** A horse cross-entered in another race the same
+     weekend, entered main-track-only on a turf race with the turf up, or one
+     whose last line is a day or two before today's card, is likely to
+     scratch. Flag it, leave it out of the contenders, and note that a scratch
+     shifts the prices on the others.
 
-## Step 5 - Rank the playable horses and name the diamond
+Lightly raced improvers with a 20%+ jockey, trainer or combo were the profile
+that hit the board most in the tracked results. Supporting angles (per-start
+earnings, course-and-distance record, pace setup) went 0 for 8 in the money
+when they were the main case for a top pick, so they break ties only.
 
-Now synthesize the three factors for the horses that cleared the odds rule.
-Weigh a rising trend and a fair price heavily, since that is where his edge
-lives. A proven, improving horse at 8-1 is worth more to him than a flat,
-fading horse at 4-1.
+## Step 5 - Fair-odds line and the value pick
 
-Layer in **smart context** that changes how much to trust the numbers:
+Give each contender an honest **win chance** in percent. The contenders
+together should usually total about 70 to 90%, leaving the rest for the
+non-contenders. Be realistic: a standout favorite might be 40 to 50%, a
+solid second choice 20 to 25%, a live outsider 8 to 12%.
 
-- **Surface and distance switches.** First time on turf, first sprint after
-  routes, first time long, dirt-to-synthetic, and so on. Flag these clearly. A
-  horse **proven on today's surface and distance** (check the surface record
-  line, e.g. `Turf(328) 5 2 2 0`) is more reliable than one projecting to it.
-- **Probable scratches.** A horse cross-entered in another race the same weekend,
-  or one whose last line is dated a day or two before today's card (it already
-  ran and cannot come back that fast), is likely to scratch. Flag it and note
-  that a scratch improves the prices on the others.
-- **Class moves.** Dropping in class after facing tougher is a positive; jumping
-  from claimers or maidens into a stakes is a question to raise.
+Convert each chance to **fair odds**, and compare to the price:
 
-Land on a clear recommendation: a top pick that best fits his profile (value +
-rising form + fair connections), a second choice, and a deeper flyer or two if
-the price is big enough to be interesting. Explain the one thing that could go
-wrong with the top pick (the turf switch, the bounce risk, the old legs), so it
-is an honest read.
+```
+fair odds (to 1) = 100 / win% - 1        (25% -> 3-1, 40% -> 1.5-1)
+value ratio      = win% / 100 x (odds + 1)
+```
+
+Use live tote odds when available (say so), otherwise the morning line.
+
+- **Overlay:** value ratio of **1.25 or more**. The horse pays at least 25%
+  more than its chance is worth. This is a bet.
+- **Fair:** about 1.0 to 1.25. Playable only as the second choice.
+- **Underlay:** under 1.0. Do not bet it, however likely it is to win. Name it
+  as the horse to beat.
+
+**Price floor: 2-1.** Mike's stake is small, so a horse shorter than 2-1 is
+not a bet even if it is an overlay. It stays in the analysis as the horse to
+beat. (Horses from 2-1 to 3-1 are now fully playable; they were thrown out
+under the old 7-2 rule.)
+
+Choose the picks:
+
+- **Top pick:** the contender with the best value ratio at 2-1 or longer that
+  also clears the connections floor. When two are close (within about 0.1),
+  take the one with the higher win chance. Do not prefer a horse just because
+  its price is longer; the value ratio already counts the price.
+- **Second choice:** the next best value ratio among the contenders at 2-1 or
+  longer.
+- **Flyer (optional):** a non-contender at a big price with one live angle
+  (the pace meltdown, the longshot barn, the hidden figure). This is where
+  contrarian stories belong.
+- **No overlay on the board:** still name a top pick and second choice (the
+  best two value ratios) so the race can be tracked, but say plainly that
+  neither is an overlay at these odds and give the minimum price that would
+  make each one a bet (the odds where the value ratio reaches 1.25:
+  `100 x 1.25 / win% - 1`).
+
+Explain the one thing that could go wrong with the top pick (the class jump,
+the bounce risk, the old legs), so it is an honest read.
+
+### At the window
+
+The final call is the board. Give Mike each pick's minimum bettable price (the
+odds where its value ratio is 1.25, and never below 2-1). If the top pick is
+under that price at post and the second choice is still above its own, bet the
+second choice. In the tracked races, picks that took money (went off shorter than
+their morning line) hit the board 9 of 12 times, while picks that drifted out to about one
+and a half times their morning line or more hit 1 of 6. A big drift is a
+warning, not a gift.
 
 ## Output format
 
 Deliver the analysis **in the chat** (no file unless Mike asks for one). Write
 it as readable prose with light structure, in this order:
 
-1. One line naming the race (track, race number, distance, surface, conditions).
-2. The horses **off the list** on the odds rule, and any **probable scratches**,
-   with a one-line reason each. This clears the deck the way he thinks.
-3. The **playable horses, ranked**, each with a short paragraph walking his three
-   steps (earnings per start, trend, connections) plus any surface/class flag.
-   Lead each with the horse name and its odds.
-4. A **bottom line**: the top pick, the second choice, and any flyer, phrased as
-   how he would actually bet it.
-5. Offer once, in a single line, to build it into a printable one-page sheet if
+1. One line naming the race (track, race number, distance, surface, conditions,
+   Beyer par if shown).
+2. **Probable scratches**, with a one-line reason each.
+3. **The contenders**, each with a short paragraph walking the method (figures
+   and trend first, then connections, earnings and any surface, class or pace
+   flag). Lead each with the horse name and odds. Below the paragraphs, a
+   small table:
+
+   | Horse | Odds | Win % | Fair odds | Value ratio | Call |
+   |---|---|---|---|---|---|
+
+   where Call is Overlay, Fair, Underlay, or Under 2-1.
+4. One or two lines on the **rest of the field** (why they are not contenders,
+   and any flyer).
+5. A **bottom line**: the top pick, the second choice, any flyer, and each
+   pick's minimum price at the window, phrased as how he would actually bet it.
+6. Offer once, in a single line, to build it into a printable one-page sheet if
    he wants one for the track.
 
 ### Writing style (Mike's preferences, always apply)
@@ -159,38 +225,45 @@ it as readable prose with light structure, in this order:
 - **American English spellings.**
 - **Do not use the "not this, but that" phrasing.** State things directly.
 - Keep the tone plain and confident, like a sharp friend at the rail, not a
-  hedging report. Do not drown it in bold text or bullets; a ranked list with a
-  paragraph per horse reads best.
+  hedging report. Do not drown it in bold text or bullets; a paragraph per
+  contender plus the one table reads best.
 
 ## Worked example (compressed, for tone and shape)
 
 Input: a Woodbine turf sprint stakes, seven horses.
 
 Output shape:
-> Woodbine Race 9, 5 furlongs on the inner turf, Ontario-bred stakes.
+> Woodbine Race 9, 5 furlongs on the inner turf, Ontario-bred stakes, par 85.
 >
-> Off the list on your odds rule: Outlaw Kid (7-5, fastest horse here, no value)
-> and Poulin in O T (5-2, and he looks cross-entered / just ran yesterday, so
-> likely a scratch anyway).
+> Probable scratch: Poulin in O T (5-2) ran yesterday and should not come back.
 >
-> **Dark Screen (8-1)** - the diamond. Per-start about $7,200 this year, but the
-> trend is the sell: Beyers 58, 66, 76, 89, that 89 a career best last out
-> beaten a neck, and it came on turf so nothing to project (5 turf starts, 2
-> wins). Connections win at a low clip but are flagged as longshot specialists
-> hitting the board 40% at a $13.93 average payoff. Rising, proven surface, live
-> price. Only risk is bouncing off that top figure.
+> **Outlaw Kid (7-5)** - the horse to beat. Beyers 88, 91, 92, two clear of
+> anyone, Husbands/Casse 28% together. He wins this about 40% of the time, but
+> 7-5 is under the 2-1 floor and fair for him is 3-2, so no bet.
 >
-> **Cost of War (6-1)** - the improver. Highest per-start in the group (about
-> $26,700 on 3 starts, two wins), Beyers climbing, strong barn (Aebly 20%, Casse
-> 19%, 18% together). The catch is first time on turf and a top figure well
-> below Dark Screen's.
+> **Cost of War (5-2)** - the value. Beyers 79, 84, 90 on a rising line, about
+> $26,700 a start on 3 starts, Aebly 20% and Casse 19% (18% together). First
+> time on turf is the question, but his dam's foals win on grass. About 30%
+> to win; fair odds 7-3, and 5-2 gives a value ratio of 1.05. Fair, not an
+> overlay on the morning line.
 >
-> ...(remaining playable horses)...
+> **Dark Screen (8-1)** - the overlay. Beyers 58, 66, 76, 89, the 89 a career
+> best beaten a neck, and proven on turf (5 starts, 2 wins). Contreras 15%.
+> About 15%; fair 5.7-1, and 8-1 gives 1.35.
 >
-> Bottom line: Dark Screen at 8-1 is the play, Cost of War the one to key against
-> him if you buy the turf switch, and Mister Blue a small saver at 20-1 on the
-> hot barn. Watch for a Poulin scratch, which only helps your prices.
+> | Horse | Odds | Win % | Fair odds | Value ratio | Call |
+> |---|---|---|---|---|---|
+> | Outlaw Kid | 7-5 | 40% | 1.5-1 | 0.96 | Under 2-1 |
+> | Cost of War | 5-2 | 30% | 2.3-1 | 1.05 | Fair |
+> | Dark Screen | 8-1 | 15% | 5.7-1 | 1.35 | Overlay |
+>
+> The rest are 70s horses going nowhere; Mister Blue (20-1) is a flyer on the
+> hot barn.
+>
+> Bottom line: Dark Screen is the play at 15-2 or better. Cost of War is the
+> second choice and becomes a bet at about 3-1 or better (watch the board). Outlaw
+> Kid is the one to beat.
 
-Notice what the example does: it clears the under-priced horses first, ranks by
-value and trend rather than raw speed, excuses a bad line with a reason, flags
-the surface switch, and calls a probable scratch. That is the method.
+Notice what the example does: it judges the whole field first, rates the
+favorite honestly, prices every contender, and picks on value ratio rather
+than raw speed or raw price. That is the method.
