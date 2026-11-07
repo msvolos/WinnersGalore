@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Belmont Park Race 9, Sat Nov 7 2026</title>
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#1f4e3d">
+<meta name="apple-mobile-web-app-title" content="Winners">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script>
+(function () {
+  const build = "20261107093953";
+  function check() {
+    fetch("../version.txt?t=" + Date.now(), {cache: "no-store"})
+      .then(r => r.ok ? r.text() : build)
+      .then(v => {
+        v = v.trim();
+        const u = new URL(location.href);
+        // Skip if we already asked for this build and still got an old copy.
+        if (v && v !== build && u.searchParams.get("v") !== v) { u.searchParams.set("v", v); location.replace(u); }
+      })
+      .catch(() => {});
+  }
+  check();
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) check(); });
+  addEventListener("pageshow", e => { if (e.persisted) check(); });
+})();
+</script>
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
+  --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+  --pos: #006300; --neg: #c0302f;
+  --series-a: #2a78d6; --series-b: #eb6834; --series-s: #1baf7a; --series-r: #8a5cd0;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+    --pos: #0ca30c; --neg: #e66767;
+    --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+  --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+  --pos: #0ca30c; --neg: #e66767;
+  --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink);
+  font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 16px 16px 48px; }
+h1 { font-size: 22px; margin: 4px 0 2px; }
+h2 { font-size: 16px; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+h3 { font-size: 15px; margin: 28px 0 10px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .04em; }
+.muted { color: var(--muted); font-weight: normal; }
+.pos { color: var(--pos); } .neg { color: var(--neg); }
+a { color: var(--series-a); }
+.card, .race { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+.hero { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 12px; }
+.hero .card { margin: 0; }
+.hero-label { font-size: 13px; color: var(--ink-2); display: flex; align-items: center; gap: 6px; }
+.hero-value { font-size: 30px; font-weight: 700; margin-top: 2px; }
+.added { font-size: 14px; color: var(--ink-2); margin: 0 0 12px; }
+.swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex: none; }
+.swatch.a { background: var(--series-a); } .swatch.b { background: var(--series-b); } .swatch.s { background: var(--series-s); } .swatch.r { background: var(--series-r); }
+.tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.tile { background: var(--page); border-radius: 8px; padding: 8px; text-align: center; }
+.tile-label { font-size: 11px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .03em; }
+.tile-value { font-size: 18px; font-weight: 700; }
+.tile-sub { font-size: 11px; color: var(--muted); }
+.kv { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; margin: 12px 0 0; font-size: 14px; }
+.kv dt { color: var(--ink-2); } .kv dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+.legend { display: flex; gap: 16px; font-size: 13px; color: var(--ink-2); margin-bottom: 6px; }
+.legend span { display: flex; align-items: center; gap: 6px; }
+.chart-wrap { position: relative; }
+svg { display: block; width: 100%; height: auto; touch-action: pan-y; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 8px; font-size: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.12); display: none; white-space: nowrap; }
+.tip b { display: block; margin-bottom: 2px; }
+.tip div { display: flex; align-items: center; gap: 6px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { padding: 6px 4px; text-align: right; border-bottom: 1px solid var(--grid); }
+th:first-child, td:first-child { text-align: left; }
+thead th { font-size: 12px; color: var(--ink-2); font-weight: 600; }
+.note { font-size: 12px; color: var(--muted); margin: 8px 0 0; }
+.race-head { display: flex; justify-content: space-between; gap: 8px; }
+.race-sub { font-size: 13px; margin-bottom: 8px; }
+.pick { display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 8px; margin-top: 6px; }
+.pick-name { font-weight: 600; }
+.pick-fin { color: var(--ink-2); font-size: 14px; }
+.pick-net { min-width: 64px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.pick-label { font-size: 11px; color: var(--muted); margin-left: 18px; }
+.race-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; font-size: 13px;
+  margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--grid); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@media (max-width: 480px) {
+  .tiles { grid-template-columns: repeat(2, 1fr); }
+  .hero-value { font-size: 24px; }
+}
+
+.back { display: inline-block; margin: 4px 0 10px; font-size: 14px; text-decoration: none; }
+.prose h2 { display: block; font-size: 17px; margin: 22px 0 8px; }
+.prose h2:first-child { margin-top: 0; }
+.prose h3, .prose h4 { font-size: 15px; margin: 18px 0 6px; text-transform: none; letter-spacing: 0; color: var(--ink); }
+.prose p, .prose li { margin: 0 0 10px; }
+.prose ul, .prose ol { padding-left: 20px; margin: 0 0 10px; }
+.prose a { overflow-wrap: anywhere; }
+.prose code { font-size: 13px; background: var(--page); padding: 1px 4px; border-radius: 4px; }
+.table-wrap { overflow-x: auto; margin: 0 0 12px; }
+.prose table { font-size: 13px; }
+.prose td, .prose th { text-align: left; vertical-align: top; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="../">← All races</a>
+  <h1>Belmont Park Race 9, Sat Nov 7 2026</h1>
+  <div class="muted" style="margin-bottom:12px">Updated Nov 7, 2026 9:39 AM</div>
+  <article class="race"><div class="race-head"><strong>Belmont Park R9</strong><span class="muted">Sat Nov 07</span></div><div class="race-sub muted">Dirt 1 1/16m (G2 Mother Goose)</div><div class="pick"><span class="swatch a"></span><span class="pick-name">Bodacious Bay <span class="muted">(5-2)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">Top pick</div><div class="pick"><span class="swatch s"></span><span class="pick-name">Tap to Open <span class="muted">(5-1)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">2nd pick</div><div class="race-foot muted">Awaiting result</div></article>
+  
+  <h3>Pre-race handicap</h3>
+  <article class="card prose"><p>PP URL: <a href="https://www.drf.com/pp-details/11-07-2026/BEL/9/D/USA">https://www.drf.com/pp-details/11-07-2026/BEL/9/D/USA</a></p>
+<p>The Grade 2 Mother Goose Stakes for 3-year-old fillies, 1 1/16 miles on the dirt, purse $300K. DRF lists the Beyer par as NA. Post 3:43 PM ET. The track is listed sloppy. Eleven horses, no scratches. Odds are morning line (no live tote at write-up time), so check the board at post.</p>
+<p><em>Rerun at about 10:30 AM after the 9:05 run was blocked by a DRF sign-out.</em></p>
+<h2>Probable scratches</h2>
+<p>None. Nobody shows a cross-entry or a race dated in the last few days. Intrepids Fantasy has been scratched main-track-only twice before, but this race is on the dirt.</p>
+<h2>Average earnings per start</h2>
+<div class="table-wrap"><table><thead><tr><th>Horse</th><th>ML</th><th>2026</th><th>2025</th></tr></thead><tbody><tr><td>Bodacious Bay</td><td>5-2</td><td>$141.7k (5)</td><td>none</td></tr><tr><td>Iron Orchard</td><td>12-1</td><td>$34.6k (4)</td><td>$93.0k (4)</td></tr><tr><td>Cognition</td><td>9-2</td><td>$64.8k (1)</td><td>$12.0k (1)</td></tr><tr><td>Tap to Open</td><td>5-1</td><td>$47.9k (7)</td><td>none</td></tr><tr><td>Answered Prayers</td><td>8-1</td><td>$37.2k (6)</td><td>none</td></tr><tr><td>Intrepids Fantasy</td><td>8-1</td><td>$34.5k (3)</td><td>none</td></tr><tr><td>Tahlequah</td><td>12-1</td><td>$33.3k (5)</td><td>$8.4k (1)</td></tr><tr><td>Ivy Girl</td><td>30-1</td><td>$26.0k (6)</td><td>$12.5k (3)</td></tr><tr><td>Ati Girl</td><td>6-1</td><td>$24.1k (6)</td><td>$2.9k (4)</td></tr><tr><td>Run Wild</td><td>15-1</td><td>$16.7k (4)</td><td>none</td></tr><tr><td>Laken</td><td>20-1</td><td>$7.1k (5)</td><td>none</td></tr></tbody></table></div>
+<h2>The contenders</h2>
+<p><strong>Bodacious Bay (5-2)</strong> - the top pick and the horse to beat. Beyers 69, 83, 84, 91, 93 on a line that has gone up every start. The 91 was a game 2nd in the Monmouth Oaks (G3), and the 93 came winning the Cotillion (G1) at Parx Sept 19 by 3 1/2 lengths over a field that included Tap to Open and Iron Orchard. Her 93 is the best figure in the race by 4 points. She is 3-1-2-0 on wet tracks, including a clear maiden win on slop at Churchill, and 3-2-1-0 at the distance. Per-start is $141.7k, by far the best in the field. Joseph/Husbands are 24% together over 418 starts. The flags: Husbands has had only 1 mount at the meet, Joseph is 2 for 22 here (9%), and she comes off a career top 7 weeks ago, so a step back is possible. She stalks (TimeformUS early 109), which suits a race with several speed horses. About 35% to win; fair odds 1.9-1, and 5-2 gives a value ratio of 1.23. Fair, just short of an overlay.</p>
+<p><strong>Tap to Open (5-1)</strong> - the second choice. Beyers 81, 82, 81, 85, 79. The 85 came winning the $200k Cathy Sophia at Parx on a good track, and she is 2-for-2 on wet tracks (also won on a wet-fast track at Ellis). She was 4th in the Cotillion, 6 wide and gaining, behind Bodacious Bay. Cox is 28% at the meet, Franco 21%, and the pair are 5 for 10 at Belmont (28% overall). Her figures top out around 85, so she needs a career best to beat the top pick, and she has the most early speed in the race (TimeformUS early 114), which may mean a fight up front with Iron Orchard and Cognition. About 16%; fair 5.3-1, and 5-1 gives 0.96.</p>
+<p><strong>Cognition (9-2)</strong> - the lightly raced talent. Two starts: a 50 as a 2-year-old, then an 89 winning a Keeneland maiden at 7 furlongs Oct 2, in hand and drawing clear. Brown is 26% at the meet, Prat 24%, and together 33% at Belmont. This is the profile that has hit the board most in the tracked races. The questions are big ones: first time around two turns, first stakes, first wet track, and a 39-point jump in one start. About 15%; fair 5.7-1, and 9-2 gives 0.83. Underlay.</p>
+<p><strong>Intrepids Fantasy (8-1)</strong> - the unbeaten Delaware filly. 3-for-3 with Beyers 60, 83, 87, the 87 an easy win in an OC 50k on a muddy track at Delaware Sept 3. She is 2-for-2 on wet tracks. Ruiz is 3 for 9 at the meet, and Capuano wins 30% this year. The jump from Delaware allowances to a Grade 2 is the question, and she has been away two months. About 10%; fair 9-1, and 8-1 gives 0.90.</p>
+<p><strong>Answered Prayers (8-1)</strong> - the honest one. Beyers 76, 75, 78, 79, 84, with the 84 a clear 2nd in a stakes at Churchill. She is 4-1-3-0 at the distance and keeps hitting the board. Mott is 7% at the meet and Alvarado 9% (4 for 43), which keeps her out of the top-pick spot. About 7%; fair 13-1, and 8-1 gives 0.63.</p>
+<div class="table-wrap"><table><thead><tr><th>Horse</th><th>Odds</th><th>Win %</th><th>Fair odds</th><th>Value ratio</th><th>Call</th></tr></thead><tbody><tr><td>Bodacious Bay</td><td>5-2</td><td>35%</td><td>1.9-1</td><td>1.23</td><td>Fair</td></tr><tr><td>Tap to Open</td><td>5-1</td><td>16%</td><td>5.3-1</td><td>0.96</td><td>Underlay</td></tr><tr><td>Cognition</td><td>9-2</td><td>15%</td><td>5.7-1</td><td>0.83</td><td>Underlay</td></tr><tr><td>Intrepids Fantasy</td><td>8-1</td><td>10%</td><td>9-1</td><td>0.90</td><td>Underlay</td></tr><tr><td>Answered Prayers</td><td>8-1</td><td>7%</td><td>13-1</td><td>0.63</td><td>Underlay</td></tr></tbody></table></div>
+<h2>The rest of the field</h2>
+<p>Ati Girl (6-1) tired after an 85 in the Alabama, and Mott/Velazquez are 6 to 7% at the meet. Iron Orchard (12-1) was a Grade 1 winner at 2, but she has gone 77, 81, 59 this year and tired in the Cotillion. Run Wild (15-1, 83 in an allowance), Tahlequah (12-1, 81 sprinting, 14 when eased in her last route), Laken (20-1) and Ivy Girl (30-1) lack the figures. No flyer worth a bet.</p>
+<h2>Pace</h2>
+<p>Tap to Open and Iron Orchard (TimeformUS early 114 each), Bodacious Bay (109), Cognition (108) and Intrepids Fantasy (105) all have speed, so the early pace should be real. Bodacious Bay has stalked and won from 2nd before, which suits this race. This is only a tiebreaker.</p>
+<h2>Bottom line</h2>
+<p>Neither pick is an overlay on the morning line. Bodacious Bay is the top pick and becomes a bet at 13-5 (2.6-1) or better. The morning line of 5-2 is just under that, so take her if the board drifts a tick. Tap to Open is the second choice and needs about 7-1 to be a bet. If Bodacious Bay goes off below 2-1, she is the horse to beat and no bet; if Tap to Open is 7-1 or better at post, bet her instead. The risk with the top pick is a step back after a career-best G1 win with a rider new to the meet.</p>
+<p>Value: top 35% / 1.23 (fair), 2nd 16% / 0.96 (underlay).</p></article>
+  <a class="back" href="../">← All races</a>
+</main>
+</body>
+</html>
