@@ -14,7 +14,7 @@
 <meta name="apple-mobile-web-app-capable" content="yes">
 <script>
 (function () {
-  const build = "20261106220706";
+  const build = "20261107083913";
   function check() {
     fetch("version.txt?t=" + Date.now(), {cache: "no-store"})
       .then(r => r.ok ? r.text() : build)
@@ -113,7 +113,7 @@ thead th { font-size: 12px; color: var(--ink-2); font-weight: 600; }
 <body>
 <main>
   <h1>DRF Race of the Day Tracker</h1>
-  <div class="muted">Updated Nov 6, 2026 10:07 PM · 20 races graded</div>
+  <div class="muted">Updated Nov 7, 2026 8:39 AM · 20 races graded</div>
 
   <div class="hero">
     <div class="card"><div class="hero-label"><span class="swatch a"></span>Top Pick net</div>
@@ -174,18 +174,18 @@ thead th { font-size: 12px; color: var(--ink-2); font-weight: 600; }
 <section class="card strat">
   <h2><span class="swatch r"></span>Post-time odds rule <span class="muted">(paper test)</span></h2>
   <div class="tiles">
-    <div class="tile"><div class="tile-label">Net</div><div class="tile-value pos">+$8.76</div><div class="tile-sub">12 races judged</div></div>
-    <div class="tile"><div class="tile-label">ROI</div><div class="tile-value pos">+12.2%</div><div class="tile-sub">net ÷ wagered</div></div>
-    <div class="tile"><div class="tile-label">Top pick, same races</div><div class="tile-value neg">−$1.68</div><div class="tile-sub">−2.3% ROI</div></div>
-    <div class="tile"><div class="tile-label">Rule added</div><div class="tile-value pos">+$10.44</div><div class="tile-sub">vs top pick</div></div>
+    <div class="tile"><div class="tile-label">Net</div><div class="tile-value neg">−$7.68</div><div class="tile-sub">13 races judged</div></div>
+    <div class="tile"><div class="tile-label">ROI</div><div class="tile-value neg">−9.8%</div><div class="tile-sub">net ÷ wagered</div></div>
+    <div class="tile"><div class="tile-label">Top pick, same races</div><div class="tile-value neg">−$7.68</div><div class="tile-sub">−9.8% ROI</div></div>
+    <div class="tile"><div class="tile-label">Rule added</div><div class="tile-value ">$0.00</div><div class="tile-sub">vs top pick</div></div>
   </div>
   <dl class="kv">
-    <dt>Kept the top pick</dt><dd>10</dd>
-    <dt>Switched to the 2nd pick</dt><dd>2</dd>
-    <dt>Passed (both under 7-2)</dt><dd>0</dd>
-    <dt>Not judged (final odds missing)</dt><dd>7</dd>
+    <dt>Kept the top pick</dt><dd>13</dd>
+    <dt>Switched to the 2nd pick</dt><dd>0</dd>
+    <dt>Passed (both under 2-1)</dt><dd>0</dd>
+    <dt>Not judged (final odds missing)</dt><dd>6</dd>
   </dl>
-  <p class="note">Bet the top pick only if it went off at 3.5-1 or longer. If it didn't, bet the 2nd pick
+  <p class="note">Bet the top pick only if it went off at 2-1 or longer. If it didn't, bet the 2nd pick
     if it did, else no bet. Only races with recorded final odds count, so the top pick is shown on the same races.</p>
 </section>
 

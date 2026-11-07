@@ -7,7 +7,7 @@ on a phone and needs nothing else.
 Strategies, same as the workbook:
   Top Pick:    $2 Win/Place/Show ($6) on the top pick
   Top 2 Picks: $6 WPS on the top pick plus $6 WPS on the second choice ($12)
-  Post-odds rule (paper test): $6 WPS on the top pick if it went off at 3.5-1+,
+  Post-odds rule (paper test): $6 WPS on the top pick if it went off at 2-1+,
     else on the 2nd pick if it did, else no bet
 
 Usage: python build_site.py [--csv ledger.csv] [--out docs/index.html]
@@ -21,7 +21,7 @@ import re
 from datetime import datetime
 
 HERE = os.path.dirname(os.path.abspath(__file__))
-RULE_MIN = 3.5  # the skill's minimum odds, applied to final odds
+RULE_MIN = 2.0  # the skill's 2-1 price floor, applied to final odds (was 3.5 before 2026-11-07)
 
 
 def num(v):
@@ -296,10 +296,10 @@ def build(rows):
   <dl class="kv">
     <dt>Kept the top pick</dt><dd>{count("top")}</dd>
     <dt>Switched to the 2nd pick</dt><dd>{count("second")}</dd>
-    <dt>Passed (both under 7-2)</dt><dd>{count("pass")}</dd>
+    <dt>Passed (both under 2-1)</dt><dd>{count("pass")}</dd>
     <dt>Not judged (final odds missing)</dt><dd>{count("unknown")}</dd>
   </dl>
-  <p class="note">Bet the top pick only if it went off at 3.5-1 or longer. If it didn't, bet the 2nd pick
+  <p class="note">Bet the top pick only if it went off at 2-1 or longer. If it didn't, bet the 2nd pick
     if it did, else no bet. Only races with recorded final odds count, so the top pick is shown on the same races.</p>
 </section>'''
 

@@ -8,7 +8,7 @@ betting strategies on each Race of the Day:
   Top 2 Picks: $6 WPS on the top pick plus $6 WPS on the second choice ($12)
 
 plus a paper test of a post-time odds rule: $6 WPS on the top pick if it went
-off at 3.5-1 or longer, else on the second pick if it did, else no bet.
+off at 2-1 or longer, else on the second pick if it did, else no bet.
 
 It also shows the second pick on its own so you can see what it adds. Every KPI
 is an Excel formula over the Ledger sheet, so edits there recalculate.
@@ -75,7 +75,7 @@ HELPERS = [
     ("r_net", "Rule Net"), ("r_twag", "Top Pick Wagered (Rule Races)"),
     ("r_tnet", "Top Pick Net (Rule Races)"),
 ]
-RULE_MIN = 3.5  # the skill's minimum odds, applied to final odds
+RULE_MIN = 2.0  # the skill's 2-1 price floor, applied to final odds (was 3.5 before 2026-11-07)
 COL = {f: get_column_letter(i) for i, (f, _) in enumerate(CSV_FIELDS + HELPERS, start=1)}
 
 DATE_COLS = {"race_date", "handicapped_on", "graded_on"}
@@ -189,7 +189,7 @@ def build_ledger(wb, rows):
         ws[c["b_cash"]] = f'=IF({c["b_wag"]}>0,IF({c["b_ret"]}>0,1,0),"")'
         ws[c["b_won"]] = (f'=IF({c["b_wag"]}>0,IF(OR(AND({a_g},{c["finish_position"]}=1),'
                           f'AND({s_g},{c["second_finish"]}=1)),1,0),"")')
-        # Post-odds rule: top pick if it went off at 3.5-1+, else the 2nd pick if it
+        # Post-odds rule: top pick if it went off at 2-1+, else the 2nd pick if it
         # did, else pass. "unknown" when a needed final price was not recorded.
         ppo, spo = c["pick_post_odds"], c["second_post_odds"]
         ws[c["r_side"]] = (f'=IF(NOT({a_g}),"",IF({ppo}="","unknown",IF({ppo}>={RULE_MIN},"top",'
@@ -588,7 +588,7 @@ def build_dashboard(wb, rows, log_last):
          f'=C{qtop+1}'],
         ["  Kept the top pick", f'=COUNTIF({side},"top")', ""],
         ["  Switched to the 2nd pick", f'=COUNTIF({side},"second")', ""],
-        ["  Passed (both under 7-2)", f'=COUNTIF({side},"pass")', ""],
+        ["  Passed (both under 2-1)", f'=COUNTIF({side},"pass")', ""],
         ["Not judged (final odds missing)", f'=COUNTIF({side},"unknown")', ""],
         ["Wagered", f"=SUM({L('r_wag')})", f"=SUM({L('r_twag')})"],
         ["Returned", f"=SUM({L('r_ret')})", f"=SUM({L('r_twag')})+SUM({L('r_tnet')})"],
@@ -602,7 +602,7 @@ def build_dashboard(wb, rows, log_last):
             ws[f"{col}{qtop+i}"].number_format = MONEY
     for col in "CD":
         ws[f"{col}{qtop+9}"].number_format = PCT
-    ws[f"B{qtop+len(q_rows)+1}"] = ("Rule: bet the top pick if its final odds were 3.5-1 or longer, else the 2nd "
+    ws[f"B{qtop+len(q_rows)+1}"] = ("Rule: bet the top pick if its final odds were 2-1 or longer, else the 2nd "
                                      "pick if its were, else no bet. Grading of the main strategies stays on the "
                                      "morning line.")
     ws[f"B{qtop+len(q_rows)+1}"].font = font(size=8, italic=True, color="808080")
