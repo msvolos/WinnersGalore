@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Woodbine Race 3, Sun Nov 8 2026</title>
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#1f4e3d">
+<meta name="apple-mobile-web-app-title" content="Winners">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script>
+(function () {
+  const build = "20261108090633";
+  function check() {
+    fetch("../version.txt?t=" + Date.now(), {cache: "no-store"})
+      .then(r => r.ok ? r.text() : build)
+      .then(v => {
+        v = v.trim();
+        const u = new URL(location.href);
+        // Skip if we already asked for this build and still got an old copy.
+        if (v && v !== build && u.searchParams.get("v") !== v) { u.searchParams.set("v", v); location.replace(u); }
+      })
+      .catch(() => {});
+  }
+  check();
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) check(); });
+  addEventListener("pageshow", e => { if (e.persisted) check(); });
+})();
+</script>
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
+  --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+  --pos: #006300; --neg: #c0302f;
+  --series-a: #2a78d6; --series-b: #eb6834; --series-s: #1baf7a; --series-r: #8a5cd0;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+    --pos: #0ca30c; --neg: #e66767;
+    --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+  --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+  --pos: #0ca30c; --neg: #e66767;
+  --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink);
+  font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 16px 16px 48px; }
+h1 { font-size: 22px; margin: 4px 0 2px; }
+h2 { font-size: 16px; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+h3 { font-size: 15px; margin: 28px 0 10px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .04em; }
+.muted { color: var(--muted); font-weight: normal; }
+.pos { color: var(--pos); } .neg { color: var(--neg); }
+a { color: var(--series-a); }
+.card, .race { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+.hero { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 12px; }
+.hero .card { margin: 0; }
+.hero-label { font-size: 13px; color: var(--ink-2); display: flex; align-items: center; gap: 6px; }
+.hero-value { font-size: 30px; font-weight: 700; margin-top: 2px; }
+.added { font-size: 14px; color: var(--ink-2); margin: 0 0 12px; }
+.swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex: none; }
+.swatch.a { background: var(--series-a); } .swatch.b { background: var(--series-b); } .swatch.s { background: var(--series-s); } .swatch.r { background: var(--series-r); }
+.tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.tile { background: var(--page); border-radius: 8px; padding: 8px; text-align: center; }
+.tile-label { font-size: 11px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .03em; }
+.tile-value { font-size: 18px; font-weight: 700; }
+.tile-sub { font-size: 11px; color: var(--muted); }
+.kv { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; margin: 12px 0 0; font-size: 14px; }
+.kv dt { color: var(--ink-2); } .kv dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+.legend { display: flex; gap: 16px; font-size: 13px; color: var(--ink-2); margin-bottom: 6px; }
+.legend span { display: flex; align-items: center; gap: 6px; }
+.chart-wrap { position: relative; }
+svg { display: block; width: 100%; height: auto; touch-action: pan-y; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 8px; font-size: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.12); display: none; white-space: nowrap; }
+.tip b { display: block; margin-bottom: 2px; }
+.tip div { display: flex; align-items: center; gap: 6px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { padding: 6px 4px; text-align: right; border-bottom: 1px solid var(--grid); }
+th:first-child, td:first-child { text-align: left; }
+thead th { font-size: 12px; color: var(--ink-2); font-weight: 600; }
+.note { font-size: 12px; color: var(--muted); margin: 8px 0 0; }
+.race-head { display: flex; justify-content: space-between; gap: 8px; }
+.race-sub { font-size: 13px; margin-bottom: 8px; }
+.pick { display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 8px; margin-top: 6px; }
+.pick-name { font-weight: 600; }
+.pick-fin { color: var(--ink-2); font-size: 14px; }
+.pick-net { min-width: 64px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.pick-label { font-size: 11px; color: var(--muted); margin-left: 18px; }
+.race-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; font-size: 13px;
+  margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--grid); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@media (max-width: 480px) {
+  .tiles { grid-template-columns: repeat(2, 1fr); }
+  .hero-value { font-size: 24px; }
+}
+
+.back { display: inline-block; margin: 4px 0 10px; font-size: 14px; text-decoration: none; }
+.prose h2 { display: block; font-size: 17px; margin: 22px 0 8px; }
+.prose h2:first-child { margin-top: 0; }
+.prose h3, .prose h4 { font-size: 15px; margin: 18px 0 6px; text-transform: none; letter-spacing: 0; color: var(--ink); }
+.prose p, .prose li { margin: 0 0 10px; }
+.prose ul, .prose ol { padding-left: 20px; margin: 0 0 10px; }
+.prose a { overflow-wrap: anywhere; }
+.prose code { font-size: 13px; background: var(--page); padding: 1px 4px; border-radius: 4px; }
+.table-wrap { overflow-x: auto; margin: 0 0 12px; }
+.prose table { font-size: 13px; }
+.prose td, .prose th { text-align: left; vertical-align: top; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="../">← All races</a>
+  <h1>Woodbine Race 3, Sun Nov 8 2026</h1>
+  <div class="muted" style="margin-bottom:12px">Updated Nov 8, 2026 9:06 AM</div>
+  <article class="race"><div class="race-head"><strong>Woodbine R3</strong><span class="muted">Sun Nov 08</span></div><div class="race-sub muted">Synth 6 1/2f (2YO OC 75k/N1X)</div><div class="pick"><span class="swatch a"></span><span class="pick-name">Morrisseau <span class="muted">(7-2)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">Top pick</div><div class="pick"><span class="swatch s"></span><span class="pick-name">Traction Park <span class="muted">(9-2)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">2nd pick</div><div class="race-foot muted">Awaiting result</div></article>
+  
+  <h3>Pre-race handicap</h3>
+  <article class="card prose"><p>PP URL: <a href="https://www.drf.com/pp-details/11-08-2026/WO/3/D/CAN">https://www.drf.com/pp-details/11-08-2026/WO/3/D/CAN</a></p>
+<p>Woodbine Race 3, 6 1/2 furlongs on the synthetic, 2-year-old optional claiming $75k / N1X, purse $125k, Beyer par NA. Six starters, post 2:05 PM ET. Odds below are the morning line.</p>
+<p><strong>Probable scratches:</strong> none. No horse shows a same-weekend race or a fresh line.</p>
+<h2>Average earnings per start (2026; all are first-year 2-year-olds)</h2>
+<div class="table-wrap"><table><thead><tr><th>Horse</th><th>ML</th><th>2026 starts</th><th>Earnings</th><th>Per start</th></tr></thead><tbody><tr><td>Groovinharmony</td><td>5-2</td><td>1</td><td>$34,374</td><td>$34,374</td></tr><tr><td>Verge</td><td>2-1</td><td>3</td><td>$61,779</td><td>$20,593</td></tr><tr><td>Morrisseau</td><td>7-2</td><td>2</td><td>$36,103</td><td>$18,052</td></tr><tr><td>Barger</td><td>6-1</td><td>3</td><td>$51,440</td><td>$17,147</td></tr><tr><td>Traction Park</td><td>9-2</td><td>3</td><td>$37,249</td><td>$12,416</td></tr><tr><td>Peace Mission</td><td>8-1</td><td>5</td><td>$26,063</td><td>$5,213</td></tr></tbody></table></div>
+<p>Groovinharmony&#x27;s number is one start, so it is a small sample. Per-start is a tiebreaker only.</p>
+<h2>The contenders</h2>
+<p><strong>Morrisseau (7-2).</strong> The best figure in the race by nine points. He ran a 35 in his debut on Sept 20 (4 wide into the stretch, in the mix, weakened behind Verge), then jumped to a 79 wiring a Woodbine maiden special weight at 5 1/2 furlongs on Oct 18 by 2 1/2, &quot;dictated pace, had more.&quot; I am excusing the debut as a green first try. Munger 17%, Day-Phillips 14%, the pair 16% at WO. TimeformUS early pace 109, one of two speed horses. The risks are real: a 44-point jump invites a bounce, he stretches from 5 1/2 to 6 1/2 furlongs for the first time, he carries 123 (high weight in the field), and Groovinharmony (early 112) should press him. About 27% to win.</p>
+<p><strong>Verge (2-1).</strong> The steadiest horse here: Beyers 59, 65, 68 on a rising line, all on the Woodbine synthetic, 1 win and 2 thirds in 3 starts. He beat Morrisseau in their debut meeting and was 3rd in the Display (a $143k stakes) at 7 furlongs last out at 4.40-1, &quot;inside, tipped out, lost 2nd.&quot; Most money earned in the field. Fukumoto 13%, Minshall 8% overall (but 30% and $2.66 with 2-year-olds), the pair 14%. Even the 68 trails Morrisseau&#x27;s 79 and Traction Park&#x27;s 70. About 22%, so 2-1 is an underlay.</p>
+<p><strong>Groovinharmony (5-2).</strong> One start, a 65 winning a 6 furlong maiden special at 2.25-1, &quot;prompt outside, edged clear.&quot; The best connections in the race: Moran 20%, Carroll 22% (24% on synthetic, $2.24), the pair 28% at WO. Early pace 112 means she is the other speed, and a filly facing colts and geldings off one run. Live, but the figure is only 65. About 20%, an underlay at 5-2.</p>
+<p><strong>Traction Park (9-2).</strong> Beat Verge (and Secured Assets) with a 70 in a 5 1/2 furlong maiden special on Aug 30, &quot;well rated, held on.&quot; Then a 55 in the Glorious Song (a $143k stakes) at 7 furlongs on Oct 11, brushed at the start and floated 6 wide at the 3/16. I am throwing that line out for the trip. Casse 20%, Wilson 17%, the pair 15%. Another filly against the boys, and she has to rate behind the two speed horses. About 14%.</p>
+<div class="table-wrap"><table><thead><tr><th>Horse</th><th>Odds</th><th>Win %</th><th>Fair odds</th><th>Value ratio</th><th>Call</th></tr></thead><tbody><tr><td>Morrisseau</td><td>7-2</td><td>27%</td><td>2.7-1</td><td>1.22</td><td>Fair</td></tr><tr><td>Verge</td><td>2-1</td><td>22%</td><td>3.5-1</td><td>0.66</td><td>Underlay</td></tr><tr><td>Groovinharmony</td><td>5-2</td><td>20%</td><td>4-1</td><td>0.70</td><td>Underlay</td></tr><tr><td>Traction Park</td><td>9-2</td><td>14%</td><td>6.1-1</td><td>0.77</td><td>Underlay</td></tr></tbody></table></div>
+<h2>Rest of the field</h2>
+<p>Barger (6-1, about 9%) has two wins but tops out at a 60, and that came on turf; his only synthetic start was a 38. Attard is 27% and dangerous with this type, so he is the flyer if the speed horses cook each other. Peace Mission (8-1, about 5%) is a turf-and-dirt filly with a 58 best, making her synthetic debut with Maragh at 11%.</p>
+<h2>Bottom line</h2>
+<p>Morrisseau is the top pick. He has the only figure that wins this at par for the level, and at 7-2 the value ratio is 1.22, just short of an overlay. Bet him at 18-5 (3.6-1) or better. The worry is the bounce off a big new top while stretching out and fending off Groovinharmony early.</p>
+<p>Traction Park is the second choice on the next best value ratio, with the second-best figure and an excuse for her last race. Neither is an overlay on the morning line; she becomes a bet at about 8-1.</p>
+<p>Verge is the horse to beat on consistency, and Groovinharmony on connections, but both are underpriced at 2-1 and 5-2. Barger is the flyer at 6-1 or more.</p></article>
+  <a class="back" href="../">← All races</a>
+</main>
+</body>
+</html>
