@@ -1,0 +1,152 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Finger Lakes Race 7, Mon Nov 9 2026</title>
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#1f4e3d">
+<meta name="apple-mobile-web-app-title" content="Winners">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script>
+(function () {
+  const build = "20261109090700";
+  function check() {
+    fetch("../version.txt?t=" + Date.now(), {cache: "no-store"})
+      .then(r => r.ok ? r.text() : build)
+      .then(v => {
+        v = v.trim();
+        const u = new URL(location.href);
+        // Skip if we already asked for this build and still got an old copy.
+        if (v && v !== build && u.searchParams.get("v") !== v) { u.searchParams.set("v", v); location.replace(u); }
+      })
+      .catch(() => {});
+  }
+  check();
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) check(); });
+  addEventListener("pageshow", e => { if (e.persisted) check(); });
+})();
+</script>
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
+  --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+  --pos: #006300; --neg: #c0302f;
+  --series-a: #2a78d6; --series-b: #eb6834; --series-s: #1baf7a; --series-r: #8a5cd0;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+    --pos: #0ca30c; --neg: #e66767;
+    --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+  --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+  --pos: #0ca30c; --neg: #e66767;
+  --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink);
+  font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 16px 16px 48px; }
+h1 { font-size: 22px; margin: 4px 0 2px; }
+h2 { font-size: 16px; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+h3 { font-size: 15px; margin: 28px 0 10px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .04em; }
+.muted { color: var(--muted); font-weight: normal; }
+.pos { color: var(--pos); } .neg { color: var(--neg); }
+a { color: var(--series-a); }
+.card, .race { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+.hero { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 12px; }
+.hero .card { margin: 0; }
+.hero-label { font-size: 13px; color: var(--ink-2); display: flex; align-items: center; gap: 6px; }
+.hero-value { font-size: 30px; font-weight: 700; margin-top: 2px; }
+.added { font-size: 14px; color: var(--ink-2); margin: 0 0 12px; }
+.swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex: none; }
+.swatch.a { background: var(--series-a); } .swatch.b { background: var(--series-b); } .swatch.s { background: var(--series-s); } .swatch.r { background: var(--series-r); }
+.tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.tile { background: var(--page); border-radius: 8px; padding: 8px; text-align: center; }
+.tile-label { font-size: 11px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .03em; }
+.tile-value { font-size: 18px; font-weight: 700; }
+.tile-sub { font-size: 11px; color: var(--muted); }
+.kv { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; margin: 12px 0 0; font-size: 14px; }
+.kv dt { color: var(--ink-2); } .kv dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+.legend { display: flex; gap: 16px; font-size: 13px; color: var(--ink-2); margin-bottom: 6px; }
+.legend span { display: flex; align-items: center; gap: 6px; }
+.chart-wrap { position: relative; }
+svg { display: block; width: 100%; height: auto; touch-action: pan-y; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 8px; font-size: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.12); display: none; white-space: nowrap; }
+.tip b { display: block; margin-bottom: 2px; }
+.tip div { display: flex; align-items: center; gap: 6px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { padding: 6px 4px; text-align: right; border-bottom: 1px solid var(--grid); }
+th:first-child, td:first-child { text-align: left; }
+thead th { font-size: 12px; color: var(--ink-2); font-weight: 600; }
+.note { font-size: 12px; color: var(--muted); margin: 8px 0 0; }
+.race-head { display: flex; justify-content: space-between; gap: 8px; }
+.race-sub { font-size: 13px; margin-bottom: 8px; }
+.pick { display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 8px; margin-top: 6px; }
+.pick-name { font-weight: 600; }
+.pick-fin { color: var(--ink-2); font-size: 14px; }
+.pick-net { min-width: 64px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.pick-label { font-size: 11px; color: var(--muted); margin-left: 18px; }
+.race-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; font-size: 13px;
+  margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--grid); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@media (max-width: 480px) {
+  .tiles { grid-template-columns: repeat(2, 1fr); }
+  .hero-value { font-size: 24px; }
+}
+
+.back { display: inline-block; margin: 4px 0 10px; font-size: 14px; text-decoration: none; }
+.prose h2 { display: block; font-size: 17px; margin: 22px 0 8px; }
+.prose h2:first-child { margin-top: 0; }
+.prose h3, .prose h4 { font-size: 15px; margin: 18px 0 6px; text-transform: none; letter-spacing: 0; color: var(--ink); }
+.prose p, .prose li { margin: 0 0 10px; }
+.prose ul, .prose ol { padding-left: 20px; margin: 0 0 10px; }
+.prose a { overflow-wrap: anywhere; }
+.prose code { font-size: 13px; background: var(--page); padding: 1px 4px; border-radius: 4px; }
+.table-wrap { overflow-x: auto; margin: 0 0 12px; }
+.prose table { font-size: 13px; }
+.prose td, .prose th { text-align: left; vertical-align: top; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="../">← All races</a>
+  <h1>Finger Lakes Race 7, Mon Nov 9 2026</h1>
+  <div class="muted" style="margin-bottom:12px">Updated Nov 9, 2026 9:07 AM</div>
+  <article class="race"><div class="race-head"><strong>Finger Lakes R7</strong><span class="muted">Mon Nov 09</span></div><div class="race-sub muted">Dirt 6f (2YO F Stakes 45k)</div><div class="pick"><span class="swatch a"></span><span class="pick-name">My Bestie <span class="muted">(5-2)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">Top pick</div><div class="pick"><span class="swatch s"></span><span class="pick-name">Good Vintage <span class="muted">(5-1)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">2nd pick</div><div class="race-foot muted">Awaiting result</div></article>
+  
+  <h3>Pre-race handicap</h3>
+  <article class="card prose"><p>PP URL: <a href="https://www.drf.com/pp-details/11-09-2026/FL/7/D/USA">https://www.drf.com/pp-details/11-09-2026/FL/7/D/USA</a></p>
+<p>Finger Lakes Race 7, 6 furlongs on the dirt, 2-year-old fillies starter stakes, purse $45k, Beyer par NA. Eight starters, post 3:01 PM ET. Odds below are the morning line.</p>
+<p><strong>Probable scratches:</strong> none. DRF lists no scratches and no horse shows a same-weekend race or a fresh line.</p>
+<h2>Average earnings per start (2026; all are first-year 2-year-olds)</h2>
+<div class="table-wrap"><table><thead><tr><th>Horse</th><th>ML</th><th>2026 starts</th><th>Earnings</th><th>Per start</th></tr></thead><tbody><tr><td>Authentic Gini</td><td>10-1</td><td>3</td><td>$29,099</td><td>$9,700</td></tr><tr><td>Beltandsuspenders</td><td>15-1</td><td>3</td><td>$35,513</td><td>$11,838</td></tr><tr><td>Financial Star</td><td>6-1</td><td>3</td><td>$33,720</td><td>$11,240</td></tr><tr><td>Good Vintage</td><td>5-1</td><td>1</td><td>$4,000</td><td>$4,000</td></tr><tr><td>Redzone Gal</td><td>7-2</td><td>2</td><td>$22,820</td><td>$11,410</td></tr><tr><td>Cozzy Trickstress</td><td>4-1</td><td>3</td><td>$36,143</td><td>$12,048</td></tr><tr><td>Pwr of Persistence</td><td>8-1</td><td>3</td><td>$29,878</td><td>$9,959</td></tr><tr><td>My Bestie</td><td>5-2</td><td>2</td><td>$23,400</td><td>$11,700</td></tr></tbody></table></div>
+<p>Everybody but Good Vintage sits between $9.7k and $12k a start, so the screen does not separate this group. Good Vintage&#x27;s low number is one maiden start in a $100k Belmont maiden, a tougher spot than any of these have tried.</p>
+<h2>The contenders</h2>
+<p><strong>My Bestie (5-2)</strong> is the horse to beat and the top pick. Beyers 43 then 61, the 61 a 8 1/2-length romp in a Finger Lakes maiden at 5 1/2 furlongs, drawing off and wrapped up late, so there may be more in the tank. That 61 ties for the best figure in the field and is 5 better than anyone who has raced here. Connections are the best on the card at the meet: Bridgmohan 39% (7 for 18), Giddings 35% (8 for 23), and the pair 37% together at FL. She has early speed (TimeformUS early 103, top in the field). The risk: 48 days off, works on the Saratoga training track are just ordinary, and Cozzy Trickstress (early 100) and Pwr of Persistence (88, blinkers on) both want to be up there with her. About 32% to win; fair odds 2.1-1, and 5-2 gives a value ratio of 1.12.</p>
+<p><strong>Good Vintage (5-1)</strong> is the second choice. Her only start is a 61 at Belmont in a $100k maiden special weight, 5th after advancing inside and swinging five wide, which is a much stronger field than the FL maiden races these fillies won. She is a $130k Keeneland September Life Is Good filly, the 61 matches My Bestie&#x27;s top, and she gets 4 pounds (114). Amelia Green is 4 for 7 at the meet (57%) and 20% with second-time maidens; Gutierrez 22% at the meet; the combo 25% on 16. She is still a maiden facing winners, and she has to ship and handle a new track. About 18% to win; fair 4.6-1, and 5-1 gives 1.08.</p>
+<p><strong>Redzone Gal (7-2)</strong> has a rising line (45 then 56, drawing off by 5 in a FL maiden), which makes her the improver of the group. She is out of the top spots on the rider: Davis is 8% at the meet, and Breed trains at 10% with the pair 0 for 3. About 13%; 7-2 is a clear underlay at 0.59.</p>
+<p><strong>Cozzy Trickstress (4-1)</strong> is the steady one (49, 48, 40) and the speed (early 100). Her last-out maiden win came at 6 furlongs, but the figure dropped to 40, and the Navarro/Barrow combo is 8% on 38. About 10%; 4-1 gives 0.50.</p>
+<p><strong>Financial Star (6-1)</strong> went 39, 39, 49, the 49 winning a FL maiden last out under Coa (22% at the meet; J/T 20%). Rising, but still 12 points below the top two. About 9%; 6-1 gives 0.63.</p>
+<div class="table-wrap"><table><thead><tr><th>Horse</th><th>Odds</th><th>Win %</th><th>Fair odds</th><th>Value ratio</th><th>Call</th></tr></thead><tbody><tr><td>My Bestie</td><td>5-2</td><td>32%</td><td>2.1-1</td><td>1.12</td><td>Fair</td></tr><tr><td>Good Vintage</td><td>5-1</td><td>18%</td><td>4.6-1</td><td>1.08</td><td>Fair</td></tr><tr><td>Redzone Gal</td><td>7-2</td><td>13%</td><td>6.7-1</td><td>0.59</td><td>Underlay</td></tr><tr><td>Cozzy Trickstress</td><td>4-1</td><td>10%</td><td>9-1</td><td>0.50</td><td>Underlay</td></tr><tr><td>Financial Star</td><td>6-1</td><td>9%</td><td>10.1-1</td><td>0.63</td><td>Underlay</td></tr></tbody></table></div>
+<h2>Rest of the field</h2>
+<p>Authentic Gini (10-1) is 37, 32, 40, the 32 excused for being checked in the Lady Finger, but 40 is not enough (about 6%). Beltandsuspenders (15-1) won a $35k maiden claimer at Saratoga with a 45, then ran 25 in the Lady Finger, and the barn is 1 for 30 with 2-year-olds. <strong>Flyer: Pwr of Persistence (8-1)</strong>, blinkers on for Barrow (22% first time blinkers, $2.12 ROI) with Worrie (20%, J/T 20%); her 52 came wiring a wet-track maiden, and the two stakes losses since were wide or slow-starting trips.</p>
+<h2>Bottom line</h2>
+<p>Neither pick is an overlay on the morning line. My Bestie is the top pick and becomes a bet at about 3-1 or better (watch the board; she will likely take money and go off shorter). Good Vintage is the second choice and needs about 6-1 to be a bet. Pwr of Persistence is the flyer at 8-1 or more. If My Bestie is under 3-1 at post and Good Vintage is 6-1 or higher, play Good Vintage.</p></article>
+  <a class="back" href="../">← All races</a>
+</main>
+</body>
+</html>
