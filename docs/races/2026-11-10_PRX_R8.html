@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Parx Racing Race 8, Tue Nov 10 2026</title>
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#1f4e3d">
+<meta name="apple-mobile-web-app-title" content="Winners">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script>
+(function () {
+  const build = "20261110114813";
+  function check() {
+    fetch("../version.txt?t=" + Date.now(), {cache: "no-store"})
+      .then(r => r.ok ? r.text() : build)
+      .then(v => {
+        v = v.trim();
+        const u = new URL(location.href);
+        // Skip if we already asked for this build and still got an old copy.
+        if (v && v !== build && u.searchParams.get("v") !== v) { u.searchParams.set("v", v); location.replace(u); }
+      })
+      .catch(() => {});
+  }
+  check();
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) check(); });
+  addEventListener("pageshow", e => { if (e.persisted) check(); });
+})();
+</script>
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
+  --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+  --pos: #006300; --neg: #c0302f;
+  --series-a: #2a78d6; --series-b: #eb6834; --series-s: #1baf7a; --series-r: #8a5cd0;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+    --pos: #0ca30c; --neg: #e66767;
+    --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+  --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+  --pos: #0ca30c; --neg: #e66767;
+  --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink);
+  font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 16px 16px 48px; }
+h1 { font-size: 22px; margin: 4px 0 2px; }
+h2 { font-size: 16px; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+h3 { font-size: 15px; margin: 28px 0 10px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .04em; }
+.muted { color: var(--muted); font-weight: normal; }
+.pos { color: var(--pos); } .neg { color: var(--neg); }
+a { color: var(--series-a); }
+.card, .race { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+.hero { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 12px; }
+.hero .card { margin: 0; }
+.hero-label { font-size: 13px; color: var(--ink-2); display: flex; align-items: center; gap: 6px; }
+.hero-value { font-size: 30px; font-weight: 700; margin-top: 2px; }
+.added { font-size: 14px; color: var(--ink-2); margin: 0 0 12px; }
+.swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex: none; }
+.swatch.a { background: var(--series-a); } .swatch.b { background: var(--series-b); } .swatch.s { background: var(--series-s); } .swatch.r { background: var(--series-r); }
+.tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.tile { background: var(--page); border-radius: 8px; padding: 8px; text-align: center; }
+.tile-label { font-size: 11px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .03em; }
+.tile-value { font-size: 18px; font-weight: 700; }
+.tile-sub { font-size: 11px; color: var(--muted); }
+.kv { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; margin: 12px 0 0; font-size: 14px; }
+.kv dt { color: var(--ink-2); } .kv dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+.legend { display: flex; gap: 16px; font-size: 13px; color: var(--ink-2); margin-bottom: 6px; }
+.legend span { display: flex; align-items: center; gap: 6px; }
+.chart-wrap { position: relative; }
+svg { display: block; width: 100%; height: auto; touch-action: pan-y; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 8px; font-size: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.12); display: none; white-space: nowrap; }
+.tip b { display: block; margin-bottom: 2px; }
+.tip div { display: flex; align-items: center; gap: 6px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { padding: 6px 4px; text-align: right; border-bottom: 1px solid var(--grid); }
+th:first-child, td:first-child { text-align: left; }
+thead th { font-size: 12px; color: var(--ink-2); font-weight: 600; }
+.note { font-size: 12px; color: var(--muted); margin: 8px 0 0; }
+.race-head { display: flex; justify-content: space-between; gap: 8px; }
+.race-sub { font-size: 13px; margin-bottom: 8px; }
+.pick { display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 8px; margin-top: 6px; }
+.pick-name { font-weight: 600; }
+.pick-fin { color: var(--ink-2); font-size: 14px; }
+.pick-net { min-width: 64px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.pick-label { font-size: 11px; color: var(--muted); margin-left: 18px; }
+.race-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; font-size: 13px;
+  margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--grid); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@media (max-width: 480px) {
+  .tiles { grid-template-columns: repeat(2, 1fr); }
+  .hero-value { font-size: 24px; }
+}
+
+.back { display: inline-block; margin: 4px 0 10px; font-size: 14px; text-decoration: none; }
+.prose h2 { display: block; font-size: 17px; margin: 22px 0 8px; }
+.prose h2:first-child { margin-top: 0; }
+.prose h3, .prose h4 { font-size: 15px; margin: 18px 0 6px; text-transform: none; letter-spacing: 0; color: var(--ink); }
+.prose p, .prose li { margin: 0 0 10px; }
+.prose ul, .prose ol { padding-left: 20px; margin: 0 0 10px; }
+.prose a { overflow-wrap: anywhere; }
+.prose code { font-size: 13px; background: var(--page); padding: 1px 4px; border-radius: 4px; }
+.table-wrap { overflow-x: auto; margin: 0 0 12px; }
+.prose table { font-size: 13px; }
+.prose td, .prose th { text-align: left; vertical-align: top; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="../">← All races</a>
+  <h1>Parx Racing Race 8, Tue Nov 10 2026</h1>
+  <div class="muted" style="margin-bottom:12px">Updated Nov 10, 2026 11:48 AM</div>
+  <article class="race"><div class="race-head"><strong>Parx Racing R8</strong><span class="muted">Tue Nov 10</span></div><div class="race-sub muted">Dirt 7f (Disco Chick Stakes 75k)</div><div class="pick"><span class="swatch a"></span><span class="pick-name">Nature&#x27;s Candy <span class="muted">(3-1)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">Top pick</div><div class="pick"><span class="swatch s"></span><span class="pick-name">Mary Q <span class="muted">(4-1)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">2nd pick</div><div class="race-foot muted">Awaiting result</div></article>
+  
+  <h3>Pre-race handicap</h3>
+  <article class="card prose"><p>PP URL: <a href="https://www.drf.com/pp-details/11-10-2026/PRX/8/D/USA">https://www.drf.com/pp-details/11-10-2026/PRX/8/D/USA</a></p>
+<p>Parx Race 8, 7 furlongs on the dirt (fast), the $75k Disco Chick Stakes for 3-year-olds and up, fillies and mares, Beyer par NA. Six starters after the scratch, post 3:14 PM ET. Odds below are the morning line.</p>
+<p><strong>Scratches and probable scratches:</strong> Angie&#x27;s Reward (10-1) is officially scratched (same barn as Lady Annabelle). Lady Annabelle shows &quot;Entered 14Nov26 CD R8,&quot; a cross-entry for Saturday, but scratches for this card are already posted and she stays in, so today looks like the target. Nobody else is a scratch risk.</p>
+<h2>Average earnings per start</h2>
+<div class="table-wrap"><table><thead><tr><th>Horse</th><th>ML</th><th>2026</th><th>Per start</th><th>2025</th><th>Per start</th></tr></thead><tbody><tr><td>Lady Annabelle</td><td>9-5</td><td>13 starts, $278,330</td><td>$21,410</td><td>10, $53,358</td><td>$5,336</td></tr><tr><td>Mary Q</td><td>4-1</td><td>5, $114,360</td><td>$22,872</td><td>13, $85,730</td><td>$6,595</td></tr><tr><td>Carousel Queen</td><td>12-1</td><td>5, $18,696</td><td>$3,739</td><td>12, $201,665</td><td>$16,805</td></tr><tr><td>Aoife&#x27;s Magic</td><td>8-1</td><td>1, $43,680</td><td>$43,680</td><td>4, $40,090</td><td>$10,023</td></tr><tr><td>Nature&#x27;s Candy</td><td>3-1</td><td>5, $94,740</td><td>$18,948</td><td>9, $196,023</td><td>$21,780</td></tr><tr><td>Presenceisapresent</td><td>5-1</td><td>4, $94,440</td><td>$23,610</td><td>1, $14,850</td><td>$14,850</td></tr></tbody></table></div>
+<p>Aoife&#x27;s Magic&#x27;s 2026 number is one start (a February win), so lean on her 2025 figure. Nature&#x27;s Candy is the most consistent earner across both years. Nobody separates on this screen.</p>
+<h2>The contenders</h2>
+<p><strong>Lady Annabelle (9-5)</strong> is the horse to beat. She has won seven straight (Beyers 74, 76, 76, 81, 79, 85, 75 from May through October), the last one this same 7 furlongs in the Commonwealth Stakes on Oct 13, where she rated second, surged and beat Nature&#x27;s Candy by 1 1/4. Gonzalez 14% and Padilla-Preciado 27%, but together they are 40% at Parx with a $2.77 ROI, the best combo on the card. Six years old and 24 starts at Parx. The knocks are small: her last-out 75 is ten points under her 85 in September, she picks up 3 pounds to 128, and she has early speed (106) in a race with two other 106s. About 37% to win; fair odds 1.7-1, and 9-5 is under the 2-1 floor anyway.</p>
+<p><strong>Nature&#x27;s Candy (3-1)</strong> owns the best figure on the playable side of the board. She won the Dr. Teresa Garofalo Stakes at 7 furlongs in July with an 84 and has a life best 93 (Oct 2025). She won this race last year and is 3-for-5 at the distance. Her last two lines dropped (79 stretching out to 1 1/16 in the Philly Special, then 72 when she ducked out at the start and still ran 2nd to Lady Annabelle), and I am excusing the 72 for the start. Hernandez 17%, Padilla 20%, combo 22% with a $2.26 ROI. Today she carries 128, the same as Lady Annabelle, after giving her 2 pounds last time, so the weights move her way. Early 106: she wants the lead and will have Lady Annabelle and Aoife&#x27;s Magic with her. About 23% to win.</p>
+<p><strong>Mary Q (4-1)</strong> is the closer (Late 99, best in the field). She just won an OC 50k/C at 1 1/16 with an 82, up from a 67 sprinting on slop where she was far back and rallied for 2nd, so the line is rising. Her 7-furlong form is a 79 runner-up at Laurel in March, and she is 0-1-2 in 6 tries at the distance. Ruiz 18%, Moore 17%, combo 17%; she loses Hernandez, who stays on Nature&#x27;s Candy. Three 106 early-speed types up front gives her something to run at, but a pace meltdown is a tiebreaker, not the case. About 18% to win.</p>
+<p><strong>Presenceisapresent (5-1)</strong> is the lightly raced 3-year-old (5 starts) for Guerrero (25%) and Vargas (18%), with 8 fewer pounds than the big two at 119. Her figures (62, 65, 69, 63, 62) top out well short of the others, and she was a flat 3rd in the Commonwealth behind both of them. About 9%.</p>
+<div class="table-wrap"><table><thead><tr><th>Horse</th><th>Odds</th><th>Win %</th><th>Fair odds</th><th>Value ratio</th><th>Call</th></tr></thead><tbody><tr><td>Lady Annabelle</td><td>9-5</td><td>37%</td><td>1.7-1</td><td>1.04</td><td>Under 2-1</td></tr><tr><td>Nature&#x27;s Candy</td><td>3-1</td><td>23%</td><td>3.3-1</td><td>0.92</td><td>Underlay</td></tr><tr><td>Mary Q</td><td>4-1</td><td>18%</td><td>4.6-1</td><td>0.90</td><td>Underlay</td></tr><tr><td>Presenceisapresent</td><td>5-1</td><td>9%</td><td>10-1</td><td>0.54</td><td>Underlay</td></tr></tbody></table></div>
+<h2>The rest</h2>
+<p>Carousel Queen (12-1) is 0-for-5 this year with a 54 last out and a vet scratch on Oct 26; she has a bullet 4f work (:47.1, 1 of 19) and Sanchez 28%, but the figures are not there (about 6%). Aoife&#x27;s Magic (8-1) is the flyer: her last start was an 82 wiring an OC 50k/C in the mud in February, and she has the speed to make the lead, but she has not run in nearly nine months and the Dotolo/Pennington combo is 7% with Dotolo 0-for-1 off 180+ days, so the connections floor keeps her off the top spots (about 7%).</p>
+<h2>Bottom line</h2>
+<p>Nobody is an overlay on the morning line. Lady Annabelle is the most likely winner and the horse to beat, but 9-5 is below the 2-1 floor. Top pick is <strong>Nature&#x27;s Candy</strong> (best playable figure, 3-for-5 at 7f, won this race last year, weights now even with the favorite); she becomes a bet at 9-2 or better. Second choice is <strong>Mary Q</strong> (rising 82 last out, the one closer in a speed-heavy field); she needs 6-1 or better. Aoife&#x27;s Magic is a small flyer at 8-1 or more if you want a live speed horse off the layoff. If Lady Annabelle drifts to 5-2 or longer she becomes the value, since 37% at 5-2 is a 1.30 ratio.</p></article>
+  <a class="back" href="../">← All races</a>
+</main>
+</body>
+</html>
