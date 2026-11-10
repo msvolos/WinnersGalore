@@ -3,3 +3,5 @@ DRF Tracker.xlsx
 ~$*.xlsx
 __pycache__/
 *.pyc
+# Skill upload packages (the unzipped copy in skill/ is tracked).
+skill/*.zip
