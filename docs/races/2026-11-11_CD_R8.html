@@ -1,0 +1,151 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Churchill Downs Race 8, Wed Nov 11 2026</title>
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#1f4e3d">
+<meta name="apple-mobile-web-app-title" content="Winners">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script>
+(function () {
+  const build = "20261111090646";
+  function check() {
+    fetch("../version.txt?t=" + Date.now(), {cache: "no-store"})
+      .then(r => r.ok ? r.text() : build)
+      .then(v => {
+        v = v.trim();
+        const u = new URL(location.href);
+        // Skip if we already asked for this build and still got an old copy.
+        if (v && v !== build && u.searchParams.get("v") !== v) { u.searchParams.set("v", v); location.replace(u); }
+      })
+      .catch(() => {});
+  }
+  check();
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) check(); });
+  addEventListener("pageshow", e => { if (e.persisted) check(); });
+})();
+</script>
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
+  --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+  --pos: #006300; --neg: #c0302f;
+  --series-a: #2a78d6; --series-b: #eb6834; --series-s: #1baf7a; --series-r: #8a5cd0;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+    --pos: #0ca30c; --neg: #e66767;
+    --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+  --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+  --pos: #0ca30c; --neg: #e66767;
+  --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink);
+  font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 16px 16px 48px; }
+h1 { font-size: 22px; margin: 4px 0 2px; }
+h2 { font-size: 16px; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+h3 { font-size: 15px; margin: 28px 0 10px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .04em; }
+.muted { color: var(--muted); font-weight: normal; }
+.pos { color: var(--pos); } .neg { color: var(--neg); }
+a { color: var(--series-a); }
+.card, .race { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+.hero { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 12px; }
+.hero .card { margin: 0; }
+.hero-label { font-size: 13px; color: var(--ink-2); display: flex; align-items: center; gap: 6px; }
+.hero-value { font-size: 30px; font-weight: 700; margin-top: 2px; }
+.added { font-size: 14px; color: var(--ink-2); margin: 0 0 12px; }
+.swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex: none; }
+.swatch.a { background: var(--series-a); } .swatch.b { background: var(--series-b); } .swatch.s { background: var(--series-s); } .swatch.r { background: var(--series-r); }
+.tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.tile { background: var(--page); border-radius: 8px; padding: 8px; text-align: center; }
+.tile-label { font-size: 11px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .03em; }
+.tile-value { font-size: 18px; font-weight: 700; }
+.tile-sub { font-size: 11px; color: var(--muted); }
+.kv { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; margin: 12px 0 0; font-size: 14px; }
+.kv dt { color: var(--ink-2); } .kv dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+.legend { display: flex; gap: 16px; font-size: 13px; color: var(--ink-2); margin-bottom: 6px; }
+.legend span { display: flex; align-items: center; gap: 6px; }
+.chart-wrap { position: relative; }
+svg { display: block; width: 100%; height: auto; touch-action: pan-y; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 8px; font-size: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.12); display: none; white-space: nowrap; }
+.tip b { display: block; margin-bottom: 2px; }
+.tip div { display: flex; align-items: center; gap: 6px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { padding: 6px 4px; text-align: right; border-bottom: 1px solid var(--grid); }
+th:first-child, td:first-child { text-align: left; }
+thead th { font-size: 12px; color: var(--ink-2); font-weight: 600; }
+.note { font-size: 12px; color: var(--muted); margin: 8px 0 0; }
+.race-head { display: flex; justify-content: space-between; gap: 8px; }
+.race-sub { font-size: 13px; margin-bottom: 8px; }
+.pick { display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 8px; margin-top: 6px; }
+.pick-name { font-weight: 600; }
+.pick-fin { color: var(--ink-2); font-size: 14px; }
+.pick-net { min-width: 64px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.pick-label { font-size: 11px; color: var(--muted); margin-left: 18px; }
+.race-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; font-size: 13px;
+  margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--grid); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@media (max-width: 480px) {
+  .tiles { grid-template-columns: repeat(2, 1fr); }
+  .hero-value { font-size: 24px; }
+}
+
+.back { display: inline-block; margin: 4px 0 10px; font-size: 14px; text-decoration: none; }
+.prose h2 { display: block; font-size: 17px; margin: 22px 0 8px; }
+.prose h2:first-child { margin-top: 0; }
+.prose h3, .prose h4 { font-size: 15px; margin: 18px 0 6px; text-transform: none; letter-spacing: 0; color: var(--ink); }
+.prose p, .prose li { margin: 0 0 10px; }
+.prose ul, .prose ol { padding-left: 20px; margin: 0 0 10px; }
+.prose a { overflow-wrap: anywhere; }
+.prose code { font-size: 13px; background: var(--page); padding: 1px 4px; border-radius: 4px; }
+.table-wrap { overflow-x: auto; margin: 0 0 12px; }
+.prose table { font-size: 13px; }
+.prose td, .prose th { text-align: left; vertical-align: top; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="../">← All races</a>
+  <h1>Churchill Downs Race 8, Wed Nov 11 2026</h1>
+  <div class="muted" style="margin-bottom:12px">Updated Nov 11, 2026 9:06 AM</div>
+  <article class="race"><div class="race-head"><strong>Churchill Downs R8</strong><span class="muted">Wed Nov 11</span></div><div class="race-sub muted">Turf 1m (3YO+ Alw 127k N1X)</div><div class="pick"><span class="swatch a"></span><span class="pick-name">Sinister Smile <span class="muted">(5-1)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">Top pick</div><div class="pick"><span class="swatch s"></span><span class="pick-name">Golden Channel <span class="muted">(8-1)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">2nd pick</div><div class="race-foot muted">Awaiting result</div></article>
+  
+  <h3>Pre-race handicap</h3>
+  <article class="card prose"><p>PP URL: <a href="https://www.drf.com/pp-details/11-11-2026/CD/8/D/USA">https://www.drf.com/pp-details/11-11-2026/CD/8/D/USA</a></p>
+<p>Churchill Downs Race 8, 1 mile on the turf, a $127k allowance for 3-year-olds and up, nonwinners of two (N1X), Beyer par 86. Twelve in the main body plus four also-eligibles, post 4:25 PM ET. Odds below are the morning line.</p>
+<p><strong>Scratches and probable scratches:</strong> No scratches posted. The four also-eligibles (Beautiful War 9-2, Just Buy It 7-2, Stackin Sats 10-1, Unitas 15-1) only run if the main body loses horses, so they are left out of the contenders. Beautiful War is also entered Friday (13Nov CD R7), so he is the least likely of them to run here. Just Buy It (79 winning a KD maiden at 7f, Saez 24%) is the one to respect if he draws in; at 7-2 he would still be an underlay (about 13%). Saez is named on both Taterpie and Just Buy It, and Gaffalione on both Irish Law and Stackin Sats, so the main-body horses keep those riders. Several of these were off-turf scratches at Keeneland on Oct 11, so if rain takes this race off the grass, expect a mass scratch and ignore this read.</p>
+<h2>Average earnings per start</h2>
+<div class="table-wrap"><table><thead><tr><th>Horse</th><th>ML</th><th>2026</th><th>Per start</th><th>2025</th><th>Per start</th></tr></thead><tbody><tr><td>Sinister Smile</td><td>5-1</td><td>5, $42,300</td><td>$8,460</td><td>10, $100,014</td><td>$10,001</td></tr><tr><td>City of Oscars</td><td>6-1</td><td>8, $61,791</td><td>$7,724</td><td>6, $34,645</td><td>$5,774</td></tr><tr><td>Without Caution</td><td>6-1</td><td>0</td><td>-</td><td>3, $27,400</td><td>$9,133</td></tr><tr><td>Epic Horsepower</td><td>12-1</td><td>3, $104,875</td><td>$34,958</td><td>3, $37,619</td><td>$12,540</td></tr><tr><td>Sheriff Bart</td><td>10-1</td><td>7, $73,252</td><td>$10,465</td><td>3, $35,000</td><td>$11,667</td></tr><tr><td>Natural Rights</td><td>8-1</td><td>2, $13,651</td><td>$6,826</td><td>3, $31,294</td><td>$10,431</td></tr><tr><td>Golden Channel</td><td>8-1</td><td>7, $47,106</td><td>$6,729</td><td>5, $78,600</td><td>$15,720</td></tr><tr><td>Time for Money</td><td>20-1</td><td>4, $11,205</td><td>$2,801</td><td>5, $82,341</td><td>$16,468</td></tr><tr><td>Atlal</td><td>20-1</td><td>4, $27,947</td><td>$6,987</td><td>4, $112,805</td><td>$28,201</td></tr><tr><td>Irish Law</td><td>4-1</td><td>3, $64,721</td><td>$21,574</td><td>2, $36,905</td><td>$18,453</td></tr><tr><td>Taterpie</td><td>15-1</td><td>6, $85,357</td><td>$14,226</td><td>1, $0</td><td>$0</td></tr><tr><td>Ready for Peace</td><td>15-1</td><td>0</td><td>-</td><td>3, $9,420</td><td>$3,140</td></tr></tbody></table></div>
+<p>Kentucky Downs purses inflate Epic Horsepower&#x27;s and Irish Law&#x27;s numbers; per start is a tiebreaker only here.</p>
+<h2>The contenders</h2>
+<p><strong>Sinister Smile (5-1)</strong> is the top pick. His one turf try was an 82 at Kentucky Downs (6 1/2f, swung widest and gaining, 4th beaten about a length), and last out he was 2nd with a 79 in the Keeneland N1X that came off the turf onto a sloppy track. His life best is an 85, and that came winning at a mile. The real edge is the barn: Irad Ortiz Jr. is 37% at the meet, Joe Sharp is 27% at the meet, and together they are 50% at Churchill ($2.84 ROI). The risk is plain: he is 1-for-17 with five seconds, so he has a habit of finding one horse better, and this is his first turf route. About 20%; fair 4-1, and 5-1 gives 1.20.</p>
+<p><strong>Irish Law (4-1)</strong> is the speed and the likely favorite. Lightly raced 3-year-old with Beyers 56, 71 (wiring a maiden at Ellis), 81 (dueled on the lead and yielded late, beaten about a length in an N1X at 1 1/16m). Throw out the 61 at Kentucky Downs (stepped slow, steadied, cut back to 6 1/2f). Early speed of 113 is the best in the main body, and Atlal (106, but a sprinter) is the only one who figures to hassle him. Gaffalione 15%, Walsh is 0-for-14 at the meet, but the combo is 23% at Churchill (130 starts, $2.36). About 19%; fair 4.3-1, and 4-1 gives 0.95. Underlay, but the most likely winner along with the top pick.</p>
+<p><strong>Golden Channel (8-1)</strong> is the second choice. Steadiest route figures in the field: 84, 85, 80 on turf in his last four routes, the 85 the best recent turf figure in the main body, and he is 4-1-1-0 at the distance. Throw out the 67 (off-turf slop, steadied) and the 75 (a mile and a half, too far). He is 1-for-12 and keeps getting outkicked, and the connections are thin: Geroux 11%, Weaver 0-for-2 at the meet (16% on the year), and the pair 0-for-2 together, which is too small a sample to hold against him. About 13%; fair 6.7-1, and 8-1 gives 1.17.</p>
+<p><strong>City of Oscars (6-1)</strong> won a Colonial allowance with an 82 on yielding ground and ran an 80 at Kentucky Downs in his last start, beaten about seven lengths. Concepcion 14%, Casse 20%, and the combo is 22% at Churchill with a big $5.99 ROI. He is 3-for-18, off since Aug 30, and the figures sit a few points below the top three. About 11%; fair 8.1-1, and 6-1 gives 0.77.</p>
+<div class="table-wrap"><table><thead><tr><th>Horse</th><th>Odds</th><th>Win %</th><th>Fair odds</th><th>Value ratio</th><th>Call</th></tr></thead><tbody><tr><td>Sinister Smile</td><td>5-1</td><td>20%</td><td>4-1</td><td>1.20</td><td>Fair</td></tr><tr><td>Irish Law</td><td>4-1</td><td>19%</td><td>4.3-1</td><td>0.95</td><td>Underlay</td></tr><tr><td>Golden Channel</td><td>8-1</td><td>13%</td><td>6.7-1</td><td>1.17</td><td>Fair</td></tr><tr><td>City of Oscars</td><td>6-1</td><td>11%</td><td>8.1-1</td><td>0.77</td><td>Underlay</td></tr></tbody></table></div>
+<h2>The rest</h2>
+<p>Sheriff Bart (10-1) is the flyer: an 82 running 2nd at Ellis on yielding turf at a mile, and a 78 leading most of the way at this course and distance in May, with the last two (65, 66) in sprints he can be excused for. Alvarado is 9% at the meet, so the connections floor keeps him off the top spots (about 8%). Natural Rights (8-1) is stuck at 75-76 with Arrieta 10% and Cunningham 0-for-4. Without Caution (6-1) and Ready for Peace (15-1) are back from layoffs of 15 and 19 months with figures in the 70s. Epic Horsepower (12-1) topped out at 72, Time for Money (20-1) at 74 with Beschizza 0% at the meet, Atlal (20-1) is a sprinter stretching out, and Taterpie (15-1) runs his figures in sprints and has not shown it around two turns. Nobody in the field has run a Beyer at par (86) on turf this year, so this is a soft, wide-open N1X.</p>
+<h2>Bottom line</h2>
+<p>Nobody is an overlay on the morning line. Top pick is <strong>Sinister Smile</strong> (hot Ortiz/Sharp barn, 82 in his only turf start, 85 life best at a mile); he becomes a bet at 21-4 or better. Second choice is <strong>Golden Channel</strong> (best recent turf figures, 4-1-1-0 at the distance); he needs 9-1 or better. Irish Law is the horse to beat on speed and becomes the value at 6-1 or longer. Sheriff Bart is a small flyer at 12-1 or more.</p></article>
+  <a class="back" href="../">← All races</a>
+</main>
+</body>
+</html>
