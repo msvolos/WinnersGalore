@@ -1,0 +1,153 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Belmont Park Race 7, Thu Nov 12 2026</title>
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#1f4e3d">
+<meta name="apple-mobile-web-app-title" content="Winners">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script>
+(function () {
+  const build = "20261112090637";
+  function check() {
+    fetch("../version.txt?t=" + Date.now(), {cache: "no-store"})
+      .then(r => r.ok ? r.text() : build)
+      .then(v => {
+        v = v.trim();
+        const u = new URL(location.href);
+        // Skip if we already asked for this build and still got an old copy.
+        if (v && v !== build && u.searchParams.get("v") !== v) { u.searchParams.set("v", v); location.replace(u); }
+      })
+      .catch(() => {});
+  }
+  check();
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) check(); });
+  addEventListener("pageshow", e => { if (e.persisted) check(); });
+})();
+</script>
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
+  --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+  --pos: #006300; --neg: #c0302f;
+  --series-a: #2a78d6; --series-b: #eb6834; --series-s: #1baf7a; --series-r: #8a5cd0;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+    --pos: #0ca30c; --neg: #e66767;
+    --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+  --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+  --pos: #0ca30c; --neg: #e66767;
+  --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink);
+  font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 16px 16px 48px; }
+h1 { font-size: 22px; margin: 4px 0 2px; }
+h2 { font-size: 16px; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+h3 { font-size: 15px; margin: 28px 0 10px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .04em; }
+.muted { color: var(--muted); font-weight: normal; }
+.pos { color: var(--pos); } .neg { color: var(--neg); }
+a { color: var(--series-a); }
+.card, .race { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+.hero { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 12px; }
+.hero .card { margin: 0; }
+.hero-label { font-size: 13px; color: var(--ink-2); display: flex; align-items: center; gap: 6px; }
+.hero-value { font-size: 30px; font-weight: 700; margin-top: 2px; }
+.added { font-size: 14px; color: var(--ink-2); margin: 0 0 12px; }
+.swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex: none; }
+.swatch.a { background: var(--series-a); } .swatch.b { background: var(--series-b); } .swatch.s { background: var(--series-s); } .swatch.r { background: var(--series-r); }
+.tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.tile { background: var(--page); border-radius: 8px; padding: 8px; text-align: center; }
+.tile-label { font-size: 11px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .03em; }
+.tile-value { font-size: 18px; font-weight: 700; }
+.tile-sub { font-size: 11px; color: var(--muted); }
+.kv { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; margin: 12px 0 0; font-size: 14px; }
+.kv dt { color: var(--ink-2); } .kv dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+.legend { display: flex; gap: 16px; font-size: 13px; color: var(--ink-2); margin-bottom: 6px; }
+.legend span { display: flex; align-items: center; gap: 6px; }
+.chart-wrap { position: relative; }
+svg { display: block; width: 100%; height: auto; touch-action: pan-y; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 8px; font-size: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.12); display: none; white-space: nowrap; }
+.tip b { display: block; margin-bottom: 2px; }
+.tip div { display: flex; align-items: center; gap: 6px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { padding: 6px 4px; text-align: right; border-bottom: 1px solid var(--grid); }
+th:first-child, td:first-child { text-align: left; }
+thead th { font-size: 12px; color: var(--ink-2); font-weight: 600; }
+.note { font-size: 12px; color: var(--muted); margin: 8px 0 0; }
+.race-head { display: flex; justify-content: space-between; gap: 8px; }
+.race-sub { font-size: 13px; margin-bottom: 8px; }
+.pick { display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 8px; margin-top: 6px; }
+.pick-name { font-weight: 600; }
+.pick-fin { color: var(--ink-2); font-size: 14px; }
+.pick-net { min-width: 64px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.pick-label { font-size: 11px; color: var(--muted); margin-left: 18px; }
+.race-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; font-size: 13px;
+  margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--grid); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@media (max-width: 480px) {
+  .tiles { grid-template-columns: repeat(2, 1fr); }
+  .hero-value { font-size: 24px; }
+}
+
+.back { display: inline-block; margin: 4px 0 10px; font-size: 14px; text-decoration: none; }
+.prose h2 { display: block; font-size: 17px; margin: 22px 0 8px; }
+.prose h2:first-child { margin-top: 0; }
+.prose h3, .prose h4 { font-size: 15px; margin: 18px 0 6px; text-transform: none; letter-spacing: 0; color: var(--ink); }
+.prose p, .prose li { margin: 0 0 10px; }
+.prose ul, .prose ol { padding-left: 20px; margin: 0 0 10px; }
+.prose a { overflow-wrap: anywhere; }
+.prose code { font-size: 13px; background: var(--page); padding: 1px 4px; border-radius: 4px; }
+.table-wrap { overflow-x: auto; margin: 0 0 12px; }
+.prose table { font-size: 13px; }
+.prose td, .prose th { text-align: left; vertical-align: top; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="../">← All races</a>
+  <h1>Belmont Park Race 7, Thu Nov 12 2026</h1>
+  <div class="muted" style="margin-bottom:12px">Updated Nov 12, 2026 9:06 AM</div>
+  <article class="race"><div class="race-head"><strong>Belmont Park R7</strong><span class="muted">Thu Nov 12</span></div><div class="race-sub muted">Inner Turf 1 1/4m (3YO+ F&amp;M OC 55k/N1X)</div><div class="pick"><span class="swatch a"></span><span class="pick-name">Bobby M&#x27;s Girl <span class="muted">(12-1)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">Top pick</div><div class="pick"><span class="swatch s"></span><span class="pick-name">Stand the Rain <span class="muted">(5-2)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">2nd pick</div><div class="race-foot muted">Awaiting result</div></article>
+  
+  <h3>Pre-race handicap</h3>
+  <article class="card prose"><p>PP URL: <a href="https://www.drf.com/pp-details/11-12-2026/BEL/7/D/USA">https://www.drf.com/pp-details/11-12-2026/BEL/7/D/USA</a></p>
+<p>Belmont Park Race 7, 1 1/4 miles on the inner turf, a $105k optional claiming allowance for fillies and mares 3 and up, nonwinners of two (OC 55k/N1X), Beyer par 89. Seven runners, post 3:43 PM ET. Odds below are the morning line.</p>
+<p><strong>Scratches and probable scratches:</strong> None posted, and nobody is cross-entered or coming back on short rest. If rain takes it off the turf, expect scratches and ignore this read.</p>
+<h2>Average earnings per start</h2>
+<div class="table-wrap"><table><thead><tr><th>Horse</th><th>ML</th><th>2026</th><th>Per start</th><th>2025</th><th>Per start</th></tr></thead><tbody><tr><td>Bobby M&#x27;s Girl</td><td>12-1</td><td>2, $5,700</td><td>$2,850</td><td>7, $95,920</td><td>$13,703</td></tr><tr><td>Alibi</td><td>4-1</td><td>3, $27,620</td><td>$9,207</td><td>2, $15,300</td><td>$7,650</td></tr><tr><td>Toes</td><td>7-2</td><td>1, $450</td><td>$450</td><td>5, $70,150</td><td>$14,030</td></tr><tr><td>Stand the Rain</td><td>5-2</td><td>5, $99,300</td><td>$19,860</td><td>4, $16,200</td><td>$4,050</td></tr><tr><td>Abigail</td><td>8-1</td><td>6, $42,775</td><td>$7,129</td><td>2, $18,665</td><td>$9,333</td></tr><tr><td>Consensus View</td><td>3-1</td><td>4, $56,670</td><td>$14,168</td><td>0</td><td>-</td></tr><tr><td>Tiz the Lady</td><td>6-1</td><td>6, $55,420</td><td>$9,237</td><td>2, $1,488</td><td>$744</td></tr></tbody></table></div>
+<p>Stand the Rain&#x27;s number is inflated by New York maiden purses; Bobby M&#x27;s Girl and Toes are lightly raced this year, so lean on 2025 for them. Tiebreaker only.</p>
+<h2>The contenders</h2>
+<p>Nobody in this field has run within 10 points of the 89 par. The best recent figures are 79s from Stand the Rain and Consensus View, so this is a soft N1X where a mid-70s horse with a decent trip can win.</p>
+<p><strong>Stand the Rain (5-2)</strong> is the most likely winner. Her line reads 77, 77, 70, 79, and the 79 came last out winning a maiden at 1 5/16 miles going away from an inside trip. She is proven at a route this long (4 starts at today&#x27;s distance, a 2nd and a 3rd, plus the win at 1 5/16) and Franco (22%) with Clement (17%) are 29% together at Belmont. The knocks: she is a maiden winner facing winners for the first time, she carries 126 (top weight by two), and she lost to Consensus View in June. About 26%; fair 2.8-1, and 5-2 gives 0.91. Underlay at the morning line, playable at 4-1.</p>
+<p><strong>Consensus View (3-1)</strong> beat Stand the Rain with a 79 in that June maiden, then ran 75 in the Saratoga Oaks (G2) and 76 in this same N1X condition at Saratoga, tracking and one-paced both times. Throw out the 64 on Oct 11 (race came off the turf, brushed). Prat (23%) and Chad Brown (25%) are 31% together at Belmont. She has not moved forward since her maiden win, and the closing style (late 110) needs pace that this race may not have. About 20%; fair 4-1, and 3-1 gives 0.80. Underlay.</p>
+<p><strong>Bobby M&#x27;s Girl (12-1)</strong> is the value. She ran 75 last out in the $200k Ticonderoga (6th after bobbling and getting stuck inside behind tiring horses) and 73 in a 105k N1X before that, both off a ten-month layoff, so third start back she should be at her sharpest. Her life best is 77, which puts her inside two points of the top figures here, and she was 3rd and 4th in N1X turf routes at Aqueduct and Belmont as a 3-year-old. Castellano (18%) rides for Duggan (13%), 2-for-4 together at Belmont. The risk is plain: she is a deep closer (late 105, early 57) in a race with one real speed horse, a 5-year-old still trying to clear this level, and her N1X tries have come up short, so she needs the pace to cooperate. About 11%; fair 8.1-1, and 12-1 gives 1.43. Overlay.</p>
+<p><strong>Toes (7-2)</strong> is the only real speed (early 89, nobody else above 76) and could get a soft lead. She ran 77 at Santa Anita and 76 winning a maiden, then stumbled at the start and was 8th first back from ten months on Nov 1 (excused). The connections are the problem: Drysdale is 13% at the meet and 5% with allowance horses, and this jockey/trainer pair is 6% over 16 starts, under the 10% floor. A lone-speed upset is possible. About 15%; fair 5.7-1, and 7-2 gives 0.68. Underlay.</p>
+<p><strong>Tiz the Lady (6-1)</strong> won a $90k maiden claimer with a 73 in June, then ran 72 and 67 in Colonial allowances. McGaughey is 30% at the meet and the pair is 29% at Belmont, but her figures are a step slow and she has never been this far. About 10%; fair 9-1, and 6-1 gives 0.70. Underlay.</p>
+<div class="table-wrap"><table><thead><tr><th>Horse</th><th>Odds</th><th>Win %</th><th>Fair odds</th><th>Value ratio</th><th>Call</th></tr></thead><tbody><tr><td>Stand the Rain</td><td>5-2</td><td>26%</td><td>2.8-1</td><td>0.91</td><td>Underlay</td></tr><tr><td>Consensus View</td><td>3-1</td><td>20%</td><td>4-1</td><td>0.80</td><td>Underlay</td></tr><tr><td>Toes</td><td>7-2</td><td>15%</td><td>5.7-1</td><td>0.68</td><td>Underlay</td></tr><tr><td>Bobby M&#x27;s Girl</td><td>12-1</td><td>11%</td><td>8.1-1</td><td>1.43</td><td>Overlay</td></tr><tr><td>Tiz the Lady</td><td>6-1</td><td>10%</td><td>9-1</td><td>0.70</td><td>Underlay</td></tr></tbody></table></div>
+<h2>The rest</h2>
+<p>Abigail (8-1, about 9%) has topped out at 74, has never gone past 1 1/8, and is Clement&#x27;s second string with Marin at 12%. Alibi (4-1, about 9%) has 74 as her best, ran 69 when 8th in her only N1X try, and Dylan Davis is 7% at the meet, under the rider floor. Alibi is the big underlay on the board. No flyer worth naming.</p>
+<h2>Bottom line</h2>
+<p>Bobby M&#x27;s Girl is the top pick at 10-1 or better; she is the only overlay on the board, and she needs a real pace to close into. Stand the Rain is the second choice and the most likely winner, but she is an underlay at 5-2 and only becomes a bet at about 4-1. Consensus View would need 21-4. If Bobby M&#x27;s Girl takes money below 10-1 and Stand the Rain drifts to 4-1, flip to Stand the Rain.</p></article>
+  <a class="back" href="../">← All races</a>
+</main>
+</body>
+</html>
