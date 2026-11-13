@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Churchill Downs Race 10, Fri Nov 13 2026</title>
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#1f4e3d">
+<meta name="apple-mobile-web-app-title" content="Winners">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script>
+(function () {
+  const build = "20261113100633";
+  function check() {
+    fetch("../version.txt?t=" + Date.now(), {cache: "no-store"})
+      .then(r => r.ok ? r.text() : build)
+      .then(v => {
+        v = v.trim();
+        const u = new URL(location.href);
+        // Skip if we already asked for this build and still got an old copy.
+        if (v && v !== build && u.searchParams.get("v") !== v) { u.searchParams.set("v", v); location.replace(u); }
+      })
+      .catch(() => {});
+  }
+  check();
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) check(); });
+  addEventListener("pageshow", e => { if (e.persisted) check(); });
+})();
+</script>
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
+  --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+  --pos: #006300; --neg: #c0302f;
+  --series-a: #2a78d6; --series-b: #eb6834; --series-s: #1baf7a; --series-r: #8a5cd0;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+    --pos: #0ca30c; --neg: #e66767;
+    --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+  --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+  --pos: #0ca30c; --neg: #e66767;
+  --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink);
+  font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 16px 16px 48px; }
+h1 { font-size: 22px; margin: 4px 0 2px; }
+h2 { font-size: 16px; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+h3 { font-size: 15px; margin: 28px 0 10px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .04em; }
+.muted { color: var(--muted); font-weight: normal; }
+.pos { color: var(--pos); } .neg { color: var(--neg); }
+a { color: var(--series-a); }
+.card, .race { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+.hero { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 12px; }
+.hero .card { margin: 0; }
+.hero-label { font-size: 13px; color: var(--ink-2); display: flex; align-items: center; gap: 6px; }
+.hero-value { font-size: 30px; font-weight: 700; margin-top: 2px; }
+.added { font-size: 14px; color: var(--ink-2); margin: 0 0 12px; }
+.swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex: none; }
+.swatch.a { background: var(--series-a); } .swatch.b { background: var(--series-b); } .swatch.s { background: var(--series-s); } .swatch.r { background: var(--series-r); }
+.tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.tile { background: var(--page); border-radius: 8px; padding: 8px; text-align: center; }
+.tile-label { font-size: 11px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .03em; }
+.tile-value { font-size: 18px; font-weight: 700; }
+.tile-sub { font-size: 11px; color: var(--muted); }
+.kv { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; margin: 12px 0 0; font-size: 14px; }
+.kv dt { color: var(--ink-2); } .kv dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+.legend { display: flex; gap: 16px; font-size: 13px; color: var(--ink-2); margin-bottom: 6px; }
+.legend span { display: flex; align-items: center; gap: 6px; }
+.chart-wrap { position: relative; }
+svg { display: block; width: 100%; height: auto; touch-action: pan-y; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 8px; font-size: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.12); display: none; white-space: nowrap; }
+.tip b { display: block; margin-bottom: 2px; }
+.tip div { display: flex; align-items: center; gap: 6px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { padding: 6px 4px; text-align: right; border-bottom: 1px solid var(--grid); }
+th:first-child, td:first-child { text-align: left; }
+thead th { font-size: 12px; color: var(--ink-2); font-weight: 600; }
+.note { font-size: 12px; color: var(--muted); margin: 8px 0 0; }
+.race-head { display: flex; justify-content: space-between; gap: 8px; }
+.race-sub { font-size: 13px; margin-bottom: 8px; }
+.pick { display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 8px; margin-top: 6px; }
+.pick-name { font-weight: 600; }
+.pick-fin { color: var(--ink-2); font-size: 14px; }
+.pick-net { min-width: 64px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.pick-label { font-size: 11px; color: var(--muted); margin-left: 18px; }
+.race-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; font-size: 13px;
+  margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--grid); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@media (max-width: 480px) {
+  .tiles { grid-template-columns: repeat(2, 1fr); }
+  .hero-value { font-size: 24px; }
+}
+
+.back { display: inline-block; margin: 4px 0 10px; font-size: 14px; text-decoration: none; }
+.prose h2 { display: block; font-size: 17px; margin: 22px 0 8px; }
+.prose h2:first-child { margin-top: 0; }
+.prose h3, .prose h4 { font-size: 15px; margin: 18px 0 6px; text-transform: none; letter-spacing: 0; color: var(--ink); }
+.prose p, .prose li { margin: 0 0 10px; }
+.prose ul, .prose ol { padding-left: 20px; margin: 0 0 10px; }
+.prose a { overflow-wrap: anywhere; }
+.prose code { font-size: 13px; background: var(--page); padding: 1px 4px; border-radius: 4px; }
+.table-wrap { overflow-x: auto; margin: 0 0 12px; }
+.prose table { font-size: 13px; }
+.prose td, .prose th { text-align: left; vertical-align: top; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="../">← All races</a>
+  <h1>Churchill Downs Race 10, Fri Nov 13 2026</h1>
+  <div class="muted" style="margin-bottom:12px">Updated Nov 13, 2026 10:06 AM</div>
+  <article class="race"><div class="race-head"><strong>Churchill Downs R10</strong><span class="muted">Fri Nov 13</span></div><div class="race-sub muted">Turf 1m (3YO+ OC 80k/N$Y 134k)</div><div class="pick"><span class="swatch a"></span><span class="pick-name">War At Sea <span class="muted">(15-1)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">Top pick</div><div class="pick"><span class="swatch s"></span><span class="pick-name">Restore <span class="muted">(15-1)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">2nd pick</div><div class="race-foot muted">Awaiting result</div></article>
+  
+  <h3>Pre-race handicap</h3>
+  <article class="card prose"><p>PP URL: <a href="https://www.drf.com/pp-details/11-13-2026/CD/10/D/USA">https://www.drf.com/pp-details/11-13-2026/CD/10/D/USA</a></p>
+<p>Churchill Downs Race 10, 1 mile on the turf, a $134k optional claiming allowance for 3-year-olds and up (OC 80k/N$Y), Beyer par not shown. Post 5:25 PM ET. Odds below are the morning line.</p>
+<p><strong>Scratches and probable scratches:</strong> Early Adopter (9-2), Dr. Agne (8-1) and First Resort (8-1) are scratched. That takes the main body from 12 to 9, so the first three also-eligibles (Kalahari Dreams, Restore, No Joke Joe) should draw in, assuming the usual 12-horse turf limit. Tough Little Nut (6-1, AE #16) needs one more scratch to get in, and I leave him out of the contenders. If Restore does not draw in, Theismann moves up to second choice.</p>
+<h2>Average earnings per start</h2>
+<div class="table-wrap"><table><thead><tr><th>Horse</th><th>ML</th><th>2026</th><th>Per start</th><th>2025</th><th>Per start</th></tr></thead><tbody><tr><td>Maui Strong</td><td>7-2</td><td>3, $106,744</td><td>$35,581</td><td>9, $171,580</td><td>$19,064</td></tr><tr><td>Cheval de Guerre</td><td>20-1</td><td>0</td><td>-</td><td>3, $107,914</td><td>$35,971</td></tr><tr><td>Great White</td><td>12-1</td><td>5, $145,628</td><td>$29,126</td><td>1, $58,492</td><td>$58,492</td></tr><tr><td>War At Sea</td><td>15-1</td><td>5, $17,180</td><td>$3,436</td><td>0 (2024: 7, $43,808)</td><td>$6,258</td></tr><tr><td>Sushi Man</td><td>12-1</td><td>5, $63,318</td><td>$12,664</td><td>8, $114,657</td><td>$14,332</td></tr><tr><td>Noises Off</td><td>6-1</td><td>4, $42,875</td><td>$10,719</td><td>4, $56,840</td><td>$14,210</td></tr><tr><td>Theismann</td><td>5-1</td><td>5, $38,187</td><td>$7,637</td><td>7, $269,908</td><td>$38,558</td></tr><tr><td>Vamos Carlitos</td><td>30-1</td><td>8, $79,949</td><td>$9,994</td><td>4, $19,200</td><td>$4,800</td></tr><tr><td>American Promise</td><td>20-1</td><td>4, $21,180</td><td>$5,295</td><td>5, $335,000</td><td>$67,000</td></tr><tr><td>Kalahari Dreams (AE)</td><td>20-1</td><td>6, $36,735</td><td>$6,123</td><td>10, $215,525</td><td>$21,553</td></tr><tr><td>Restore (AE)</td><td>15-1</td><td>5, $96,402</td><td>$19,280</td><td>4, $18,370</td><td>$4,593</td></tr><tr><td>No Joke Joe (AE)</td><td>20-1</td><td>0</td><td>-</td><td>3, $134,693</td><td>$44,898</td></tr><tr><td>Tough Little Nut (AE)</td><td>6-1</td><td>6, $86,268</td><td>$14,378</td><td>4, $15,143</td><td>$3,786</td></tr></tbody></table></div>
+<p>The big numbers (American Promise, Great White, No Joke Joe) come from dirt stakes or New York and Kentucky maiden purses and say little about a turf mile. Tiebreaker only.</p>
+<h2>The contenders</h2>
+<p>With no par shown, the reference point is the field itself. The best recent turf figures are Theismann&#x27;s 94 and 90 (May and June, in OC 175k company), War At Sea&#x27;s 93 in August, and the 86 to 88 group of Noises Off, Maui Strong and Tough Little Nut.</p>
+<p><strong>Maui Strong (7-2)</strong> is the most likely winner. He ran 87 last out, game in 2nd at this level over this course and distance, after an 86 winning an N1X here in June, with a wide-trip 82 in between at Saratoga. He is 6-2-1-1 on the Churchill turf and 7-2-1-1 at the distance. The problem is the combo: Corrales (13%) and Romans (18% at the meet) are 1-for-23 together at Churchill (4%) and 5% overall, under the 10% floor, so he cannot be the top pick. About 20%; fair 4-1, and 7-2 gives 0.90. Underlay, and the horse to beat.</p>
+<p><strong>Theismann (5-1)</strong> has the best figures in the race, 94 and 90 in OC 175k races here in May and June, and he has early speed (113) nobody else matches. He was claimed by Mike Maker out of a 72 when he popped the gate and faltered on Sep 7, and Maker wins 21% first off the claim. The knocks: Maker is 0-for-19 at this meet, he faded in both of those big-figure races, and he has not run in nine weeks (scratched at Indiana in October). Gaffalione (14%) and Maker are 13% together at Churchill. About 18%; fair 4.6-1, and 5-1 gives 1.08. Fair. Bet him at 6-1 or better.</p>
+<p><strong>Noises Off (6-1)</strong> is the steady one: 88 in an OC 80k N2X at Kentucky Downs (3rd, 4-5 wide), 88 winning at Indiana in June, and 88 in an OC 100k here last fall. He has three 88s in his last five and is 3-0-1-1 over this course. Rodriguez (18%) and Lobo (25% at the meet) are 19% together. He is a deep closer (late 101) who has not run since September, and a 6-year-old with one win in his last ten. About 15%; fair 5.7-1, and 6-1 gives 1.05. Fair. Bet at 7-1 or better.</p>
+<p><strong>War At Sea (15-1)</strong> is the value. He ran 93 two back in an OC 100k N2X turf mile at Del Mar, 4th and beaten under three lengths after angling out, and 88 before that when 3rd. Throw out the last line: a 78 on dirt eight days later, a surface try on short rest. He has a 95 life best at this distance and is 11-2-1-1 at a mile on turf. Torres is 22% at the meet, and new trainer DiVito (12% this year, 14% first off the claim) is 20% with him over 10 starts. The risk: he is a 7-year-old, 0-for-5 this year, ten weeks off, with a new barn and no start on this course. About 9%; fair 10-1, and 15-1 gives 1.44. Overlay.</p>
+<p><strong>Restore (15-1, AE)</strong> is the improver. His figures go 51, 75, 84, and the 84 came winning a 1 1/16 N1X on this turf at 22-1 in September, leading all the way and holding gamely. He is 3-for-5 this year. Gutierrez (10%) and Stewart (19% this year) are 6-for-19 together at Churchill (32%, $5.73 ROI), the best combo in the race. The questions are the class step to N$Y company, cutting back to a mile with a lot of speed inside him, and getting in off the AE list. About 8%; fair 11.5-1, and 15-1 gives 1.28. Overlay, just.</p>
+<p><strong>Sushi Man (12-1)</strong> ran 83 in a 1 1/8 N2X at Keeneland (3rd, outkicked) after 85 winning a Canterbury stakes. He is 3-for-5 at the distance. Arrieta is 9% at the meet and the J/T is 0-for-8, so he stays out of the top spots. About 7%; fair 13-1, and 12-1 gives 0.91. Underlay.</p>
+<div class="table-wrap"><table><thead><tr><th>Horse</th><th>Odds</th><th>Win %</th><th>Fair odds</th><th>Value ratio</th><th>Call</th></tr></thead><tbody><tr><td>Maui Strong</td><td>7-2</td><td>20%</td><td>4-1</td><td>0.90</td><td>Underlay</td></tr><tr><td>Theismann</td><td>5-1</td><td>18%</td><td>4.6-1</td><td>1.08</td><td>Fair</td></tr><tr><td>Noises Off</td><td>6-1</td><td>15%</td><td>5.7-1</td><td>1.05</td><td>Fair</td></tr><tr><td>War At Sea</td><td>15-1</td><td>9%</td><td>10-1</td><td>1.44</td><td>Overlay</td></tr><tr><td>Restore</td><td>15-1</td><td>8%</td><td>11.5-1</td><td>1.28</td><td>Overlay</td></tr><tr><td>Sushi Man</td><td>12-1</td><td>7%</td><td>13-1</td><td>0.91</td><td>Underlay</td></tr></tbody></table></div>
+<h2>The rest</h2>
+<p>Great White (12-1) tries turf for the first time with Morales at 2%, and Ennis is 5% with first-time turfers. American Promise (20-1) is a dirt horse trying turf, and Asmussen is 4% with first-time turfers. Vamos Carlitos (30-1) has never run better than 66 on turf. Kalahari Dreams (20-1, AE) is a sprinter, and Bauer is 3% going sprint to route. No Joke Joe (20-1, AE) has not run in 10 months and tops out at 68. Tough Little Nut (6-1, AE #16) ran 86 when 2nd at Keeneland but likely does not draw in, and Sheehy is 0-for-24 at the meet. Flyer: Cheval de Guerre (20-1), off 13 months and stretching out from turf sprints, but Saez and Kenneally are 22% together at Churchill with a $2.93 ROI.</p>
+<h2>Bottom line</h2>
+<p>War At Sea is the top pick at 13-1 or better; he is the best overlay on the board. Restore is the second choice at about 15-1 or better, and only if he draws in (if he does not, Theismann takes the second spot at 6-1 or better). Maui Strong is the horse to beat but is an underlay with a cold combo. Watch the board on War At Sea: a big drift past about 25-1 is a warning.</p></article>
+  <a class="back" href="../">← All races</a>
+</main>
+</body>
+</html>
