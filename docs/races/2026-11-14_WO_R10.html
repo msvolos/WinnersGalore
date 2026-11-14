@@ -1,0 +1,155 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Woodbine Race 10, Sat Nov 14 2026</title>
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#1f4e3d">
+<meta name="apple-mobile-web-app-title" content="Winners">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script>
+(function () {
+  const build = "20261114090713";
+  function check() {
+    fetch("../version.txt?t=" + Date.now(), {cache: "no-store"})
+      .then(r => r.ok ? r.text() : build)
+      .then(v => {
+        v = v.trim();
+        const u = new URL(location.href);
+        // Skip if we already asked for this build and still got an old copy.
+        if (v && v !== build && u.searchParams.get("v") !== v) { u.searchParams.set("v", v); location.replace(u); }
+      })
+      .catch(() => {});
+  }
+  check();
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) check(); });
+  addEventListener("pageshow", e => { if (e.persisted) check(); });
+})();
+</script>
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
+  --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+  --pos: #006300; --neg: #c0302f;
+  --series-a: #2a78d6; --series-b: #eb6834; --series-s: #1baf7a; --series-r: #8a5cd0;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+    --pos: #0ca30c; --neg: #e66767;
+    --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+  --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+  --pos: #0ca30c; --neg: #e66767;
+  --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink);
+  font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 16px 16px 48px; }
+h1 { font-size: 22px; margin: 4px 0 2px; }
+h2 { font-size: 16px; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+h3 { font-size: 15px; margin: 28px 0 10px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .04em; }
+.muted { color: var(--muted); font-weight: normal; }
+.pos { color: var(--pos); } .neg { color: var(--neg); }
+a { color: var(--series-a); }
+.card, .race { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+.hero { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 12px; }
+.hero .card { margin: 0; }
+.hero-label { font-size: 13px; color: var(--ink-2); display: flex; align-items: center; gap: 6px; }
+.hero-value { font-size: 30px; font-weight: 700; margin-top: 2px; }
+.added { font-size: 14px; color: var(--ink-2); margin: 0 0 12px; }
+.swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex: none; }
+.swatch.a { background: var(--series-a); } .swatch.b { background: var(--series-b); } .swatch.s { background: var(--series-s); } .swatch.r { background: var(--series-r); }
+.tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.tile { background: var(--page); border-radius: 8px; padding: 8px; text-align: center; }
+.tile-label { font-size: 11px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .03em; }
+.tile-value { font-size: 18px; font-weight: 700; }
+.tile-sub { font-size: 11px; color: var(--muted); }
+.kv { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; margin: 12px 0 0; font-size: 14px; }
+.kv dt { color: var(--ink-2); } .kv dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+.legend { display: flex; gap: 16px; font-size: 13px; color: var(--ink-2); margin-bottom: 6px; }
+.legend span { display: flex; align-items: center; gap: 6px; }
+.chart-wrap { position: relative; }
+svg { display: block; width: 100%; height: auto; touch-action: pan-y; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 8px; font-size: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.12); display: none; white-space: nowrap; }
+.tip b { display: block; margin-bottom: 2px; }
+.tip div { display: flex; align-items: center; gap: 6px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { padding: 6px 4px; text-align: right; border-bottom: 1px solid var(--grid); }
+th:first-child, td:first-child { text-align: left; }
+thead th { font-size: 12px; color: var(--ink-2); font-weight: 600; }
+.note { font-size: 12px; color: var(--muted); margin: 8px 0 0; }
+.race-head { display: flex; justify-content: space-between; gap: 8px; }
+.race-sub { font-size: 13px; margin-bottom: 8px; }
+.pick { display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 8px; margin-top: 6px; }
+.pick-name { font-weight: 600; }
+.pick-fin { color: var(--ink-2); font-size: 14px; }
+.pick-net { min-width: 64px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.pick-label { font-size: 11px; color: var(--muted); margin-left: 18px; }
+.race-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; font-size: 13px;
+  margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--grid); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@media (max-width: 480px) {
+  .tiles { grid-template-columns: repeat(2, 1fr); }
+  .hero-value { font-size: 24px; }
+}
+
+.back { display: inline-block; margin: 4px 0 10px; font-size: 14px; text-decoration: none; }
+.prose h2 { display: block; font-size: 17px; margin: 22px 0 8px; }
+.prose h2:first-child { margin-top: 0; }
+.prose h3, .prose h4 { font-size: 15px; margin: 18px 0 6px; text-transform: none; letter-spacing: 0; color: var(--ink); }
+.prose p, .prose li { margin: 0 0 10px; }
+.prose ul, .prose ol { padding-left: 20px; margin: 0 0 10px; }
+.prose a { overflow-wrap: anywhere; }
+.prose code { font-size: 13px; background: var(--page); padding: 1px 4px; border-radius: 4px; }
+.table-wrap { overflow-x: auto; margin: 0 0 12px; }
+.prose table { font-size: 13px; }
+.prose td, .prose th { text-align: left; vertical-align: top; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="../">← All races</a>
+  <h1>Woodbine Race 10, Sat Nov 14 2026</h1>
+  <div class="muted" style="margin-bottom:12px">Updated Nov 14, 2026 9:07 AM</div>
+  <article class="race"><div class="race-head"><strong>Woodbine R10</strong><span class="muted">Sat Nov 14</span></div><div class="race-sub muted">Synth 6f (Kennedy Road G2 200k)</div><div class="pick"><span class="swatch a"></span><span class="pick-name">Victory Achieved <span class="muted">(2-1)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">Top pick</div><div class="pick"><span class="swatch s"></span><span class="pick-name">Arbiter <span class="muted">(3-1)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">2nd pick</div><div class="race-foot muted">Awaiting result</div></article>
+  
+  <h3>Pre-race handicap</h3>
+  <article class="card prose"><p>PP URL: <a href="https://www.drf.com/pp-details/11-14-2026/WO/10/D/CAN">https://www.drf.com/pp-details/11-14-2026/WO/10/D/CAN</a></p>
+<p>Woodbine Race 10, the Grade 2 Kennedy Road Stakes, 6 furlongs on the synthetic for 3-year-olds and up, $200k, Beyer par 98. Post 5:42 PM ET. Seven runners. Odds below are the morning line.</p>
+<p><strong>Scratches and probable scratches:</strong> None listed, and nobody looks likely to come out. No cross-entries show, and the shortest turnaround in the field is Nobals off an October 22 race.</p>
+<h2>Average earnings per start</h2>
+<div class="table-wrap"><table><thead><tr><th>Horse</th><th>ML</th><th>2026</th><th>Per start</th><th>2025</th><th>Per start</th></tr></thead><tbody><tr><td>G T Five Hundred</td><td>8-1</td><td>8 starts, $287,511</td><td>$35,939</td><td>10 starts, $185,088</td><td>$18,509</td></tr><tr><td>Arbiter</td><td>3-1</td><td>3 starts, $65,636</td><td>$21,879</td><td>2 starts, $131,103</td><td>$65,552</td></tr><tr><td>My Boy Prince</td><td>5-2</td><td>9 starts, $400,600</td><td>$44,511</td><td>6 starts, $436,284</td><td>$72,714</td></tr><tr><td>Nobals</td><td>6-1</td><td>5 starts, $80,910</td><td>$16,182</td><td>9 starts, $283,511</td><td>$31,501</td></tr><tr><td>Victory Achieved</td><td>2-1</td><td>5 starts, $215,356</td><td>$43,071</td><td>4 starts, $25,331</td><td>$6,333</td></tr><tr><td>War Strategy</td><td>10-1</td><td>5 starts, $84,624</td><td>$16,925</td><td>3 starts, $19,563</td><td>$6,521</td></tr><tr><td>Ready to Collect</td><td>20-1</td><td>5 starts, $106,401</td><td>$21,280</td><td>8 starts, $178,665</td><td>$22,333</td></tr></tbody></table></div>
+<p>My Boy Prince and Victory Achieved lead the screen this year. Arbiter&#x27;s 2025 number is two stakes-quality juvenile wins on a tiny sample.</p>
+<h2>Pace</h2>
+<p>Plenty of speed. War Strategy (early 113), Arbiter (111), Victory Achieved (108) and Ready to Collect (105) all want to be up close, with Nobals (101) right behind them. My Boy Prince (late 89) is the only real closer. That is a tiebreaker only: speed has held more often than it has collapsed in the tracked races.</p>
+<h2>The contenders</h2>
+<p><strong>Victory Achieved (2-1)</strong>, the horse most likely to win. His last start was a career-best 100 winning the Grade 2 Nearctic on good turf at Woodbine, edging away from Nobals by 2 1/4. Before that he ran 92, 91 and 92 in three straight stakes seconds and a GP allowance win, so the line is steady to rising and the last figure is already over the 98 par. He is 4-for-9 on synthetic. Hernandez 21%, Casse 20%, and the pair are 31% together at Woodbine with a $2.13 ROI. Six weeks between starts suits a Casse runner. The risk: he is coming off a 9-point career top, he carries 124, and War Strategy and Arbiter both have more early speed, so he may have to sit in a contested pace. About 30%; fair odds 2.3-1, so 2-1 is a slight underlay (0.90).</p>
+<p><strong>Arbiter (3-1)</strong>, the best figure on today&#x27;s surface and distance. The lone 3-year-old ran a 98 (exactly par) winning the Woodstock at this track and trip by 5 3/4 in April, &quot;when asked had plenty.&quot; He is 2-for-3 on synthetic and 2-for-2 at the distance. The one bad line is a 70 on CD turf in June, his only try on grass this year, which I throw out as a surface experiment. The question is five months off; he has steady Keeneland works and Ward is 26% with 61-180 day layoffs. Moran 20% at the meet and the combo is 44% at Woodbine (9 starts). Lightly raced, 20%+ connections, the profile that has hit the board most. Facing older stakes horses for the first time at a 4-pound break. About 22%; fair 3.5-1, and 3-1 gives 0.88.</p>
+<p><strong>My Boy Prince (5-2)</strong>, the class of the field on paper. Life earnings over $1.6 million, Beyers of 101 and 100 in the spring, and a perfect-looking 7-5-2-0 synthetic record at Woodbine. The trouble is the trend: 93, 92, 88 and 92 since, with &quot;gave way&quot; and &quot;shuffled&quot; in the last two, and he has never run 6 furlongs (the distance line shows no starts). He is the only closer in a speed-heavy field, which helps, but I will not lean on the pace. Aebly 19%, Casse 20%, J/T 21%. About 18%; fair 4.6-1, and 5-2 is a big underlay (0.63).</p>
+<p><strong>Nobals (6-1)</strong>, the defending champion. He won this race last year with a 95 and has run 87, 66, 90, 92 and 86 this year, three of them thirds and one a clear 2nd to Victory Achieved in the Nearctic. 7-for-14 on synthetic and 4-for-9 at the distance. Rodriguez 16%, Rivelli 25%, J/T 34% overall. The knock is that he is 7, 0-for-5 this year, and his best this year is 92. About 13%; fair 6.7-1, and 6-1 gives 0.91.</p>
+<p><strong>G T Five Hundred (8-1)</strong>, a 6-for-9 synthetic horse who won the Grade 2 Connaught Cup with a 95 in July. He bled when last in the King Edward in August and has been away three months since. Douglas 13%, Desruisseaux 17%, J/T 20%. About 8%; fair 11.5-1, and 8-1 gives 0.72.</p>
+<div class="table-wrap"><table><thead><tr><th>Horse</th><th>Odds</th><th>Win %</th><th>Fair odds</th><th>Value ratio</th><th>Call</th></tr></thead><tbody><tr><td>Victory Achieved</td><td>2-1</td><td>30%</td><td>2.3-1</td><td>0.90</td><td>Underlay</td></tr><tr><td>Arbiter</td><td>3-1</td><td>22%</td><td>3.5-1</td><td>0.88</td><td>Underlay</td></tr><tr><td>My Boy Prince</td><td>5-2</td><td>18%</td><td>4.6-1</td><td>0.63</td><td>Underlay</td></tr><tr><td>Nobals</td><td>6-1</td><td>13%</td><td>6.7-1</td><td>0.91</td><td>Underlay</td></tr><tr><td>G T Five Hundred</td><td>8-1</td><td>8%</td><td>11.5-1</td><td>0.72</td><td>Underlay</td></tr></tbody></table></div>
+<h2>The rest</h2>
+<p>War Strategy (10-1) won an OC 50k N2X with a 96 last out and has the most early speed in the race, but he is 1-for-12 on synthetic and jumps from allowance company into a Grade 2; he is the flyer on Wright&#x27;s 26% barn if he gets loose on the lead. Ready to Collect (20-1) runs mid-80s and is 0-for-3 on synthetic.</p>
+<h2>Bottom line</h2>
+<p>There is no overlay on the morning line. The board&#x27;s 26% take shows in every price. Victory Achieved is the top pick (best value ratio among the likely winners, last-out figure over par, 31% connections at the track) and becomes a bet at 16-5 or better. Arbiter is the second choice and a bet at about 9-2 or better. Nobals is a hair higher on value ratio (0.91 vs 0.88) but at a far lower win chance, 0-for-5 this year, so I used the close-call tiebreak (higher win chance) for the second spot; he is a bet at 9-1 or better. War Strategy is the flyer at 10-1. If Victory Achieved is 2-1 or shorter at post and Arbiter drifts to 9-2, bet Arbiter.</p>
+<p>Note for the tracker: unattended morning run, morning-line odds used. Neither pick is an overlay at the morning line.</p></article>
+  <a class="back" href="../">← All races</a>
+</main>
+</body>
+</html>
