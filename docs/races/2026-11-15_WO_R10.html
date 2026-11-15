@@ -1,0 +1,156 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Woodbine Race 10, Sun Nov 15 2026</title>
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#1f4e3d">
+<meta name="apple-mobile-web-app-title" content="Winners">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script>
+(function () {
+  const build = "20261115090616";
+  function check() {
+    fetch("../version.txt?t=" + Date.now(), {cache: "no-store"})
+      .then(r => r.ok ? r.text() : build)
+      .then(v => {
+        v = v.trim();
+        const u = new URL(location.href);
+        // Skip if we already asked for this build and still got an old copy.
+        if (v && v !== build && u.searchParams.get("v") !== v) { u.searchParams.set("v", v); location.replace(u); }
+      })
+      .catch(() => {});
+  }
+  check();
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) check(); });
+  addEventListener("pageshow", e => { if (e.persisted) check(); });
+})();
+</script>
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
+  --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+  --pos: #006300; --neg: #c0302f;
+  --series-a: #2a78d6; --series-b: #eb6834; --series-s: #1baf7a; --series-r: #8a5cd0;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+    --pos: #0ca30c; --neg: #e66767;
+    --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+  --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+  --pos: #0ca30c; --neg: #e66767;
+  --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink);
+  font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 16px 16px 48px; }
+h1 { font-size: 22px; margin: 4px 0 2px; }
+h2 { font-size: 16px; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+h3 { font-size: 15px; margin: 28px 0 10px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .04em; }
+.muted { color: var(--muted); font-weight: normal; }
+.pos { color: var(--pos); } .neg { color: var(--neg); }
+a { color: var(--series-a); }
+.card, .race { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+.hero { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 12px; }
+.hero .card { margin: 0; }
+.hero-label { font-size: 13px; color: var(--ink-2); display: flex; align-items: center; gap: 6px; }
+.hero-value { font-size: 30px; font-weight: 700; margin-top: 2px; }
+.added { font-size: 14px; color: var(--ink-2); margin: 0 0 12px; }
+.swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex: none; }
+.swatch.a { background: var(--series-a); } .swatch.b { background: var(--series-b); } .swatch.s { background: var(--series-s); } .swatch.r { background: var(--series-r); }
+.tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.tile { background: var(--page); border-radius: 8px; padding: 8px; text-align: center; }
+.tile-label { font-size: 11px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .03em; }
+.tile-value { font-size: 18px; font-weight: 700; }
+.tile-sub { font-size: 11px; color: var(--muted); }
+.kv { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; margin: 12px 0 0; font-size: 14px; }
+.kv dt { color: var(--ink-2); } .kv dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+.legend { display: flex; gap: 16px; font-size: 13px; color: var(--ink-2); margin-bottom: 6px; }
+.legend span { display: flex; align-items: center; gap: 6px; }
+.chart-wrap { position: relative; }
+svg { display: block; width: 100%; height: auto; touch-action: pan-y; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 8px; font-size: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.12); display: none; white-space: nowrap; }
+.tip b { display: block; margin-bottom: 2px; }
+.tip div { display: flex; align-items: center; gap: 6px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { padding: 6px 4px; text-align: right; border-bottom: 1px solid var(--grid); }
+th:first-child, td:first-child { text-align: left; }
+thead th { font-size: 12px; color: var(--ink-2); font-weight: 600; }
+.note { font-size: 12px; color: var(--muted); margin: 8px 0 0; }
+.race-head { display: flex; justify-content: space-between; gap: 8px; }
+.race-sub { font-size: 13px; margin-bottom: 8px; }
+.pick { display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 8px; margin-top: 6px; }
+.pick-name { font-weight: 600; }
+.pick-fin { color: var(--ink-2); font-size: 14px; }
+.pick-net { min-width: 64px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.pick-label { font-size: 11px; color: var(--muted); margin-left: 18px; }
+.race-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; font-size: 13px;
+  margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--grid); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@media (max-width: 480px) {
+  .tiles { grid-template-columns: repeat(2, 1fr); }
+  .hero-value { font-size: 24px; }
+}
+
+.back { display: inline-block; margin: 4px 0 10px; font-size: 14px; text-decoration: none; }
+.prose h2 { display: block; font-size: 17px; margin: 22px 0 8px; }
+.prose h2:first-child { margin-top: 0; }
+.prose h3, .prose h4 { font-size: 15px; margin: 18px 0 6px; text-transform: none; letter-spacing: 0; color: var(--ink); }
+.prose p, .prose li { margin: 0 0 10px; }
+.prose ul, .prose ol { padding-left: 20px; margin: 0 0 10px; }
+.prose a { overflow-wrap: anywhere; }
+.prose code { font-size: 13px; background: var(--page); padding: 1px 4px; border-radius: 4px; }
+.table-wrap { overflow-x: auto; margin: 0 0 12px; }
+.prose table { font-size: 13px; }
+.prose td, .prose th { text-align: left; vertical-align: top; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="../">← All races</a>
+  <h1>Woodbine Race 10, Sun Nov 15 2026</h1>
+  <div class="muted" style="margin-bottom:12px">Updated Nov 15, 2026 9:06 AM</div>
+  <article class="race"><div class="race-head"><strong>Woodbine R10</strong><span class="muted">Sun Nov 15</span></div><div class="race-sub muted">Synth 1 1/16m (Lake Ontario S 150k, 3YO Ont-bred)</div><div class="pick"><span class="swatch a"></span><span class="pick-name">My Covenant <span class="muted">(5-2)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">Top pick</div><div class="pick"><span class="swatch s"></span><span class="pick-name">Imyourmedicineman <span class="muted">(7-2)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">2nd pick</div><div class="race-foot muted">Awaiting result</div></article>
+  
+  <h3>Pre-race handicap</h3>
+  <article class="card prose"><p>PP URL: <a href="https://www.drf.com/pp-details/11-15-2026/WO/10/D/CAN">https://www.drf.com/pp-details/11-15-2026/WO/10/D/CAN</a></p>
+<p>Woodbine Race 10, the $150k Lake Ontario Stakes, 1 1/16 miles on the synthetic for Ontario-bred 3-year-olds, Beyer par not shown. Post 5:41 PM ET. Seven runners. Odds below are the morning line.</p>
+<p><strong>Scratches and probable scratches:</strong> None listed, and nobody looks likely to come out. No cross-entries show, and the shortest turnaround is Auntie&#x27;s Bambino off a November 5 maiden race.</p>
+<h2>Average earnings per start</h2>
+<div class="table-wrap"><table><thead><tr><th>Horse</th><th>ML</th><th>2026</th><th>Per start</th><th>2025</th><th>Per start</th></tr></thead><tbody><tr><td>Auntie&#x27;s Bambino</td><td>8-1</td><td>13 starts, $98,823</td><td>$7,602</td><td>6 starts, $20,915</td><td>$3,486</td></tr><tr><td>Bond Market</td><td>7-5</td><td>4 starts, $179,931</td><td>$44,983</td><td>unraced</td><td>-</td></tr><tr><td>Decadent Danish</td><td>6-1</td><td>8 starts, $77,818</td><td>$9,727</td><td>2 starts, $30,580</td><td>$15,290</td></tr><tr><td>My Covenant</td><td>5-2</td><td>7 starts, $153,767</td><td>$21,967</td><td>3 starts, $32,820</td><td>$10,940</td></tr><tr><td>Call Me Bond</td><td>20-1</td><td>7 starts, $19,995</td><td>$2,856</td><td>3 starts, $40,410</td><td>$13,470</td></tr><tr><td>Imyourmedicineman</td><td>7-2</td><td>8 starts, $100,261</td><td>$12,533</td><td>3 starts, $46,701</td><td>$15,567</td></tr><tr><td>Baltic Sea</td><td>20-1</td><td>6 starts, $34,694</td><td>$5,782</td><td>unraced</td><td>-</td></tr></tbody></table></div>
+<p>Bond Market&#x27;s number is inflated by a second in the $500k Breeders&#x27; on only four starts. My Covenant is the steady earner, with two stakes wins in his last two.</p>
+<h2>Pace</h2>
+<p>My Covenant (early 102) is the only real speed and has led or pressed in his last three. Decadent Danish and Baltic Sea (83 each) are the next quickest. Bond Market (late 115) and Imyourmedicineman (late 90) come from behind. On paper My Covenant can make an uncontested lead. That is a tiebreaker only.</p>
+<h2>The contenders</h2>
+<p><strong>My Covenant (5-2)</strong>, the best figures and the hottest connections. His line runs 68, 73, 81, 88: a 73 winning an N2L on turf, an 81 winning the Lake Erie Stakes at Fort Erie by 9, then an 88 wiring the Sophomore Stakes here at 6 1/2 furlongs on the synthetic. That 88 is six points clear of anything else in the field. He is 2-for-8 on the Woodbine synthetic. Moran 20%, Cheung 26%, and the pair are 5-for-8 together (63%, $6.47 ROI); Cheung wins 47% off 31 to 60 days and 25% going sprint to route. The risk is simple: he has never been farther than 7 furlongs, and his pedigree (Souper Speedy out of an Old Forester mare) reads sprinter. If he relaxes on the lead, nobody else wants it. About 32%; fair odds 2.1-1, so 5-2 is a fair price (1.12), not an overlay.</p>
+<p><strong>Bond Market (7-5)</strong>, the class on paper. Three straight 82s: 6th in the Kings Plate (hopped at the start, beaten 12), 2nd in the Breeders&#x27; at 1 1/2 on turf, then an easy win in an N2L at 1 3/8 on turf at 6-5. He has the best class and route experience in the field. But the 82s are on turf at a mile and three-eighths and beyond, his only synthetic start is the Plate, and he is a deep closer cutting back to 1 1/16 behind a lone speed. Forde is 8% at the meet and Grant/Forde is 9% together over 53 starts, so he is kept out of the top spot by the connections floor anyway. About 24%; fair odds 3.2-1, so 7-5 is a big underlay (0.58) and under the 2-1 floor. The horse to beat if the pace gets hot.</p>
+<p><strong>Imyourmedicineman (7-2)</strong>, stakes-tested and proven on this surface. His best figure is an 84 running 2nd in the Plate Trial at 1 1/8 on the synthetic. Since then he ran 79 in the Plate (checked at the 5/16 and the 1/4, throw that one out), 71 and 77 in the Prince of Wales and Breeders&#x27;, then a 77 winning an N2L on turf at 1 1/16 at 8-5 after being shuffled. Synthetic 7-1-2-1, and he won at this distance as a 2-year-old. Aebly 19%, Ladouceur only 8%, but 3-for-8 together (38%). The figures have flattened in the high 70s, below My Covenant&#x27;s last two. About 18%; fair odds 4.6-1, so 7-2 is an underlay (0.81).</p>
+<p><strong>Decadent Danish (6-1)</strong>, proven at the course and distance. Synthetic 6-2-1-0 and 5-2-1-0 at the distance, with a 77 winning an N2L at this trip in August and a 75 winning a turf N3L in September. Last out he was bumped at the break and ran 74 for 5th, beaten 10 behind older N1X horses. Douglas 13%, Dixon 9%, 20% together on a small sample. The figures sit at 74 to 77, a good ten below My Covenant. About 12%; fair odds 7.3-1, so 6-1 is a slight underlay (0.84).</p>
+<div class="table-wrap"><table><thead><tr><th>Horse</th><th>Odds</th><th>Win %</th><th>Fair odds</th><th>Value ratio</th><th>Call</th></tr></thead><tbody><tr><td>My Covenant</td><td>5-2</td><td>32%</td><td>2.1-1</td><td>1.12</td><td>Fair</td></tr><tr><td>Bond Market</td><td>7-5</td><td>24%</td><td>3.2-1</td><td>0.58</td><td>Under 2-1</td></tr><tr><td>Imyourmedicineman</td><td>7-2</td><td>18%</td><td>4.6-1</td><td>0.81</td><td>Underlay</td></tr><tr><td>Decadent Danish</td><td>6-1</td><td>12%</td><td>7.3-1</td><td>0.84</td><td>Underlay</td></tr></tbody></table></div>
+<h2>The rest</h2>
+<p>Auntie&#x27;s Bambino (8-1) is a maiden 0-for-19 for a trainer 0-for-16 at the meet; the 8-1 is a gift to nobody. Call Me Bond (20-1) has topped out at 70 with a 5% rider. Baltic Sea (20-1) is the flyer: still a maiden, but his 77 rallying late for 3rd on November 5 is right with Decadent Danish&#x27;s figures, though it came on turf and his only synthetic start was a 41. Walcott 11%, J/T 8%, so it is a small-ticket idea only.</p>
+<h2>Bottom line</h2>
+<p>My Covenant is the top pick. He has the best figures, the best form, and connections winning at 63% together, and he can steal the race on the lead. The stretch-out is the question. At 5-2 he is fair; bet him at 3-1 or better (value ratio 1.25 at about 2.9-1).</p>
+<p>Imyourmedicineman is the second choice (0.81, with Decadent Danish at 0.84 within the 0.1 tiebreak and a lower win chance). He is proven on the surface at stakes level. Neither is an overlay at the morning line. He becomes a bet at 6-1 or better. Decadent Danish would need 9-1.</p>
+<p>Bond Market is the one to beat on class, at a price nobody should take with an 8% rider.</p>
+<p>Flyer: Baltic Sea (20-1).</p></article>
+  <a class="back" href="../">← All races</a>
+</main>
+</body>
+</html>
