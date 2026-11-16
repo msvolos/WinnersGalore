@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Finger Lakes Race 7, Mon Nov 16 2026</title>
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#1f4e3d">
+<meta name="apple-mobile-web-app-title" content="Winners">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script>
+(function () {
+  const build = "20261116105223";
+  function check() {
+    fetch("../version.txt?t=" + Date.now(), {cache: "no-store"})
+      .then(r => r.ok ? r.text() : build)
+      .then(v => {
+        v = v.trim();
+        const u = new URL(location.href);
+        // Skip if we already asked for this build and still got an old copy.
+        if (v && v !== build && u.searchParams.get("v") !== v) { u.searchParams.set("v", v); location.replace(u); }
+      })
+      .catch(() => {});
+  }
+  check();
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) check(); });
+  addEventListener("pageshow", e => { if (e.persisted) check(); });
+})();
+</script>
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
+  --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+  --pos: #006300; --neg: #c0302f;
+  --series-a: #2a78d6; --series-b: #eb6834; --series-s: #1baf7a; --series-r: #8a5cd0;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+    --pos: #0ca30c; --neg: #e66767;
+    --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+  --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+  --pos: #0ca30c; --neg: #e66767;
+  --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink);
+  font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 16px 16px 48px; }
+h1 { font-size: 22px; margin: 4px 0 2px; }
+h2 { font-size: 16px; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+h3 { font-size: 15px; margin: 28px 0 10px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .04em; }
+.muted { color: var(--muted); font-weight: normal; }
+.pos { color: var(--pos); } .neg { color: var(--neg); }
+a { color: var(--series-a); }
+.card, .race { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+.hero { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 12px; }
+.hero .card { margin: 0; }
+.hero-label { font-size: 13px; color: var(--ink-2); display: flex; align-items: center; gap: 6px; }
+.hero-value { font-size: 30px; font-weight: 700; margin-top: 2px; }
+.added { font-size: 14px; color: var(--ink-2); margin: 0 0 12px; }
+.swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex: none; }
+.swatch.a { background: var(--series-a); } .swatch.b { background: var(--series-b); } .swatch.s { background: var(--series-s); } .swatch.r { background: var(--series-r); }
+.tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.tile { background: var(--page); border-radius: 8px; padding: 8px; text-align: center; }
+.tile-label { font-size: 11px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .03em; }
+.tile-value { font-size: 18px; font-weight: 700; }
+.tile-sub { font-size: 11px; color: var(--muted); }
+.kv { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; margin: 12px 0 0; font-size: 14px; }
+.kv dt { color: var(--ink-2); } .kv dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+.legend { display: flex; gap: 16px; font-size: 13px; color: var(--ink-2); margin-bottom: 6px; }
+.legend span { display: flex; align-items: center; gap: 6px; }
+.chart-wrap { position: relative; }
+svg { display: block; width: 100%; height: auto; touch-action: pan-y; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 8px; font-size: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.12); display: none; white-space: nowrap; }
+.tip b { display: block; margin-bottom: 2px; }
+.tip div { display: flex; align-items: center; gap: 6px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { padding: 6px 4px; text-align: right; border-bottom: 1px solid var(--grid); }
+th:first-child, td:first-child { text-align: left; }
+thead th { font-size: 12px; color: var(--ink-2); font-weight: 600; }
+.note { font-size: 12px; color: var(--muted); margin: 8px 0 0; }
+.race-head { display: flex; justify-content: space-between; gap: 8px; }
+.race-sub { font-size: 13px; margin-bottom: 8px; }
+.pick { display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 8px; margin-top: 6px; }
+.pick-name { font-weight: 600; }
+.pick-fin { color: var(--ink-2); font-size: 14px; }
+.pick-net { min-width: 64px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.pick-label { font-size: 11px; color: var(--muted); margin-left: 18px; }
+.race-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; font-size: 13px;
+  margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--grid); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@media (max-width: 480px) {
+  .tiles { grid-template-columns: repeat(2, 1fr); }
+  .hero-value { font-size: 24px; }
+}
+
+.back { display: inline-block; margin: 4px 0 10px; font-size: 14px; text-decoration: none; }
+.prose h2 { display: block; font-size: 17px; margin: 22px 0 8px; }
+.prose h2:first-child { margin-top: 0; }
+.prose h3, .prose h4 { font-size: 15px; margin: 18px 0 6px; text-transform: none; letter-spacing: 0; color: var(--ink); }
+.prose p, .prose li { margin: 0 0 10px; }
+.prose ul, .prose ol { padding-left: 20px; margin: 0 0 10px; }
+.prose a { overflow-wrap: anywhere; }
+.prose code { font-size: 13px; background: var(--page); padding: 1px 4px; border-radius: 4px; }
+.table-wrap { overflow-x: auto; margin: 0 0 12px; }
+.prose table { font-size: 13px; }
+.prose td, .prose th { text-align: left; vertical-align: top; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="../">← All races</a>
+  <h1>Finger Lakes Race 7, Mon Nov 16 2026</h1>
+  <div class="muted" style="margin-bottom:12px">Updated Nov 16, 2026 10:52 AM</div>
+  <article class="race"><div class="race-head"><strong>Finger Lakes R7</strong><span class="muted">Mon Nov 16</span></div><div class="race-sub muted">Dirt 1m 70y (3YO+ Alw 26.9k N3L)</div><div class="pick"><span class="swatch a"></span><span class="pick-name">Hey Pal <span class="muted">(3-1)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">Top pick</div><div class="pick"><span class="swatch s"></span><span class="pick-name">Isola d&#x27;Oro <span class="muted">(4-1)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">2nd pick</div><div class="race-foot muted">Awaiting result</div></article>
+  
+  <h3>Pre-race handicap</h3>
+  <article class="card prose"><p>PP URL: <a href="https://www.drf.com/pp-details/11-16-2026/FL/7/D/USA">https://www.drf.com/pp-details/11-16-2026/FL/7/D/USA</a></p>
+<p>Finger Lakes Race 7, a $26,900 allowance for non-winners of three races lifetime (N3L), 1 mile 70 yards on the dirt, Beyer par 73. Post 3:01 PM ET. Nine runners. Odds below are the morning line.</p>
+<p><strong>Scratches and probable scratches:</strong> None listed, and nobody looks likely to come out. No cross-entries show, and the shortest turnaround is Start the Day off a November 4 win (12 days).</p>
+<h2>Average earnings per start</h2>
+<div class="table-wrap"><table><thead><tr><th>Horse</th><th>ML</th><th>2026</th><th>Per start</th><th>2025</th><th>Per start</th></tr></thead><tbody><tr><td>Inonit</td><td>10-1</td><td>9 starts, $63,870</td><td>$7,097</td><td>4, $20,160</td><td>$5,040</td></tr><tr><td>Hey Pal</td><td>3-1</td><td>8, $39,123</td><td>$4,890</td><td>5, $42,304</td><td>$8,461</td></tr><tr><td>Gray Haired Gus</td><td>6-1</td><td>7, $35,188</td><td>$5,027</td><td>7, $31,460</td><td>$4,494</td></tr><tr><td>Isola d&#x27;Oro</td><td>4-1</td><td>8, $52,360</td><td>$6,545</td><td>1, $4,560</td><td>$4,560</td></tr><tr><td>Bolt to Run</td><td>25-1</td><td>13, $11,899</td><td>$915</td><td>16, $36,876</td><td>$2,305</td></tr><tr><td>Start the Day</td><td>5-1</td><td>7, $45,448</td><td>$6,493</td><td>0</td><td>-</td></tr><tr><td>Sweet Tone</td><td>15-1</td><td>14, $44,743</td><td>$3,196</td><td>12, $40,090</td><td>$3,341</td></tr><tr><td>Fess</td><td>20-1</td><td>9, $27,794</td><td>$3,088</td><td>0</td><td>-</td></tr><tr><td>Serra</td><td>5-2</td><td>4, $35,200</td><td>$8,800</td><td>0</td><td>-</td></tr></tbody></table></div>
+<p>Serra tops the screen on only four starts (2-for-4 this year), which is the improving type the screen is meant to flag. Inonit, Isola d&#x27;Oro and Start the Day bunch just behind. Hey Pal&#x27;s 2025 number is inflated by a $500k state-bred stakes start. Per-start is a tiebreaker here, nothing more.</p>
+<h2>The contenders</h2>
+<p><strong>Hey Pal (3-1).</strong> The top figure on the current form. He ran a 74 (right at par 73) last out at this level, setting the pace and caught late by Trew Violence, with Isola d&#x27;Oro third. Before that a 68 second at 2-5 in an N3L, a 70 winning the N2L at 1 1/16 by 5, and a 54 on October 12 that I am throwing out (hopped at the start, 6 wide on the far turn). He is 12-2-4-2 at Finger Lakes and 5-1-3-1 at the distance. Coa wins 22% at the meet, Ferraro 20%, and the pair are 26% together here with a $1.70 ROI. Gets 119 as a 3-year-old against older horses at 121 to 124. The knock is the record: two wins from thirteen starts and a habit of getting caught late (twice this year from the lead). About 23% to win.</p>
+<p><strong>Isola d&#x27;Oro (4-1).</strong> The cleanest improver in the race. Figures 63, 66, 69, 71 over his last four routes, the 69 winning an N2L at 1 1/8 by 3 1/2 over Start the Day and the 71 a third behind Hey Pal last out (he &quot;faltered&quot; late after racing 2 paths off the rail). Only nine lifetime starts. Gutierrez wins 21% at the meet, and Lisa Lugovich is 4-for-9 here (44%) with the J/T 3-for-6 at Finger Lakes ($2.94). Stalking style (early 87) fits any pace setup. The question is 124 pounds, top weight, five more than Hey Pal, and he still has to find two points to reach par. About 20% to win.</p>
+<p><strong>Serra (5-2).</strong> The likely favorite and a lightly raced Good Magic colt who has done nothing wrong at Finger Lakes: 63 (crossed first, disqualified to second), 59 winning a maiden race by 3 1/2, and 66 winning the N2L last out after being jostled at the start and going 5 wide into the lane. Perez 20%, Michael Ferraro 18% (36% off a win), J/T 23%. He is on the improve, but his best figure is a 66, seven below par and eight below Hey Pal, and he is a deep closer (late 95, early 66) who needs the speed to come back. About 20% to win, which makes 5-2 a big underlay.</p>
+<p><strong>Start the Day (5-1).</strong> Another rising 3-year-old: 35, 59, 63, 69, the 69 drawing clear in an N2L at 1 1/16 on November 4 after a second to Isola d&#x27;Oro. Flores 15%, Barrow 18%, J/T 18%. He has early speed (89) and will be near Hey Pal and Fess early. He was beaten 3 1/2 lengths by Isola d&#x27;Oro in October and has only matched that horse&#x27;s current figure. About 12% to win.</p>
+<p><strong>Gray Haired Gus (6-1).</strong> Honest and stuck: 68, 66, 66, 67, 64 this year, the 68 winning an N2L in July over Hey Pal and Isola d&#x27;Oro. Blocked at the eighth pole last out (64), so a bit better than that line. Navarro 15%, Buckley 18%, J/T 20%. Every figure sits five to nine below par. About 9% to win.</p>
+<div class="table-wrap"><table><thead><tr><th>Horse</th><th>Odds</th><th>Win %</th><th>Fair odds</th><th>Value ratio</th><th>Call</th></tr></thead><tbody><tr><td>Hey Pal</td><td>3-1</td><td>23%</td><td>3.3-1</td><td>0.92</td><td>Underlay</td></tr><tr><td>Isola d&#x27;Oro</td><td>4-1</td><td>20%</td><td>4-1</td><td>1.00</td><td>Fair</td></tr><tr><td>Serra</td><td>5-2</td><td>20%</td><td>4-1</td><td>0.70</td><td>Underlay</td></tr><tr><td>Start the Day</td><td>5-1</td><td>12%</td><td>7.3-1</td><td>0.72</td><td>Underlay</td></tr><tr><td>Gray Haired Gus</td><td>6-1</td><td>9%</td><td>10-1</td><td>0.63</td><td>Underlay</td></tr></tbody></table></div>
+<h2>The rest of the field</h2>
+<p>Inonit (10-1) owns the best figure on paper, a 76 winning a maiden route in July, but he has gone 61, 56, 54 since (the 54 after stumbling at the start) and Kocakaya wins 8%, which keeps him off the top spot. He is the flyer: Lugovich is 4-for-9 at the meet, and if the 76 comes back he wins. Sweet Tone (15-1) is a 60s grinder, Fess (20-1) is a sprinter stretching out with speed (early 102) who should help set the pace and back up, and Bolt to Run (25-1) is a claimer with a 2% dirt trainer.</p>
+<h2>Pace</h2>
+<p>Fess, Hey Pal and Start the Day all want to be close early, with Fess the quickest. Isola d&#x27;Oro sits just behind them, and Serra and Inonit come from off the pace. Speed has held up more often than it has collapsed in the tracked races, so the pace read breaks ties only.</p>
+<h2>Bottom line</h2>
+<p>Neither pick is an overlay on the morning line. Isola d&#x27;Oro has the best value ratio (1.00) and Hey Pal is close behind (0.92); with the two within 0.1, the close-call rule takes the higher win chance, so <strong>Hey Pal is the top pick</strong> and <strong>Isola d&#x27;Oro the second choice</strong>.</p>
+<ul><li><strong>Hey Pal:</strong> a bet at 9-2 or better (value ratio 1.25 at 4.4-1).</li><li><strong>Isola d&#x27;Oro:</strong> a bet at 11-2 or better (1.25 at 5.25-1).</li><li><strong>Flyer:</strong> Inonit at 10-1 or more, on the July 76 and the 44% barn.</li><li><strong>Horse to beat on the board:</strong> Serra at 5-2, the likely favorite, a big underlay with the best figure seven below par.</li></ul>
+<p>What can go wrong with Hey Pal: he has been caught late twice this year after making the lead, and he will have Fess and Start the Day for company early.</p>
+<p>At the window: if Hey Pal is shorter than 9-2 and Isola d&#x27;Oro is 11-2 or longer, play Isola d&#x27;Oro. If either takes a lot of money (shorter than its morning line), that has been a good sign in the tracked races; a big drift is a warning.</p></article>
+  <a class="back" href="../">← All races</a>
+</main>
+</body>
+</html>
