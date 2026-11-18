@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Churchill Downs Race 8, Wed Nov 18 2026</title>
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#1f4e3d">
+<meta name="apple-mobile-web-app-title" content="Winners">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script>
+(function () {
+  const build = "20261118090800";
+  function check() {
+    fetch("../version.txt?t=" + Date.now(), {cache: "no-store"})
+      .then(r => r.ok ? r.text() : build)
+      .then(v => {
+        v = v.trim();
+        const u = new URL(location.href);
+        // Skip if we already asked for this build and still got an old copy.
+        if (v && v !== build && u.searchParams.get("v") !== v) { u.searchParams.set("v", v); location.replace(u); }
+      })
+      .catch(() => {});
+  }
+  check();
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) check(); });
+  addEventListener("pageshow", e => { if (e.persisted) check(); });
+})();
+</script>
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
+  --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+  --pos: #006300; --neg: #c0302f;
+  --series-a: #2a78d6; --series-b: #eb6834; --series-s: #1baf7a; --series-r: #8a5cd0;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+    --pos: #0ca30c; --neg: #e66767;
+    --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+  --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+  --pos: #0ca30c; --neg: #e66767;
+  --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink);
+  font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 16px 16px 48px; }
+h1 { font-size: 22px; margin: 4px 0 2px; }
+h2 { font-size: 16px; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+h3 { font-size: 15px; margin: 28px 0 10px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .04em; }
+.muted { color: var(--muted); font-weight: normal; }
+.pos { color: var(--pos); } .neg { color: var(--neg); }
+a { color: var(--series-a); }
+.card, .race { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+.hero { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 12px; }
+.hero .card { margin: 0; }
+.hero-label { font-size: 13px; color: var(--ink-2); display: flex; align-items: center; gap: 6px; }
+.hero-value { font-size: 30px; font-weight: 700; margin-top: 2px; }
+.added { font-size: 14px; color: var(--ink-2); margin: 0 0 12px; }
+.swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex: none; }
+.swatch.a { background: var(--series-a); } .swatch.b { background: var(--series-b); } .swatch.s { background: var(--series-s); } .swatch.r { background: var(--series-r); }
+.tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.tile { background: var(--page); border-radius: 8px; padding: 8px; text-align: center; }
+.tile-label { font-size: 11px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .03em; }
+.tile-value { font-size: 18px; font-weight: 700; }
+.tile-sub { font-size: 11px; color: var(--muted); }
+.kv { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; margin: 12px 0 0; font-size: 14px; }
+.kv dt { color: var(--ink-2); } .kv dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+.legend { display: flex; gap: 16px; font-size: 13px; color: var(--ink-2); margin-bottom: 6px; }
+.legend span { display: flex; align-items: center; gap: 6px; }
+.chart-wrap { position: relative; }
+svg { display: block; width: 100%; height: auto; touch-action: pan-y; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 8px; font-size: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.12); display: none; white-space: nowrap; }
+.tip b { display: block; margin-bottom: 2px; }
+.tip div { display: flex; align-items: center; gap: 6px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { padding: 6px 4px; text-align: right; border-bottom: 1px solid var(--grid); }
+th:first-child, td:first-child { text-align: left; }
+thead th { font-size: 12px; color: var(--ink-2); font-weight: 600; }
+.note { font-size: 12px; color: var(--muted); margin: 8px 0 0; }
+.race-head { display: flex; justify-content: space-between; gap: 8px; }
+.race-sub { font-size: 13px; margin-bottom: 8px; }
+.pick { display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 8px; margin-top: 6px; }
+.pick-name { font-weight: 600; }
+.pick-fin { color: var(--ink-2); font-size: 14px; }
+.pick-net { min-width: 64px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.pick-label { font-size: 11px; color: var(--muted); margin-left: 18px; }
+.race-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; font-size: 13px;
+  margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--grid); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@media (max-width: 480px) {
+  .tiles { grid-template-columns: repeat(2, 1fr); }
+  .hero-value { font-size: 24px; }
+}
+
+.back { display: inline-block; margin: 4px 0 10px; font-size: 14px; text-decoration: none; }
+.prose h2 { display: block; font-size: 17px; margin: 22px 0 8px; }
+.prose h2:first-child { margin-top: 0; }
+.prose h3, .prose h4 { font-size: 15px; margin: 18px 0 6px; text-transform: none; letter-spacing: 0; color: var(--ink); }
+.prose p, .prose li { margin: 0 0 10px; }
+.prose ul, .prose ol { padding-left: 20px; margin: 0 0 10px; }
+.prose a { overflow-wrap: anywhere; }
+.prose code { font-size: 13px; background: var(--page); padding: 1px 4px; border-radius: 4px; }
+.table-wrap { overflow-x: auto; margin: 0 0 12px; }
+.prose table { font-size: 13px; }
+.prose td, .prose th { text-align: left; vertical-align: top; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="../">← All races</a>
+  <h1>Churchill Downs Race 8, Wed Nov 18 2026</h1>
+  <div class="muted" style="margin-bottom:12px">Updated Nov 18, 2026 9:08 AM</div>
+  <article class="race"><div class="race-head"><strong>Churchill Downs R8</strong><span class="muted">Wed Nov 18</span></div><div class="race-sub muted">Dirt 1 1/8m (3YO+ Alw 127k N1X)</div><div class="pick"><span class="swatch a"></span><span class="pick-name">Pagode <span class="muted">(7-2)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">Top pick</div><div class="pick"><span class="swatch s"></span><span class="pick-name">C McGriff <span class="muted">(8-1)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">2nd pick</div><div class="race-foot muted">Awaiting result</div></article>
+  
+  <h3>Pre-race handicap</h3>
+  <article class="card prose"><p>PP URL: <a href="https://www.drf.com/pp-details/11-18-2026/CD/8/D/USA">https://www.drf.com/pp-details/11-18-2026/CD/8/D/USA</a></p>
+<p>Churchill Downs Race 8, a $127,000 allowance for 3-year-olds and up that have not won a race other than maiden, claiming or starter (N1X), 1 1/8 miles on a fast dirt track, Beyer par 92. Post 4:25 PM ET. Eleven runners. Odds below are the morning line.</p>
+<p><strong>Scratches and probable scratches:</strong> None listed. Uncle Evco (15-1) is also entered in tomorrow&#x27;s first race at Churchill and could come out of one of them; he is not a contender either way. Jus Too Fly was scratched from a Nov 14 race to re-enter here.</p>
+<h2>Average earnings per start</h2>
+<div class="table-wrap"><table><thead><tr><th>Horse</th><th>ML</th><th>2026</th><th>Per start</th><th>2025</th><th>Per start</th></tr></thead><tbody><tr><td>C McGriff</td><td>8-1</td><td>7 starts, $137,220</td><td>$19,603</td><td>1, $3,600</td><td>$3,600</td></tr><tr><td>Uncle Evco</td><td>15-1</td><td>11, $61,053</td><td>$5,550</td><td>10, $34,080</td><td>$3,408</td></tr><tr><td>Zapruder</td><td>6-1</td><td>6, $55,945</td><td>$9,324</td><td>5, $6,076</td><td>$1,215</td></tr><tr><td>Pagode</td><td>7-2</td><td>3, $56,425</td><td>$18,808</td><td>7, $120,269</td><td>$17,181</td></tr><tr><td>King of Ashes</td><td>10-1</td><td>6, $54,387</td><td>$9,065</td><td>7, $154,410</td><td>$22,059</td></tr><tr><td>Commentate</td><td>4-1</td><td>1, $65,643</td><td>$65,643</td><td>1, $1,164</td><td>$1,164</td></tr><tr><td>Discotheque</td><td>15-1</td><td>9, $154,928</td><td>$17,214</td><td>9, $91,726</td><td>$10,192</td></tr><tr><td>Vitruvian Man</td><td>9-2</td><td>6, $148,877</td><td>$24,813</td><td>5, $82,345</td><td>$16,469</td></tr><tr><td>Rugged Love</td><td>8-1</td><td>5, $119,919</td><td>$23,984</td><td>0</td><td>-</td></tr><tr><td>Jus Too Fly</td><td>30-1</td><td>13, $40,338</td><td>$3,103</td><td>9, $11,312</td><td>$1,257</td></tr><tr><td>Bourbon Flight</td><td>15-1</td><td>8, $184,871</td><td>$23,109</td><td>3, $6,148</td><td>$2,049</td></tr></tbody></table></div>
+<p>Commentate&#x27;s number is one maiden win on one start, so it means little. Vitruvian Man, Rugged Love, Bourbon Flight and C McGriff lead on volume, and Pagode is steady across both years without many wins. Per-start is a tiebreaker only.</p>
+<h2>The contenders</h2>
+<p>Par is 92, and only one horse has run to it lately. The Oct 21 Keeneland N1X at 1 1/16 is the key race: Freddie B won, C McGriff was 2nd (81), Rugged Love 3rd (81), Pagode 4th (77) and Bourbon Flight 8th (71).</p>
+<p><strong>Pagode (7-2).</strong> The best figures in the race, and the only horse to run to par lately. A 92 second in a CD N1X at 1 1/16 on Sep 23 (stutter step at the start, denied), a 90 second at 1 3/16 here in June, and a 94 second at this exact distance here last November. He is 2-0-2-0 at 1 1/8 and 3-0-3-0 at Churchill. The Keeneland 77 came after he was steadied into the first turn and went four wide as the 2.48-1 favorite, so I discount it. Saez wins 25% at the meet, Sharp 20%, J/T 18% at CD, and Sharp is 27% taking blinkers off, which he does today. The risk is plain: he is 1-for-10 with six seconds and keeps finding one better. About 26% to win.</p>
+<p><strong>Vitruvian Man (9-2).</strong> An 85 winning a Keeneland state-bred N1X at 1 1/16 last out as the 1.88-1 favorite, with an 83 turf second at Del Mar and an 86 third in the Santa Anita Derby at this distance before that. Steady 78 to 86 figures and proven at 1 1/8, though still six under par. The problem is the barn: O&#x27;Neill is 0-for-5 at the meet and the Bejarano/O&#x27;Neill combo is 1-for-20 (5%) the last two years, which keeps him out of the top spot. He is a deep closer (Late 107). About 18% to win.</p>
+<p><strong>C McGriff (8-1).</strong> Second in that Keeneland race with an 81, three wide, on the lead in a duel and outkicked late, his best figure. He won a CD N1X state-bred in June with an 80 and is 4-1-1-0 at Churchill. Alvarado wins 16%, Medina 17% at the meet, and the pair are 29% together at CD with a $3.55 ROI, the best combo number in the race. He has to find about eleven points to reach par, and he has never been past 1 1/16. About 12% to win.</p>
+<p><strong>Zapruder (6-1).</strong> A 90 fourth at 38-1 in the same Sep 23 CD N1X that Pagode ran 2nd in, then an 86 winning a $50k claimer here in June. Everything else this year is turf or a two-turn flop. A 6-year-old who is 5-for-28 and has not won an allowance since 2024. Garcia 13%, Romans 19%, J/T 16%. Deep closer. About 10% to win.</p>
+<p><strong>Commentate (4-1).</strong> The well-bred 3-year-old ($350k Candy Ride) won a 7-furlong maiden at Keeneland with a 76, coming from far back. Two career starts, first time around two turns, and he needs to jump 16 points to par. DeVaux wins 6% and Concepcion 10% at the meet. He will take money on pedigree. About 10% to win.</p>
+<div class="table-wrap"><table><thead><tr><th>Horse</th><th>Odds</th><th>Win %</th><th>Fair odds</th><th>Value ratio</th><th>Call</th></tr></thead><tbody><tr><td>Pagode</td><td>7-2</td><td>26%</td><td>2.8-1</td><td>1.17</td><td>Fair</td></tr><tr><td>C McGriff</td><td>8-1</td><td>12%</td><td>7.3-1</td><td>1.08</td><td>Fair</td></tr><tr><td>Vitruvian Man</td><td>9-2</td><td>18%</td><td>4.6-1</td><td>0.99</td><td>Underlay</td></tr><tr><td>Zapruder</td><td>6-1</td><td>10%</td><td>9-1</td><td>0.70</td><td>Underlay</td></tr><tr><td>Commentate</td><td>4-1</td><td>10%</td><td>9-1</td><td>0.50</td><td>Underlay</td></tr></tbody></table></div>
+<h2>The rest</h2>
+<p>Rugged Love (8-1, 80 and 81, Gaffalione/Walsh 23% at CD) and Discotheque (15-1, 86 and 84 in 7-furlong sprints, 77 last out, new barn) are the speed (Early 114 and 113), and they should hook up and make the pace honest, which suits the stalkers and closers. King of Ashes (10-1) is a turf horse with a sloppy-track 86, and Torres is 6% at the meet. Uncle Evco and Jus Too Fly are claiming-level. Bourbon Flight (15-1) is the flyer: an 84 winning a $50k N1X at Ellis, Ortiz Jr. 20%, Sharp 20% and a 32% J/T at CD, but he faded to 8th in the Keeneland key race.</p>
+<h2>Bottom line</h2>
+<p>Neither pick is an overlay on the morning line. Pagode is the top pick (value ratio 1.17, best on the board, and the highest win chance) and becomes a bet at 4-1 or better. C McGriff is the second choice (1.08, a close call that went to Pagode on win chance) and becomes a bet at 10-1 or better. Vitruvian Man is the most likely threat but the 5% J/T keeps him off the ticket at 9-2. Commentate is the big underlay at 4-1. Bourbon Flight is the flyer at 15-1.</p>
+<p>The main risk to the top pick is his habit of running second: 1-for-10 with six seconds, and a closer like Vitruvian Man can run him down late.</p></article>
+  <a class="back" href="../">← All races</a>
+</main>
+</body>
+</html>
