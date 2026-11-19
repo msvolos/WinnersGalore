@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Fair Grounds Race 8, Thu Nov 19 2026</title>
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#1f4e3d">
+<meta name="apple-mobile-web-app-title" content="Winners">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script>
+(function () {
+  const build = "20261119092110";
+  function check() {
+    fetch("../version.txt?t=" + Date.now(), {cache: "no-store"})
+      .then(r => r.ok ? r.text() : build)
+      .then(v => {
+        v = v.trim();
+        const u = new URL(location.href);
+        // Skip if we already asked for this build and still got an old copy.
+        if (v && v !== build && u.searchParams.get("v") !== v) { u.searchParams.set("v", v); location.replace(u); }
+      })
+      .catch(() => {});
+  }
+  check();
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) check(); });
+  addEventListener("pageshow", e => { if (e.persisted) check(); });
+})();
+</script>
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
+  --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+  --pos: #006300; --neg: #c0302f;
+  --series-a: #2a78d6; --series-b: #eb6834; --series-s: #1baf7a; --series-r: #8a5cd0;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+    --pos: #0ca30c; --neg: #e66767;
+    --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+  --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+  --pos: #0ca30c; --neg: #e66767;
+  --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink);
+  font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 16px 16px 48px; }
+h1 { font-size: 22px; margin: 4px 0 2px; }
+h2 { font-size: 16px; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+h3 { font-size: 15px; margin: 28px 0 10px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .04em; }
+.muted { color: var(--muted); font-weight: normal; }
+.pos { color: var(--pos); } .neg { color: var(--neg); }
+a { color: var(--series-a); }
+.card, .race { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+.hero { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 12px; }
+.hero .card { margin: 0; }
+.hero-label { font-size: 13px; color: var(--ink-2); display: flex; align-items: center; gap: 6px; }
+.hero-value { font-size: 30px; font-weight: 700; margin-top: 2px; }
+.added { font-size: 14px; color: var(--ink-2); margin: 0 0 12px; }
+.swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex: none; }
+.swatch.a { background: var(--series-a); } .swatch.b { background: var(--series-b); } .swatch.s { background: var(--series-s); } .swatch.r { background: var(--series-r); }
+.tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.tile { background: var(--page); border-radius: 8px; padding: 8px; text-align: center; }
+.tile-label { font-size: 11px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .03em; }
+.tile-value { font-size: 18px; font-weight: 700; }
+.tile-sub { font-size: 11px; color: var(--muted); }
+.kv { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; margin: 12px 0 0; font-size: 14px; }
+.kv dt { color: var(--ink-2); } .kv dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+.legend { display: flex; gap: 16px; font-size: 13px; color: var(--ink-2); margin-bottom: 6px; }
+.legend span { display: flex; align-items: center; gap: 6px; }
+.chart-wrap { position: relative; }
+svg { display: block; width: 100%; height: auto; touch-action: pan-y; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 8px; font-size: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.12); display: none; white-space: nowrap; }
+.tip b { display: block; margin-bottom: 2px; }
+.tip div { display: flex; align-items: center; gap: 6px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { padding: 6px 4px; text-align: right; border-bottom: 1px solid var(--grid); }
+th:first-child, td:first-child { text-align: left; }
+thead th { font-size: 12px; color: var(--ink-2); font-weight: 600; }
+.note { font-size: 12px; color: var(--muted); margin: 8px 0 0; }
+.race-head { display: flex; justify-content: space-between; gap: 8px; }
+.race-sub { font-size: 13px; margin-bottom: 8px; }
+.pick { display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 8px; margin-top: 6px; }
+.pick-name { font-weight: 600; }
+.pick-fin { color: var(--ink-2); font-size: 14px; }
+.pick-net { min-width: 64px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.pick-label { font-size: 11px; color: var(--muted); margin-left: 18px; }
+.race-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; font-size: 13px;
+  margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--grid); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@media (max-width: 480px) {
+  .tiles { grid-template-columns: repeat(2, 1fr); }
+  .hero-value { font-size: 24px; }
+}
+
+.back { display: inline-block; margin: 4px 0 10px; font-size: 14px; text-decoration: none; }
+.prose h2 { display: block; font-size: 17px; margin: 22px 0 8px; }
+.prose h2:first-child { margin-top: 0; }
+.prose h3, .prose h4 { font-size: 15px; margin: 18px 0 6px; text-transform: none; letter-spacing: 0; color: var(--ink); }
+.prose p, .prose li { margin: 0 0 10px; }
+.prose ul, .prose ol { padding-left: 20px; margin: 0 0 10px; }
+.prose a { overflow-wrap: anywhere; }
+.prose code { font-size: 13px; background: var(--page); padding: 1px 4px; border-radius: 4px; }
+.table-wrap { overflow-x: auto; margin: 0 0 12px; }
+.prose table { font-size: 13px; }
+.prose td, .prose th { text-align: left; vertical-align: top; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="../">← All races</a>
+  <h1>Fair Grounds Race 8, Thu Nov 19 2026</h1>
+  <div class="muted" style="margin-bottom:12px">Updated Nov 19, 2026 9:21 AM</div>
+  <article class="race"><div class="race-head"><strong>Fair Grounds R8</strong><span class="muted">Thu Nov 19</span></div><div class="race-sub muted">Dirt 6f (Joseph R. Peluso Memorial 100k, 2YO LA-bred)</div><div class="pick"><span class="swatch a"></span><span class="pick-name">Yo&#x27; Lion <span class="muted">(8-1)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">Top pick</div><div class="pick"><span class="swatch s"></span><span class="pick-name">Star of Bethlehem <span class="muted">(7-2)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">2nd pick</div><div class="race-foot muted">Awaiting result</div></article>
+  
+  <h3>Pre-race handicap</h3>
+  <article class="card prose"><p>PP URL: <a href="https://www.drf.com/pp-details/11-19-2026/FG/8/D/USA">https://www.drf.com/pp-details/11-19-2026/FG/8/D/USA</a></p>
+<p>Fair Grounds Race 8, the Joseph R. Peluso Memorial, a $100,000 stakes for Louisiana-bred 2-year-olds, 6 furlongs on the dirt, Beyer par not available. Post 5:25 PM ET. Ten runners. Odds below are the morning line.</p>
+<p><strong>Scratches and probable scratches:</strong> None listed, and nobody looks likely to come out. Levee Native was scratched by the vet from a Nov 5 Delta Downs allowance and returns here off a 3-furlong breeze, which is a mild concern, but he is not a contender either way.</p>
+<h2>Average earnings per start</h2>
+<p>All ten are 2-year-olds, so there is no prior year to weigh.</p>
+<div class="table-wrap"><table><thead><tr><th>Horse</th><th>ML</th><th>2026</th><th>Per start</th></tr></thead><tbody><tr><td>Max Attack</td><td>10-1</td><td>3 starts, $34,000</td><td>$11,333</td></tr><tr><td>Hes Steelin Mylady</td><td>9-2</td><td>4, $47,495</td><td>$11,874</td></tr><tr><td>Star of Bethlehem</td><td>7-2</td><td>4, $83,600</td><td>$20,900</td></tr><tr><td>Yo&#x27; Lion</td><td>8-1</td><td>2, $16,600</td><td>$8,300</td></tr><tr><td>Date Money</td><td>8-1</td><td>2, $30,000</td><td>$15,000</td></tr><tr><td>Levee Native</td><td>12-1</td><td>3, $27,520</td><td>$9,173</td></tr><tr><td>Essential George</td><td>3-1</td><td>1, $30,000</td><td>$30,000</td></tr><tr><td>Pastinaca</td><td>10-1</td><td>4, $41,650</td><td>$10,413</td></tr><tr><td>Touch Money</td><td>12-1</td><td>3, $26,463</td><td>$8,821</td></tr><tr><td>Lucky Spot</td><td>12-1</td><td>1, $18,000</td><td>$18,000</td></tr></tbody></table></div>
+<p>Essential George&#x27;s number is one maiden win. Star of Bethlehem leads on real volume, two wins and two seconds including the LA Cup Juvenile stakes. Per-start is a tiebreaker only.</p>
+<h2>The contenders</h2>
+<p>The key race is the Sep 19 LA Cup Juvenile at Louisiana Downs: Star of Bethlehem won it by 4 1/2 with a 72, Pastinaca was 3rd (54) and Levee Native 7th (43). The other link is the Aug 1 Yong Futurity at Evangeline, won by Golfito (not entered) over Star of Bethlehem and Hes Steelin Mylady.</p>
+<p><strong>Yo&#x27; Lion (8-1).</strong> The best figure in the race by a lot. An 85 winning a Louisiana Downs maiden by 6 1/2 on Sep 23, on the lead and cruising home, and his 1:04.15 for 5 1/2 furlongs was nearly a second faster than Star of Bethlehem&#x27;s stakes win at the same track and distance four days earlier. His only other start was a 17 in the LA Legacy on Oct 31, 7 furlongs on a muddy track, brief speed and done as the 2.10-1 favorite. I throw that line out: wrong surface condition and a longer trip for a quick 2-year-old. He was gelded after it and worked 5 furlongs in 1:02.3 here on Nov 11. Nieves wins 13%, Foster 12%, and the pair are 15% together the last two years ($2.09 ROI), though 0-for-7 at Fair Grounds and Foster is 0-for-11 in stakes. The risk is that the 85 was a one-off and the 17 is the real horse, and he has to deal with Essential George and Lucky Spot for the lead. About 14% to win.</p>
+<p><strong>Star of Bethlehem (7-2).</strong> The proven stakes winner. Figures climb 52, 58, 72, and the 72 came wiring the LA Cup Juvenile on the rail and kicking clear. He was 2nd, beaten a half length, in the Yong Futurity before that after dueling. 2-for-4, $20,900 a start. He moved to David Terre (23% this year, 33% first time with a new trainer), Pedroza wins 14%, and the J/T is 1-for-7. Early 106, so he will be in the speed fight with Essential George, Lucky Spot and Yo&#x27; Lion. Off since Sep 19, with a bullet 3-furlong breeze here on Nov 12. About 24% to win.</p>
+<p><strong>Essential George (3-1).</strong> One start, a 67 winning a 5-furlong maiden at Delta Downs by 3 1/2, on the lead and clear. The fastest early speed in the race (Early 118). Landry wins 26%, Hernandez 15%, and the pair are 3-for-9 (33%). He is the lightly raced improver with a hot barn, but he is stretching out to 6 furlongs and facing winners in a stakes for the first time off a 67. The likely favorite, and the morning line already prices him short. About 22% to win.</p>
+<p><strong>Hes Steelin Mylady (9-2).</strong> The most seasoned horse here, with three thirds in tougher company: a 74 in a Keeneland OC 100k N1X at 1 1/16 on a good track (held on for show), a 68 in the open Sapling Stakes at Monmouth (dueled, tight late), and a 55 in the Yong Futurity after breaking in and getting bumped. He won his Indiana debut with a 55. Back to a sprint and down to state-bred company, both positives. West wins 23%, Murrill 14%, the J/T is 22% (46 starts, $1.77), and West is 27% going from routes to sprints. Only 1-for-4 and his best fast-track figure is 68. About 20% to win.</p>
+<div class="table-wrap"><table><thead><tr><th>Horse</th><th>Odds</th><th>Win %</th><th>Fair odds</th><th>Value ratio</th><th>Call</th></tr></thead><tbody><tr><td>Star of Bethlehem</td><td>7-2</td><td>24%</td><td>3.2-1</td><td>1.08</td><td>Fair</td></tr><tr><td>Essential George</td><td>3-1</td><td>22%</td><td>3.5-1</td><td>0.88</td><td>Underlay</td></tr><tr><td>Hes Steelin Mylady</td><td>9-2</td><td>20%</td><td>4-1</td><td>1.10</td><td>Fair</td></tr><tr><td>Yo&#x27; Lion</td><td>8-1</td><td>14%</td><td>6.1-1</td><td>1.26</td><td>Overlay</td></tr></tbody></table></div>
+<h2>The rest</h2>
+<p>Touch Money (12-1) is still a maiden, but his 62 third in a Churchill maiden and 53 second at Keeneland were in open company, he gets 5 pounds (117), and Concepcion/Calhoun are 21% together at Fair Grounds; he is the flyer at about 7% (13-1 fair). Pastinaca (10-1) peaked with a 67 in August and has gone 54 and 46 since. Date Money (8-1, 58 maiden win) has Sheehy at 9%. Lucky Spot (12-1) won a $20,000 maiden claimer with a 53, Murray 8%. Max Attack (10-1, best 54) and Levee Native (12-1, best 44) are too slow.</p>
+<h2>Bottom line</h2>
+<p>Yo&#x27; Lion is the top pick and the only overlay on the board (value ratio 1.26). He is a bet at 8-1 or better; anything shorter and the second choice takes over. Star of Bethlehem is the second choice: Hes Steelin Mylady rates a hair higher on value (1.10 vs 1.08), so the close call goes to Star of Bethlehem on win chance (24% vs 20%), and he becomes a bet at 9-2 or better. Hes Steelin Mylady needs 11-2. Essential George is the horse to beat and an underlay at 3-1. Touch Money is the flyer at 12-1.</p>
+<p>The main risk to the top pick is that the 85 was a one-race wonder. He has run once well and once terribly, and with four horses showing early speed he may not get the easy lead he had at Louisiana Downs.</p></article>
+  <a class="back" href="../">← All races</a>
+</main>
+</body>
+</html>
