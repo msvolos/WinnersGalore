@@ -1,0 +1,154 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Churchill Downs Race 8, Fri Nov 20 2026</title>
+<link rel="icon" href="../icon.svg" type="image/svg+xml">
+<link rel="icon" href="../favicon-32.png" sizes="32x32" type="image/png">
+<link rel="apple-touch-icon" href="../apple-touch-icon.png">
+<link rel="manifest" href="../manifest.webmanifest">
+<meta name="theme-color" content="#1f4e3d">
+<meta name="apple-mobile-web-app-title" content="Winners">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<script>
+(function () {
+  const build = "20261120090755";
+  function check() {
+    fetch("../version.txt?t=" + Date.now(), {cache: "no-store"})
+      .then(r => r.ok ? r.text() : build)
+      .then(v => {
+        v = v.trim();
+        const u = new URL(location.href);
+        // Skip if we already asked for this build and still got an old copy.
+        if (v && v !== build && u.searchParams.get("v") !== v) { u.searchParams.set("v", v); location.replace(u); }
+      })
+      .catch(() => {});
+  }
+  check();
+  document.addEventListener("visibilitychange", () => { if (!document.hidden) check(); });
+  addEventListener("pageshow", e => { if (e.persisted) check(); });
+})();
+</script>
+<style>
+:root {
+  color-scheme: light;
+  --page: #f9f9f7; --surface: #fcfcfb; --ink: #0b0b0b; --ink-2: #52514e; --muted: #898781;
+  --grid: #e1e0d9; --axis: #c3c2b7; --border: rgba(11,11,11,0.10);
+  --pos: #006300; --neg: #c0302f;
+  --series-a: #2a78d6; --series-b: #eb6834; --series-s: #1baf7a; --series-r: #8a5cd0;
+}
+@media (prefers-color-scheme: dark) {
+  :root:not([data-theme="light"]) {
+    color-scheme: dark;
+    --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+    --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+    --pos: #0ca30c; --neg: #e66767;
+    --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
+  }
+}
+:root[data-theme="dark"] {
+  color-scheme: dark;
+  --page: #0d0d0d; --surface: #1a1a19; --ink: #f0efec; --ink-2: #c3c2b7; --muted: #898781;
+  --grid: #2c2c2a; --axis: #383835; --border: rgba(255,255,255,0.10);
+  --pos: #0ca30c; --neg: #e66767;
+  --series-a: #3987e5; --series-b: #d95926; --series-s: #199e70; --series-r: #9d74e0;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--page); color: var(--ink);
+  font: 15px/1.45 system-ui, -apple-system, "Segoe UI", sans-serif; }
+main { max-width: 760px; margin: 0 auto; padding: 16px 16px 48px; }
+h1 { font-size: 22px; margin: 4px 0 2px; }
+h2 { font-size: 16px; margin: 0 0 12px; display: flex; align-items: center; gap: 8px; }
+h3 { font-size: 15px; margin: 28px 0 10px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .04em; }
+.muted { color: var(--muted); font-weight: normal; }
+.pos { color: var(--pos); } .neg { color: var(--neg); }
+a { color: var(--series-a); }
+.card, .race { background: var(--surface); border: 1px solid var(--border); border-radius: 12px; padding: 14px; margin-bottom: 12px; }
+.hero { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 14px 0 12px; }
+.hero .card { margin: 0; }
+.hero-label { font-size: 13px; color: var(--ink-2); display: flex; align-items: center; gap: 6px; }
+.hero-value { font-size: 30px; font-weight: 700; margin-top: 2px; }
+.added { font-size: 14px; color: var(--ink-2); margin: 0 0 12px; }
+.swatch { width: 10px; height: 10px; border-radius: 3px; display: inline-block; flex: none; }
+.swatch.a { background: var(--series-a); } .swatch.b { background: var(--series-b); } .swatch.s { background: var(--series-s); } .swatch.r { background: var(--series-r); }
+.tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; }
+.tile { background: var(--page); border-radius: 8px; padding: 8px; text-align: center; }
+.tile-label { font-size: 11px; color: var(--ink-2); text-transform: uppercase; letter-spacing: .03em; }
+.tile-value { font-size: 18px; font-weight: 700; }
+.tile-sub { font-size: 11px; color: var(--muted); }
+.kv { display: grid; grid-template-columns: 1fr auto; gap: 4px 12px; margin: 12px 0 0; font-size: 14px; }
+.kv dt { color: var(--ink-2); } .kv dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+.legend { display: flex; gap: 16px; font-size: 13px; color: var(--ink-2); margin-bottom: 6px; }
+.legend span { display: flex; align-items: center; gap: 6px; }
+.chart-wrap { position: relative; }
+svg { display: block; width: 100%; height: auto; touch-action: pan-y; }
+.tip { position: absolute; pointer-events: none; background: var(--surface); border: 1px solid var(--border);
+  border-radius: 8px; padding: 6px 8px; font-size: 12px; box-shadow: 0 2px 8px rgba(0,0,0,.12); display: none; white-space: nowrap; }
+.tip b { display: block; margin-bottom: 2px; }
+.tip div { display: flex; align-items: center; gap: 6px; }
+table { width: 100%; border-collapse: collapse; font-size: 14px; font-variant-numeric: tabular-nums; }
+th, td { padding: 6px 4px; text-align: right; border-bottom: 1px solid var(--grid); }
+th:first-child, td:first-child { text-align: left; }
+thead th { font-size: 12px; color: var(--ink-2); font-weight: 600; }
+.note { font-size: 12px; color: var(--muted); margin: 8px 0 0; }
+.race-head { display: flex; justify-content: space-between; gap: 8px; }
+.race-sub { font-size: 13px; margin-bottom: 8px; }
+.pick { display: grid; grid-template-columns: auto 1fr auto auto; align-items: center; gap: 8px; margin-top: 6px; }
+.pick-name { font-weight: 600; }
+.pick-fin { color: var(--ink-2); font-size: 14px; }
+.pick-net { min-width: 64px; text-align: right; font-variant-numeric: tabular-nums; font-weight: 600; }
+.pick-label { font-size: 11px; color: var(--muted); margin-left: 18px; }
+.race-foot { display: flex; flex-wrap: wrap; justify-content: space-between; gap: 4px 12px; font-size: 13px;
+  margin-top: 10px; padding-top: 8px; border-top: 1px solid var(--grid); }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip: rect(0 0 0 0); }
+@media (max-width: 480px) {
+  .tiles { grid-template-columns: repeat(2, 1fr); }
+  .hero-value { font-size: 24px; }
+}
+
+.back { display: inline-block; margin: 4px 0 10px; font-size: 14px; text-decoration: none; }
+.prose h2 { display: block; font-size: 17px; margin: 22px 0 8px; }
+.prose h2:first-child { margin-top: 0; }
+.prose h3, .prose h4 { font-size: 15px; margin: 18px 0 6px; text-transform: none; letter-spacing: 0; color: var(--ink); }
+.prose p, .prose li { margin: 0 0 10px; }
+.prose ul, .prose ol { padding-left: 20px; margin: 0 0 10px; }
+.prose a { overflow-wrap: anywhere; }
+.prose code { font-size: 13px; background: var(--page); padding: 1px 4px; border-radius: 4px; }
+.table-wrap { overflow-x: auto; margin: 0 0 12px; }
+.prose table { font-size: 13px; }
+.prose td, .prose th { text-align: left; vertical-align: top; }
+</style>
+</head>
+<body>
+<main>
+  <a class="back" href="../">← All races</a>
+  <h1>Churchill Downs Race 8, Fri Nov 20 2026</h1>
+  <div class="muted" style="margin-bottom:12px">Updated Nov 20, 2026 9:07 AM</div>
+  <article class="race"><div class="race-head"><strong>Churchill Downs R8</strong><span class="muted">Fri Nov 20</span></div><div class="race-sub muted">Dirt 6 1/2f (3YO+ OC 80k/N2X)</div><div class="pick"><span class="swatch a"></span><span class="pick-name">Stiglets <span class="muted">(6-1)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">Top pick</div><div class="pick"><span class="swatch s"></span><span class="pick-name">Jefferson Street <span class="muted">(10-1)</span></span><span class="pick-fin">pending</span><span class="pick-net"></span></div><div class="pick-label">2nd pick</div><div class="race-foot muted">Awaiting result</div></article>
+  
+  <h3>Pre-race handicap</h3>
+  <article class="card prose"><p>PP URL: <a href="https://www.drf.com/pp-details/11-20-2026/CD/8/D/USA">https://www.drf.com/pp-details/11-20-2026/CD/8/D/USA</a></p>
+<p>Churchill Downs Race 8, a $134,000 optional claiming allowance (OC 80k/N2X) for 3-year-olds and up, 6 1/2 furlongs on a fast dirt track, Beyer par 95. Post 4:25 PM ET. Ten runners. Odds below are the morning line.</p>
+<p><strong>Scratches and probable scratches:</strong> None listed, and nobody is cross-entered or looks likely to come out. Master Controller has a long history of trainer scratches (four this year), so keep half an eye on him, but he is not a contender either way.</p>
+<h2>Average earnings per start</h2>
+<div class="table-wrap"><table><thead><tr><th>Horse</th><th>ML</th><th>This year</th><th>Per start</th><th>Last year</th><th>Per start</th></tr></thead><tbody><tr><td>Market Street</td><td>12-1</td><td>4, $15,612</td><td>$3,903</td><td>8, $99,955</td><td>$12,494</td></tr><tr><td>Tagermeen</td><td>3-1</td><td>3, $193,996</td><td>$64,665</td><td>4, $62,000</td><td>$15,500</td></tr><tr><td>Master Controller</td><td>15-1</td><td>4, $91,570</td><td>$22,893</td><td>3, $52,655</td><td>$17,552</td></tr><tr><td>It&#x27;s My Life</td><td>10-1</td><td>1, $1,625</td><td>$1,625</td><td>2, $109,890</td><td>$54,945</td></tr><tr><td>Ship Ship Hooray</td><td>15-1</td><td>6, $73,579</td><td>$12,263</td><td>7, $83,723</td><td>$11,960</td></tr><tr><td>B Sudd</td><td>30-1</td><td>6, $83,156</td><td>$13,859</td><td>7, $46,837</td><td>$6,691</td></tr><tr><td>Dr Ruben M</td><td>9-2</td><td>8, $90,755</td><td>$11,344</td><td>3, $5,548</td><td>$1,849</td></tr><tr><td>Eagles Flight</td><td>5-2</td><td>no starts</td><td>n/a</td><td>4 (2025), $63,740</td><td>$15,935</td></tr><tr><td>Jefferson Street</td><td>10-1</td><td>3, $18,107</td><td>$6,036</td><td>8 (2024), $254,200</td><td>$31,775</td></tr><tr><td>Stiglets</td><td>6-1</td><td>2, $81,600</td><td>$40,800</td><td>8, $149,721</td><td>$18,715</td></tr></tbody></table></div>
+<p>Tagermeen&#x27;s number is real volume (two wins and a stakes second this year). Stiglets&#x27; is two starts, one a big win. Per-start is a tiebreaker only.</p>
+<h2>The contenders</h2>
+<p>The key race is the Sep 18 CD OC 80k/N2X at 6 furlongs: Tip Me Song won, Ship Ship Hooray was 2nd on the lead with a 91, Jefferson Street 3rd (85) on a rail trip, and Market Street 4th (82). Most of that group met again in the Oct 17 Keeneland N2X, where Ship Ship Hooray (84), Jefferson Street (82, squeezed at the start as the favorite) and Market Street (85) all ran 4th to 6th behind Rockies Balbo.</p>
+<p><strong>Tagermeen (3-1).</strong> The most consistent horse in the race: 2-for-7 with three seconds, and his figures run 91 (maiden win at this trip in the slop), 87 (won a Saratoga N1X after stumbling at the start and getting caught 5 wide) and 93 (2nd in the Harrods Creek at 7 furlongs here, beaten a length and a quarter). The 93 is two below par and the best recent figure among the horses who are actually racing regularly. He is a 3-year-old meeting older horses at this level for the first time, off since Sep 19 with steady works. Gaffalione wins 13% at the meet, Asmussen 20%, but the pair are just 6% together at Churchill (2-for-31, $0.28) and 7% overall. That combo flag keeps him out of the top-pick spot. About 22% to win, and 3-1 prices him right where he should be.</p>
+<p><strong>Eagles Flight (5-2).</strong> The most talent on paper and the biggest question. He ran a 100 winning a 1-mile N1X at Santa Anita in March 2025, then an 84 (3rd, route) and an 86 (4th at 6 furlongs in an OC 80k N2X, weakened). He has not raced since June 13, 2025, seventeen months ago, and comes off a Sadler-to-DeVaux barn switch. DeVaux is 25% first time with a new horse and 22% off 180-day layoffs, Jose Ortiz wins 22% on the year (12% at the meet), and the pair are 23% together at Churchill ($2.59 ROI) on 73 starts. He breezed a bullet half (:47.2, 1 of 39) at Keeneland on Nov 14. Every one of those angles is real, but his only sprint figure in his last four starts is the 86, and a 17-month layoff is a lot to ask the morning-line favorite to overcome. About 18%.</p>
+<p><strong>Stiglets (6-1).</strong> The fastest horse in the race and the speed of the race. He ran a 107 winning an Oaklawn N1X by 5 1/2 lengths on Jan 3, on the lead and much best, then an 85 when 3rd at 4-5 in an OC 62k N2X in March (pressed the rail, kept on). Before that he was 2nd with a 95 in a CD N1X at 6 furlongs and has run 88 to 91 in several other spots. His TimeformUS Early figure of 128 is 19 points clear of anyone else, so he should get a clean lead. He has been off since March 5 (8 1/2 months), but D&#x27;Amato wins 20% off 180-day layoffs ($2.00) and 25% at this meet, and the work tab is strong: a 4-furlong :47.4 (3 of 119) on Nov 14 behind five straight 5-furlong works. Arrieta wins 12% at the meet and 16% on the year, and the pair are 25% together (36 starts). The risk is the layoff and the 85 last time out: if the 107 was his peak and the 85 is the real horse, he is a length or two short. About 17% to win.</p>
+<p><strong>Dr Ruben M (9-2).</strong> Steady sprint figures: 91 winning an Ellis Park $50,000 claimer at this exact trip (drew off, beating Ship Ship Hooray), 81 when 3rd at 2-1 in a Belmont N1X at 6 1/2 (weakened), and 91 in a Belmont N1X last out (2nd after being bumped). He is 2-0-1-0 at the distance, gets in at 113 pounds (7 less than most of the field), and picks up Irad Ortiz Jr, who wins 22% at the meet. O&#x27;Neill is 0-for-6 here (17% on the year) and the J/T is 0-for-1. He is four points under par on his best day and has never run at Churchill. About 15%, and 9-2 is short for that.</p>
+<p><strong>Jefferson Street (10-1).</strong> The class of the field on his 2024 form: a 102 winning a Saratoga N1X at this distance, a 94 when 2nd in the Harrods Creek here, and 2nd in the Grade 2 Amsterdam. He missed all of 2025, was gelded, and has come back 66, 85, 82; the 82 last out was as the 3.55-1 favorite at Keeneland after he got squeezed at the start, and the 85 before it was a rail-trip 3rd in this class at Churchill. Mott wins 25% at the meet, Alvarado 16%, and the pair are 19% together (558 starts) and 19% at CD. Blinkers come off today (Mott 13% with that move, $0.48). He is 4-2-1-0 at 6 1/2 furlongs. The figures are moving the right way but are still 10 under par. About 10%.</p>
+<div class="table-wrap"><table><thead><tr><th>Horse</th><th>Odds</th><th>Win %</th><th>Fair odds</th><th>Value ratio</th><th>Call</th></tr></thead><tbody><tr><td>Tagermeen</td><td>3-1</td><td>22%</td><td>3.5-1</td><td>0.88</td><td>Underlay</td></tr><tr><td>Eagles Flight</td><td>5-2</td><td>18%</td><td>4.6-1</td><td>0.63</td><td>Underlay</td></tr><tr><td>Stiglets</td><td>6-1</td><td>17%</td><td>4.9-1</td><td>1.19</td><td>Fair</td></tr><tr><td>Dr Ruben M</td><td>9-2</td><td>15%</td><td>5.7-1</td><td>0.83</td><td>Underlay</td></tr><tr><td>Jefferson Street</td><td>10-1</td><td>10%</td><td>9-1</td><td>1.10</td><td>Fair</td></tr></tbody></table></div>
+<h2>The rest</h2>
+<p>Ship Ship Hooray (15-1) ran a 91 in this class here in September on the lead, and Torres/Shaffer are 2-for-8 at Churchill ($4.05), but he will be chasing Stiglets instead of setting the pace, and he dropped to an 84 last out; he is the flyer at about 6%. Market Street (12-1, 82 to 88 lately, 0-for-4 this year, Torres 7%, Shorter 0-for-10) closes but never wins. Master Controller (15-1) has gone 92, 84, 71 in routes and returns to a sprint. It&#x27;s My Life (10-1) was eased in his only start this year, and Carrasco is 0-for-12 at the meet. B Sudd (30-1, best recent 80) is too slow.</p>
+<h2>Bottom line</h2>
+<p>Neither pick is an overlay on the morning line. Stiglets is the top pick: his value ratio (1.19) edges Jefferson Street (1.10) and he has the higher win chance, so the close call goes his way. He is a bet at 13-2 or better. Jefferson Street is the second choice and needs 12-1 or better. Tagermeen is the horse to beat but an underlay at 3-1 (with a 6% J/T at CD), and Eagles Flight is a big underlay at 5-2 off a 17-month layoff. Ship Ship Hooray is the flyer at 15-1.</p>
+<p>The main risk to the top pick is the 8 1/2-month layoff and the 85 last time out. If he comes back closer to the 85 than the 107, a horse like Tagermeen or Dr Ruben M can run him down in the stretch.</p></article>
+  <a class="back" href="../">← All races</a>
+</main>
+</body>
+</html>
